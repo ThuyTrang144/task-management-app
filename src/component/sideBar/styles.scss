@@ -13,15 +13,21 @@
     align-self: center;
     margin-top: 15px;
 }
-.menu-section .menu-title {
+@mixin menu-title {
     color: #5A5B6A;
     font-size: 14px;
     font-weight: bold;
 }
-.menu-section .menu-title::after {
+@mixin menu-title-underline {
     content:"";
     display:block;
     border-bottom: 1px solid #D2D2D6;
+}
+.menu-section .menu-title {
+    @include menu-title;
+}
+.menu-section .menu-title:after {
+    @include menu-title-underline;
     margin-top: 10px;
 }
 .work-item-list {
@@ -33,8 +39,7 @@
     display: flex;
     align-items: center;
 }
-
-.work-item-list .nav-item:hover {
+.work-item-list .item:hover {
     color: #2979FF;
     background-color: #CEE5FF;
 }
@@ -48,74 +53,133 @@
     height: 20px;
     color: #787885;
 }
-
-.work-item-list li .item-name {
+.work-item-list .item .item-name {
     font-size: 18px;
     margin-left: 10px;
 }
-.folder-heading a {
-    text-decoration: none;
+.menu-section .ant-menu-submenu-arrow {
+    position: absolute;
+    right: 40px;
 }
-.expand-folder {
-    float: right;
-    position: relative;
-    bottom: 40px;
+.menu-section .folder-title {
+    @include menu-title;
 }
-#bucket-list {
-    flex-direction: column
+.menu-section .folder-title::after {
+    @include menu-title-underline;
 }
-.work-item-list .filter-selector {
-    display: flex;
-    flex-direction: column;
+.ant-menu {
+    background-color: #F0F0F1 !important;
 }
-.filter-selector p {
+.ant-menu-item {
+    height: 46px !important;
+    font-size: 18px !important;
+}
+.ant-menu-item:hover {
+    background-color: #CEE5FF;
+}
+.ant-menu .ant-menu-sub .ant-menu-inline {
+    background-color: #F0F0F1 !important;
+    margin-left: 20px;
+}
+.ant-menu-title-content {
+    position: relative !important;
+    right: 20px !important;
+}
+.ant-menu-submenu-title {
+    padding-right: unset !important;
+    padding-left: 20px !important;
+    width: 107% !important;
+}
+.ant-menu-item:active, .ant-menu-submenu-title:active {
+    background: unset !important;
+}
+.selector {
+    width: 100% !important;
+}
+.filter-name {
     font-size: 14px;
     font-weight: bold;
 }
-.selector-input {
-    border-radius: 2px;
-    background-color: white;
-    border: 1px solid #D9D9D9;
-    height: 32px;
+.sub-filter {
+    margin-top: 15px;
 }
-.selector-input i {
-    float: right;
-    margin-right: 15px;
-    line-height: 30px;
-    color: #D2D2D6;
+.checkbox-filter {
+    display: flex !important;
+    flex-direction: column !important;
 }
-.selector-input input {
-    border-style: none;
-    line-height: 30px;
-    margin-left: 10px;
+.ant-checkbox-wrapper {
+    margin-left: unset !important;
+    padding-bottom: 10px;
 }
-.selector-input input:focus {
-    outline: none;
-}
-.selection {
-    height: 32px;
-}
-.selector .selector-list {
-    display: none;
-    flex-direction: column;
-    background-color: white;
-    margin-top: 4px;
-    border-radius: 2px;
-    position: absolute;
-    z-index: 1;
-    width: 280px;
-}
-.selector-list p {
-    margin-left: 15px;
-    color: #5A5B6A;
-}
-.checkbox-item {
-    padding-top: 10px;
-}
-.checkbox-list {
-    position: relative;
-    bottom: 10px;
-}
+// .ant-menu-title-content:hover {
+//     color: #2979FF !important;
+// }
+// .ant-menu-submenu {
+//     width: 100% !important;
+// }
+// .folder-heading a {
+//     text-decoration: none;
+// }
+// .expand-folder {
+//     float: right;
+//     position: relative;
+//     bottom: 40px;
+// }
+// #bucket-list {
+//     flex-direction: column
+// }
+// .work-item-list .filter-selector {
+//     display: flex;
+//     flex-direction: column;
+// }
+// .filter-selector p {
+//     font-size: 14px;
+//     font-weight: bold;
+// }
+// .selector-input {
+//     border-radius: 2px;
+//     background-color: white;
+//     border: 1px solid #D9D9D9;
+//     height: 32px;
+// }
+// .selector-input i {
+//     float: right;
+//     margin-right: 15px;
+//     line-height: 30px;
+//     color: #D2D2D6;
+// }
+// .selector-input input {
+//     border-style: none;
+//     line-height: 30px;
+//     margin-left: 10px;
+// }
+// .selector-input input:focus {
+//     outline: none;
+// }
+// .selection {
+//     height: 32px;
+// }
+// .selector .selector-list {
+//     display: none;
+//     flex-direction: column;
+//     background-color: white;
+//     margin-top: 4px;
+//     border-radius: 2px;
+//     position: absolute;
+//     z-index: 1;
+//     width: 280px;
+// }
+// .selector-list p {
+//     margin-left: 15px;
+//     color: #5A5B6A;
+// }
+// .checkbox-item {
+//     padding-top: 10px;
+// }
+// .checkbox-list {
+//     position: relative;
+//     bottom: 10px;
+// }
 @media (max-width: 1536px) {
     .sidebar {
         width: 280px;
