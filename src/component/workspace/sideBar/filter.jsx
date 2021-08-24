@@ -1,8 +1,8 @@
 import { Select } from 'antd';
 import { Checkbox } from 'antd';
 import React from 'react';
-import './styles.scss'
 const { Option } = Select;
+
 class Filter extends React.PureComponent {
     constructor(props) {
         super(props)

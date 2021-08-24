@@ -1,13 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import Header from './component/header/header';
-import SideBar from './component/sideBar/sideBar';
+import WorkSpace from './component/workspace/workspace';
 
 function App() {
   return (
     <div>
       <Header />
-      <SideBar />
+      <WorkSpace />
     </div>
   );
 }

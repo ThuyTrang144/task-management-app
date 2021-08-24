@@ -1,6 +1,7 @@
 import React from 'react';
 import {faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 class ActivityMenu extends React.PureComponent {
     constructor(props) {
         super(props)

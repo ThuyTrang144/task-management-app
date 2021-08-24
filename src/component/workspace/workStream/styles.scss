@@ -1,0 +1,155 @@
+@import '../.././font-size.scss';
+@import '../.././colors.scss';
+.work-stream {
+    margin-top: 15px;
+    margin-left: 15px;
+    display: flex;
+    width: 420px;
+    height: 100%;
+    background-color: #F8F8F8;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.creation-box {
+    width: 100%;
+    height: 136px;
+    background-color: $header-background-color;
+    display: inherit;
+    flex-direction: column;
+}
+.box-heading {
+    width: 100%;
+    height: 62px;
+    background-color: #4F91FF;
+    color: $text-color-light;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 25px;
+    border-radius: 4px 4px 0px 0px;
+}
+.text-heading {
+    margin-left: 20px;
+}
+.title {
+    font-size: $xl;
+    font-weight: bold;
+}
+.total-work {
+    font-size: 16px;
+}
+.search-icon {
+    color: $text-color-light;
+    margin-right: 20px;
+    font-size: $two-xl;
+}
+.add-work-item {
+    margin-top: 10px;
+    width: 90%;
+    height: 30px;
+    border-bottom: 0.5px solid grey;
+    align-self: center;
+}
+.add-work-item .add-icon {
+    float: right;
+    position: relative;
+    top: 7px;
+    color: #787885;
+}
+.adding-box {
+    align-items: center;
+    position: relative;
+    top: 5px;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom: hidden
+}
+.add-work-item:hover {
+    border-bottom: 0.5px solid #40A9FF
+}
+.adding-box:focus {
+    outline: none;
+}
+.instruction {
+    color: $text-color-dark;
+    font-size: $lg;
+    display: inherit;
+    justify-content: space-between;
+    position: relative;
+    top: 5px;
+}
+.instruction > span {
+    margin-left: 20px;
+}
+.add-detail {
+    color: $text-hover-color;
+    text-decoration: none;
+    margin-right: 20px;
+}
+.work-listing {
+    margin-top: 10px;
+    align-self: center;
+    width: 90%;
+}
+.item-card {
+    height: 64px;
+    width: 100%;
+    border-radius: 4px;
+    box-shadow: 0px 0px 8px 0px #e1e1e3;
+    background-color: $header-background-color;
+    margin-top: 10px;
+}
+.created-date {
+    margin-left: 10px;
+}
+.item-card:hover {
+    background-color: $background-hover-color;
+}
+.item-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px 10px 10px;
+}
+.item-title .work-item-name {
+    color: black;
+    font-size: 16px;
+}
+.item-title .work-item-status {
+    color: #FFB41F;
+    font-size: 12px;
+}
+.item-title .work-item-status-done {
+    color: #43A047;
+    font-size: 12px;
+}
+.work-information {
+    display: flex;
+    justify-content: space-between;
+    color: $text-color-dark;
+    font-size: $sm;
+    padding: 0 10px;
+}
+.item-icon {
+    margin-right: 5px;
+    color: $icon-color-dark;
+}
+@media (max-width: 1536px ) {
+    .work-stream {
+        width: 420px;
+    }
+    .instruction {
+        font-size: 14px;
+    }
+}
+@media (max-width: 1280px) {
+    .work-stream {
+        width: 40%;
+    }
+} 
+@media (max-width: 1024px) {
+    .work-stream {
+        width: 70%;
+        margin-right: 15px;
+    }
+} 

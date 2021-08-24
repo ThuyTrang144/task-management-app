@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.scss'
+import './styles.scss'
 import Logo from './logo';
 import ChannelSelector from './channelSelector';
 import UserInfo from './userInfo';

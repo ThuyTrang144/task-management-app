@@ -1,6 +1,7 @@
 import React from 'react';
 import {faTasks, faUser, faUsers, faArchive } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 class WorkItemMenu extends React.PureComponent {
     constructor(props) {
         super(props)

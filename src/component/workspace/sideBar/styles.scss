@@ -1,12 +1,15 @@
+@import '~antd/dist/antd.css';
+@import '../.././colors.scss';
+@import '../.././font-size.scss';
+
 .sidebar {
     width: 320px;
     margin-left: 15px;
-    background-color: #F0F0F1;
+    background-color: $body-background-color;
     height: 100%;
-    color: #4A4B57;
+    color: $text-color-dark;
     display: flex;
     flex-direction: column;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .menu-section {
     width: 90%;
@@ -14,14 +17,14 @@
     margin-top: 15px;
 }
 @mixin menu-title {
-    color: #5A5B6A;
-    font-size: 14px;
+    color: $text-color-dark;
+    font-size: $md;
     font-weight: bold;
 }
 @mixin menu-title-underline {
     content:"";
     display:block;
-    border-bottom: 1px solid #D2D2D6;
+    border-bottom: 1px solid $border-color-light;
 }
 .menu-section .menu-title {
     @include menu-title;
@@ -40,21 +43,21 @@
     align-items: center;
 }
 .work-item-list .item:hover {
-    color: #2979FF;
-    background-color: #CEE5FF;
+    color: $text-hover-color;
+    background-color: $background-hover-color;
 }
 .work-item-list .item .item-icon {
     display: inherit;
     align-items: center;
     width: 30px;
     height: 30px;
-    font-size: 14px;
+    font-size: $md;
     width: 20px;
     height: 20px;
-    color: #787885;
+    color: $icon-color-dark;
 }
 .work-item-list .item .item-name {
-    font-size: 18px;
+    font-size: $xl;
     margin-left: 10px;
 }
 .menu-section .ant-menu-submenu-arrow {
@@ -68,17 +71,17 @@
     @include menu-title-underline;
 }
 .ant-menu {
-    background-color: #F0F0F1 !important;
+    background-color: $body-background-color !important;
 }
 .ant-menu-item {
     height: 46px !important;
-    font-size: 18px !important;
+    font-size: $xl !important;
 }
 .ant-menu-item:hover {
-    background-color: #CEE5FF;
+    background-color: $background-hover-color;
 }
 .ant-menu .ant-menu-sub .ant-menu-inline {
-    background-color: #F0F0F1 !important;
+    background-color: $body-background-color !important;
     margin-left: 20px;
 }
 .ant-menu-title-content {
@@ -97,7 +100,7 @@
     width: 100% !important;
 }
 .filter-name {
-    font-size: 14px;
+    font-size: $md;
     font-weight: bold;
 }
 .sub-filter {
@@ -111,75 +114,6 @@
     margin-left: unset !important;
     padding-bottom: 10px;
 }
-// .ant-menu-title-content:hover {
-//     color: #2979FF !important;
-// }
-// .ant-menu-submenu {
-//     width: 100% !important;
-// }
-// .folder-heading a {
-//     text-decoration: none;
-// }
-// .expand-folder {
-//     float: right;
-//     position: relative;
-//     bottom: 40px;
-// }
-// #bucket-list {
-//     flex-direction: column
-// }
-// .work-item-list .filter-selector {
-//     display: flex;
-//     flex-direction: column;
-// }
-// .filter-selector p {
-//     font-size: 14px;
-//     font-weight: bold;
-// }
-// .selector-input {
-//     border-radius: 2px;
-//     background-color: white;
-//     border: 1px solid #D9D9D9;
-//     height: 32px;
-// }
-// .selector-input i {
-//     float: right;
-//     margin-right: 15px;
-//     line-height: 30px;
-//     color: #D2D2D6;
-// }
-// .selector-input input {
-//     border-style: none;
-//     line-height: 30px;
-//     margin-left: 10px;
-// }
-// .selector-input input:focus {
-//     outline: none;
-// }
-// .selection {
-//     height: 32px;
-// }
-// .selector .selector-list {
-//     display: none;
-//     flex-direction: column;
-//     background-color: white;
-//     margin-top: 4px;
-//     border-radius: 2px;
-//     position: absolute;
-//     z-index: 1;
-//     width: 280px;
-// }
-// .selector-list p {
-//     margin-left: 15px;
-//     color: #5A5B6A;
-// }
-// .checkbox-item {
-//     padding-top: 10px;
-// }
-// .checkbox-list {
-//     position: relative;
-//     bottom: 10px;
-// }
 @media (max-width: 1536px) {
     .sidebar {
         width: 280px;
