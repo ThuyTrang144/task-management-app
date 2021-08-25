@@ -26,7 +26,9 @@ class Bucket extends React.Component {
                     status={item.status} 
                     assignee={item.assignee} 
                     createdDate={item.createdDate} 
-                    dueDate={item.dueDate}/>
+                    dueDate={item.dueDate}
+                    viewWorkDetail={this.props.viewWorkDetail}
+                    />
          
         )
     }

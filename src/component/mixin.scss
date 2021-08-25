@@ -15,6 +15,11 @@
         .work-item-name {
             color: black;
             font-size: 16px;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
         }
         .work-item-status {
             color: #FFB41F;

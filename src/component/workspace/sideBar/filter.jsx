@@ -33,28 +33,28 @@ class Filter extends React.PureComponent {
     }
     renderAssignee() {
         return this.state.assignee.map((item, index) => 
-            <Option class='selector-input' key={index} value={item}>{item}</Option>
+            <Option className='selector-input' key={index} value={item}>{item}</Option>
         )
     }
     renderTags() {
         return this.state.tag.map((item, index) => 
-            <Option class='selector-input' key={index} value={item}>{item}</Option>
+            <Option className='selector-input' key={index} value={item}>{item}</Option>
         )
     }
     renderStatus() {
         return this.state.status.map((item, index) => 
-            <Checkbox key={index} value={item}>{item}</Checkbox>
+            <Checkbox key={index} >{item}</Checkbox>
         )
     }
     renderImportanceLevel() {
         return this.state.importanceLevel.map((item, index) => 
-            <Checkbox key={index} value={item}>{item}</Checkbox>
+            <Checkbox key={index}>{item}</Checkbox>
         )
     }
     render() { 
         return ( 
             <div className='menu-section'>
-                <p class="menu-title">FILTERS</p>
+                <p className="menu-title">FILTERS</p>
                     <div className='sub-filter'>
                         <p className='filter-name'>Assignee</p>
                         <Select className='selector' placeholder='Select Asignee'>

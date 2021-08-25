@@ -1,6 +1,6 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Checkbox from 'antd/lib/checkbox/Checkbox';
+import { Checkbox } from 'antd';
 import React from 'react';
 import ItemCard from '../workStream/itemCard';
 import '../workStream/styles.scss';
@@ -9,7 +9,7 @@ class BucketItem extends React.Component {
         return ( 
             <div key={this.props.index} className="bucket-item">
                 <div className="item-actions">
-                    <Checkbox />
+                    <Checkbox/>
                     <FontAwesomeIcon className='favourite-icon' icon={faStar}/>
                 </div>
                 <div className='bucket-item-card'>
@@ -18,7 +18,9 @@ class BucketItem extends React.Component {
                         status={this.props.status} 
                         assignee={this.props.assignee} 
                         createdDate={this.props.createdDate} 
-                        dueDate={this.props.dueDate} />
+                        dueDate={this.props.dueDate}
+                        viewWorkDetail={this.props.viewWorkDetail}
+                         />
                 </div>
             </div>
     );

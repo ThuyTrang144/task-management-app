@@ -25,7 +25,7 @@ class FolderMenu extends React.Component {
         <Menu 
         mode="inline"
         >          
-        <SubMenu title={<p className='folder-title'>FOlDERS</p>}>
+        <SubMenu key="SubMenu" title={<p className='folder-title'>FOlDERS</p>}>
           {this.renderMenu()}
           </SubMenu>
         </Menu>

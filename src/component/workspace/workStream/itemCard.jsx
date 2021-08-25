@@ -4,10 +4,10 @@ import React from 'react';
 class ItemCard extends React.Component {
     render() { 
         return ( 
-            <div className='item-card'>
+            <div className='item-card' onClick={this.props.viewWorkDetail}>
                 <div className="item-title">
-                        <span class="work-item-name">{this.props.name}</span>
-                        <span class="work-item-status">{this.props.status}</span>
+                        <span className="work-item-name" onClick={this.props.viewWorkDetail}>{this.props.name}</span>
+                        <span className="work-item-status">{this.props.status}</span>
                     </div>
                     <div className="work-information">
                         <div>

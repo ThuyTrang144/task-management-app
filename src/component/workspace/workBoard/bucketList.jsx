@@ -32,7 +32,7 @@ class BucketList extends React.PureComponent {
                             <FontAwesomeIcon className='bucket-icon' icon={faBars} />
                         </div>
                 </div>
-                <Bucket />
+                <Bucket viewWorkDetail={this.props.viewWorkDetail}/>
             </div>
         )
     }
@@ -58,7 +58,7 @@ class BucketList extends React.PureComponent {
                         <Option value={option[0]}>{option[0]}</Option>
                         <Option value={option[1]}>{option[1]}</Option>
                     </Select> 
-                        <button class="add-bucket"><FontAwesomeIcon className='add-icon' icon={faPlus} />Add bucket
+                        <button className="add-bucket"><FontAwesomeIcon className='add-icon' icon={faPlus} />Add bucket
                     </button>
                 </div>
             </div>

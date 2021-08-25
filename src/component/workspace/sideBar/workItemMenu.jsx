@@ -16,7 +16,7 @@ class WorkItemMenu extends React.PureComponent {
     renderMenu() {
         const { menuItem } = this.state
         return menuItem.map((item, index) => 
-            <li class='item' key={index}>
+            <li className='item' key={index}>
                 <FontAwesomeIcon className='item-icon' icon={item.icon}></FontAwesomeIcon>
                 <span className='item-name'>{item.name}</span>
             </li>
@@ -24,9 +24,9 @@ class WorkItemMenu extends React.PureComponent {
     }
     render() { 
         return ( 
-            <div class="menu-section">
-                <p class="menu-title">WORK ITEM</p>
-                <ul class="work-item-list">        
+            <div className="menu-section">
+                <p className="menu-title">WORK ITEM</p>
+                <ul className="work-item-list">        
                     {this.renderMenu()}
                 </ul>
             </div>
