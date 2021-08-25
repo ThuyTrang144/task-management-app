@@ -3,13 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 import React from 'react';
 import ItemCard from '../workStream/itemCard';
+import '../workStream/styles.scss';
 class BucketItem extends React.Component {
     render() { 
         return ( 
             <div key={this.props.index} className="bucket-item">
                 <div className="item-actions">
                     <Checkbox />
-                    <FontAwesomeIcon icon={faStar}/>
+                    <FontAwesomeIcon className='favourite-icon' icon={faStar}/>
                 </div>
                 <div className='bucket-item-card'>
                     <ItemCard 

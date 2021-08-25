@@ -1,10 +1,6 @@
 @import '~antd/dist/antd.css';
 @import '.././colors.scss';
 @import '.././font-size.scss';
-body {
-    margin: 0px;
-    background-color: $body-background-color;
-}
 .header {
     background-color: $header-background-color;
     position: relative;
@@ -13,97 +9,103 @@ body {
     display: flex;
     justify-content: space-between;
     box-shadow: 0 0px 8px 0 $shadow-color-dark;
-}   
-.header .left {
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-}   
-.logo {
-    color: $logo-color;
-    display: flex;
-    align-items: center;
-}  
-.logo .menu-icon {
-    font-size: 35px;
-    padding: 10px;
-}   
-.logo .app-name {
-    font-size: $four-xl;
-}  
-.channel-selector {
-    height: 34px;
-    width: 300px;
-    margin-left: 20px;
-    color: $text-color-light !important;
-    font-size: $lg;
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-}
-.channel-selector:focus {
-    color: $text-color-light !important;
-}
-.channel-selector .ant-select-selector {    
-    background-color: #13C2C2 !important;
-    border-style: none;
-    border-radius: 100px !important;
-    border: none !important;
-}
-.channel-selector .ant-select-arrow {
-    color: $text-color-light !important;
-    font-size: $md;
-}
-.header .right {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-}   
-.noti-icon {
-    display: inherit;
-    border-radius: 100px;
-    width: 30px;
-    height: 30px;
-    background-color: #c4c4c4;
-    margin-right: 20px;
-    align-items: center;
-    justify-content: center;
-    color: $text-color-light;
-}   
-.noti-icon:hover {
-    background-color: $background-hover-color;
-}   
-.new-noti {
-    width: 16px;
-    height: 16px;
-    background-color: #FF4D4F;
-    color: $text-color-light;
-    border-radius: 100px;
-    font-size: $sx;
-    text-align: center;
-    position: absolute;
-    top: 10px;
-    margin-left: 30px;
-}  
-.avatar {
-    color: $text-color-dark;
-    font-size: $lg;
-    font-weight: bold;
-    padding-right: 10px;
-}
-.avatar img {
-    height: 30px;
-    width: 30px;
+    .left {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        .logo {
+            color: $logo-color;
+            display: flex;
+            align-items: center;
+            .menu-icon {
+                font-size: 35px;
+                padding: 10px;
+            }
+            .app-name {
+                font-size: $four-xl;
+            }
+        }     
+        .ant-select.channel-selector {
+            height: 34px;
+            width: 300px;
+            margin-left: 20px;
+            color: $text-color-light;
+            font-size: $lg;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .ant-select-selector {
+                background-color: #13C2C2;
+                border-style: none;
+                border-radius: 100px;
+            }
+            .ant-select-arrow {
+                color: $text-color-light;
+                font-size: $md;
+            }
+        }
+        .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+            box-shadow: none;
+            border-color: unset;
+        }
+    }
+    .right {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+        .noti-icon {
+            display: inherit;
+            border-radius: 100px;
+            width: 30px;
+            height: 30px;
+            background-color: #c4c4c4;
+            margin-right: 20px;
+            align-items: center;
+            justify-content: center;
+            color: $text-color-light;
+            &:hover {
+                background-color: $background-hover-color;
+            }
+            .new-noti {
+                width: 16px;
+                height: 16px;
+                background-color: #FF4D4F;
+                color: $text-color-light;
+                border-radius: 100px;
+                font-size: $sx;
+                text-align: center;
+                position: absolute;
+                top: 10px;
+                margin-left: 30px;
+            }  
+        }   
+        .avatar {
+            color: $text-color-dark;
+            font-size: $lg;
+            font-weight: bold;
+            padding-right: 10px;
+            img {
+                height: 30px;
+                width: 30px;
+            }
+        } 
+    }  
+
 }   
 @media (max-width: 768px) {
-    .header .logo span {
-       display: none;
+    .header {
+        .logo {
+            span {
+                display: none;
+            }
+        }
+        .channel-selector {
+            margin-left: unset;
+        }  
+        .select-button {
+            background-color: $text-color-light;
+            color: #13C2C2;
+        }
     }  
-    .channel-selector {
-        margin-left: unset;
-    }  
-    .select-button {
-        background-color: $text-color-light;
-        color: #13C2C2;
-    }
+
 }

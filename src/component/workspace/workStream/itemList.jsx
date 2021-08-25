@@ -18,7 +18,7 @@ class ItemList extends React.PureComponent {
     }
     renderItemList() {
         const { item } = this.state;
-        const itemList = item.map((item, index) => 
+        return item.map((item, index) => 
             <ItemCard 
             key={index} 
             name={item.name} 
@@ -27,7 +27,6 @@ class ItemList extends React.PureComponent {
             createdDate={item.createdDate} 
             dueDate={item.dueDate} />
         )
-        return itemList;
     }
     render() { 
         return ( 

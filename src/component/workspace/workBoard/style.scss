@@ -1,139 +1,141 @@
 @import '../.././font-size.scss';
 @import '../.././colors.scss';
+@import '../../mixin.scss';
 .bucket-board {
     width: 1180px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-.bucket-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 15px 15px 0px 15px
-}
-.search-box {
-    width: 560px;
-    height: 40px;
-    border-radius: 100px; 
-    border: 1px solid #D2D2D6;
-    background-color: white;
-    display: flex;
-    align-items: center;
-}
-.search-box:hover{
-    border: 1px solid #40A9FF
-}
-.search-box input {
-    border-style: hidden;
-    font-size: 16px;
-}
-.search-box input:hover {
-    outline: none;
-}
-.search-box input:focus {
-    outline: none;
-}
-.search-box .search-item {
-    font-size: 20px;
-    color: #9696A0;
-    margin-inline: 15px;
-}
-.bucket-selector {
-    width: 162px;
-    height: 40px;
-    border: 1px solid #D2D2D6;
-    border-radius: 100px;
-    background-color: white;
-    padding-left: 10px;
-    margin-right: 15px;
-    font-size: 14px;
-}
-.bucket-selector:focus {
-    border: 1px solid #40A9FF
-}
-.add-bucket {
-    width: 130px;
-    height:40px;
-    background-color: #2979FF;
-    border-radius: 100px;
-    color: white;
-    border-style: none;
-}
-.add-bucket i {
-    margin-right: 10px;
-}
-.bucket-listing {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 15px;
-}
-.bucket-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-right: 15px;
-    padding-bottom: 15px;
-    width: 560px;
-}
-.bucket-title {
-    display: inherit;
-    justify-content: space-between;
-    align-items: center;
-}
-.bucket-box a {
-    text-decoration: none;
-}
-.bucket-title a {
-    font-size: 18px;
-    color: #292A31;
-}
-.bucket-box a:hover{
-    color: #40A9FF;
-}
-.bucket-title .actions {
-    font-size: 30px;
-    color: #787885;
-}
-.bucket-card {
-    width: 100%;
-    box-shadow: 0px 0px 2px 0px grey;
-    background-color: white;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.bucket-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.item-actions {
-    display: inherit;
-    flex-direction: column;
-    justify-content: space-around;
-    margin-top: 5px;
-}
-.item-actions #star-icon:focus {
-    display: none;
-}
-.bucket-item-card .item-card {
-    width: 500px !important;
-    box-shadow: unset !important;
-    position: relative;
-    left: 10px;
-}
-.bucket-item-card .item-card:hover {
-    background: unset !important;
-}
-.bucket-item-card .work-item-name:hover {
-    color: #2979FF;
-}
-.bucket-icon {
-    font-size: $three-xl;
-    margin-right: 10px;
-}
-.bucket-icon  .favourite-icon {
-    color: #FFB41F !important;
-    fill: #FFB41F !important;
+    .bucket-actions {
+        @include display-flex;
+        margin: 15px 15px 0px 15px;
+        .search-box {
+            width: 560px;
+            height: 40px;
+            border-radius: 100px; 
+            border: 1px solid #D2D2D6;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            &:hover {
+                border: 1px solid #40A9FF
+            }
+            input {
+                border-style: hidden;
+                font-size: 16px;
+                &:hover {
+                    outline: none;
+                }
+                &:focus {
+                    outline: none;
+                }
+            }
+            .search-item {
+                font-size: 20px;
+                color: #9696A0;
+                margin-inline: 15px;
+            }
+        }
+        .action-group {
+            @include display-flex;
+            .ant-select.bucket-selector {
+                width: 162px;
+                height: 40px;  
+                margin-right: 20px;
+                @include display-flex;
+                border: 1px solid #D2D2D6;    
+                border-radius: 100px; 
+                background-color: $header-background-color;
+                .ant-select-selector {
+                    background-color: unset;
+                    border-style: unset;
+                    border-radius: 100px;
+                }
+            }
+            .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+                box-shadow: none;
+                border-color: unset;
+            }
+            .add-bucket {
+                width: 130px;
+                height:40px;
+                background-color: #2979FF;
+                border-radius: 100px;
+                color: white;
+                border-style: none;
+                .add-icon {
+                    margin-right: 10px;
+                }
+            }
+        }   
+    }
+    .bucket-listing {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 15px;
+        .bucket-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-right: 15px;
+            padding-bottom: 15px;
+            width: 560px;
+            .bucket-title {
+                @include display-flex;
+                a {
+                    text-decoration: none;
+                    font-size: 18px;
+                    color: black;
+                    &:hover{
+                        color: #40A9FF;
+                    }
+                }
+                .actions {
+                    font-size: 30px;
+                    color: #787885;
+                    .bucket-icon {
+                        font-size: $three-xl;
+                        margin-right: 10px;
+                    }
+                }
+            }
+            .bucket-card {
+                width: 100%;
+                box-shadow: 0px 0px 2px 0px grey;
+                background-color: white;
+                border-radius: 5px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .bucket-item {
+                    @include display-flex;
+                    .item-actions {
+                        @include display-flex;
+                        flex-direction: column;
+                        margin-top: 10px;
+                        .favourite-icon {
+                            color: #FFB41F;
+                            margin-top: 10px
+                        }
+                    }
+                }
+                .bucket-item-card  {
+                    .item-card {
+                        @include item-card;
+                        width: 500px;
+                        box-shadow: unset;
+                        position: relative;
+                        left: 10px;
+                        &:hover {
+                            background: unset;
+                        }
+                        .work-item-name {
+                            &:hover {
+                                color: #2979FF;
+                            }
+                        }
+                    }   
+                }
+                             
+            }
+        }
+    }
 }

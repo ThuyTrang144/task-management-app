@@ -2,12 +2,6 @@ import { faUser, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 class ItemCard extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-
-    //     }
-    // }
     render() { 
         return ( 
             <div className='item-card'>

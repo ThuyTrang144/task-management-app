@@ -15,13 +15,12 @@ class WorkItemMenu extends React.PureComponent {
     }
     renderMenu() {
         const { menuItem } = this.state
-        const menu = menuItem.map((item, index) => 
+        return menuItem.map((item, index) => 
             <li class='item' key={index}>
                 <FontAwesomeIcon className='item-icon' icon={item.icon}></FontAwesomeIcon>
                 <span className='item-name'>{item.name}</span>
             </li>
         )
-        return menu;
     }
     render() { 
         return ( 

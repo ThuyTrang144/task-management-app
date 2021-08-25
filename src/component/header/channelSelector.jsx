@@ -20,14 +20,16 @@ class ChannelSelector extends React.PureComponent {
         this.setState({ value })
     }
     rederChannelName() {
-        const channelList = this.state.channelName.map((item, index) => 
-                <Option key={index} value={item}>{item}</Option>
+        return this.state.channelName.map((item, index) => (
+            <Option key={index} value={item}>{item}</Option>
+            )
+
         )
-        return channelList
     }
     render() { 
         return (
             <Select 
+                id='selector'
                 className='channel-selector' 
                 defaultValue={"Channel: " + this.state.channelName[0].toLocaleUpperCase()} 
                 onChange={this.onChange}

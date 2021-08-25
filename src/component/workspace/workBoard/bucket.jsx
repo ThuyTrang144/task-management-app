@@ -18,7 +18,7 @@ class Bucket extends React.Component {
     }
     renderItemList() {
         const { item } = this.state;
-        const itemList = item.map((item, index) => 
+        return item.map((item, index) => 
                 <BucketItem  
                     className='bucket-item-card'
                     key={index} 
@@ -29,7 +29,6 @@ class Bucket extends React.Component {
                     dueDate={item.dueDate}/>
          
         )
-        return itemList;
     }
     render() { 
         return ( 

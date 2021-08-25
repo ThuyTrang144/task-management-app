@@ -1,8 +1,12 @@
-import { faArchive, faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faArchive, faBars, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './style.scss';
 import Bucket from './bucket';
+import { Select } from 'antd';
+const { Option } = Select;
+const option = ['Buckets', 'Tags'];
+
 class BucketList extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -13,24 +17,28 @@ class BucketList extends React.PureComponent {
                 { name: 'Important Tasks'},
                 { name: 'Important Tasks'},
                 { name: 'Important Tasks'},
-            ]
+            ],
+            value: 'Buckets'
          }
     }
     renderBucketList() {
         const {boardName} = this.state
-        const bucketList = boardName.map((item, index) =>
+        return boardName.map((item, index) =>
             <div key={index} className='bucket-box'>
                 <div className="bucket-title">
                         <a href="#">{item.name.toLocaleUpperCase()}</a>
                         <div className="actions">
-                            <FontAwesomeIcon className='bucket-icon archive-icon' icon={faArchive} />
-                            <FontAwesomeIcon className='bucket-icon favourite-icon' icon={faBars} />
+                            <FontAwesomeIcon className='bucket-icon' icon={faArchive} />
+                            <FontAwesomeIcon className='bucket-icon' icon={faBars} />
                         </div>
                 </div>
                 <Bucket />
             </div>
         )
-        return bucketList
+    }
+    onChange = (option) => {
+        const value = option;
+        this.setState({ value })
     }
     render() { 
         return ( 
@@ -40,12 +48,17 @@ class BucketList extends React.PureComponent {
                     <FontAwesomeIcon className='search-item' icon={faSearch} />
                     <input type="text" placeholder="Search for work items" />
                 </div>
-                <div>
-                    <select className="bucket-selector">
-                        <option>Buckets</option>
-                        <option>Tags</option>
-                    </select>
-                    <button class="add-bucket"><i class="fa fa-plus"></i>Add bucket
+                <div className='action-group'>
+                    <Select 
+                        className='bucket-selector' 
+                        defaultValue={"View by: " + this.state.value} 
+                        onChange={this.onChange}
+                        value={"View By: " + this.state.value}   
+                    >
+                        <Option value={option[0]}>{option[0]}</Option>
+                        <Option value={option[1]}>{option[1]}</Option>
+                    </Select> 
+                        <button class="add-bucket"><FontAwesomeIcon className='add-icon' icon={faPlus} />Add bucket
                     </button>
                 </div>
             </div>

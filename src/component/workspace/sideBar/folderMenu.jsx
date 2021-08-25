@@ -15,10 +15,9 @@ class FolderMenu extends React.Component {
     }
   }
   renderMenu() {
-    const menu = this.state.menuItem.map((item, index) => 
+    return this.state.menuItem.map((item, index) => 
       <Menu.Item className='item' key={index}>{item}</Menu.Item>
     )
-    return menu;
   }
   render() {
     return (
