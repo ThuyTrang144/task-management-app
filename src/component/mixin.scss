@@ -6,8 +6,8 @@
     background-color: $header-background-color;
     margin-top: 10px;
     &:hover {
-        background-color: $background-hover-color;
-    }       
+        background-color: $background-hover-color !important;
+    }
     .item-title {
         display: flex;
         justify-content: space-between;

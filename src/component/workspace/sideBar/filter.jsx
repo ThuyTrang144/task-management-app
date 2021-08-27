@@ -4,51 +4,24 @@ import React from 'react';
 const { Option } = Select;
 
 class Filter extends React.PureComponent {
-    constructor(props) {
-        super(props)
-        this.state = {
-            assignee: [
-                'Anros Nguyen',
-                'Trang Nguyen',
-                'Thien Huynh'
-            ],
-            tag: [
-                '#english',
-                '#coding',
-                '#reading',
-                '#cooking'
-            ],
-            status: [
-                'New',
-                'In Progress',
-                'Done'
-            ],
-            importanceLevel: [
-                'Urgent',
-                'High', 
-                'Normal', 
-                'Low',
-            ]
-        }
-    }
     renderAssignee() {
-        return this.state.assignee.map((item, index) => 
-            <Option className='selector-input' key={index} value={item}>{item}</Option>
+        return this.props.assignee.map(item => 
+            <Option className='selector-input' key={item} value={item}>{item}</Option>
         )
     }
     renderTags() {
-        return this.state.tag.map((item, index) => 
-            <Option className='selector-input' key={index} value={item}>{item}</Option>
+        return this.props.tag.map(item => 
+            <Option className='selector-input' key={item} value={item}>{item}</Option>
         )
     }
     renderStatus() {
-        return this.state.status.map((item, index) => 
-            <Checkbox key={index} >{item}</Checkbox>
+        return this.props.status.map(item => 
+            <Checkbox key={item} >{item}</Checkbox>
         )
     }
     renderImportanceLevel() {
-        return this.state.importanceLevel.map((item, index) => 
-            <Checkbox key={index}>{item}</Checkbox>
+        return this.props.importanceLevel.map(item => 
+            <Checkbox key={item}>{item}</Checkbox>
         )
     }
     render() { 

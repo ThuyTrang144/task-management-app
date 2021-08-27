@@ -11,20 +11,12 @@ class BucketList extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = { 
-            boardName: [
-                { name: 'Important Tasks' },
-                { name: 'Important Tasks'},
-                { name: 'Important Tasks'},
-                { name: 'Important Tasks'},
-                { name: 'Important Tasks'},
-            ],
-            value: 'Buckets'
+            value: 'Buckets',
          }
     }
     renderBucketList() {
-        const {boardName} = this.state
-        return boardName.map((item, index) =>
-            <div key={index} className='bucket-box'>
+        return this.props.bucketList.map(item =>
+            <div key={item.name} className='bucket-box'>
                 <div className="bucket-title">
                         <a href="#">{item.name.toLocaleUpperCase()}</a>
                         <div className="actions">
@@ -32,7 +24,10 @@ class BucketList extends React.PureComponent {
                             <FontAwesomeIcon className='bucket-icon' icon={faBars} />
                         </div>
                 </div>
-                <Bucket viewWorkDetail={this.props.viewWorkDetail}/>
+                <Bucket  
+                    bucketItemList={this.props.bucketItemList}
+                    viewWorkDetailOfBucket={this.props.viewWorkDetailOfBucket}
+                    />
             </div>
         )
     }

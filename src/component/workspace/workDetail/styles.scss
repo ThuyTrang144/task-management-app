@@ -117,300 +117,333 @@
             }
         }
     }
-    .detail-view-left {
-        width: 80%;
+    .detail-view {
         display: flex;
-        flex-direction: column;
-        background-color: white;
-        border-right: 1px solid #E1E1E3;
-        .tag {  
+        justify-content: space-between;
+        width: 100%;
+        #delete-icon {
+            color: $text-warning-color;
+        }
+        .detail-view-left {
+            width: 70%;
             display: flex;
-            flex-wrap: wrap;
-            margin-left: 15px;
-            .tag-item {
-                height: 22px;
-                margin-top: 15px;
+            flex-direction: column;
+            background-color: white;
+            border-right: 1px solid #E1E1E3;
+            .tag {  
+                display: flex;
+                flex-wrap: wrap;
+                margin-left: 15px;
+                .tag-item {
+                    height: 22px;
+                    margin-top: 15px;
+                }
+                .add-tag-input {
+                    height: 22px;
+                    width: auto;
+                    margin-top: 15px;
+                }
+                .add-tag {
+                    margin-top: 15px;
+                    height: 22px;
+                    border: 1px dashed $border-color-light;
+                }
             }
-            .add-tag-input {
-                height: 22px;
-                width: auto;
-                margin-top: 15px;
-            }
-            .add-tag {
-                margin-top: 15px;
-                height: 22px;
-                border: 1px dashed $border-color-light;
+            .item-description {
+                display: flex;
+                font-size: 18px;
+                color: #5A5B6A;
+                padding: 10px 15px;
+                .anticon-edit {
+                    margin-left: 15px;
+                    &:hover {
+                        color: $text-hover-color;
+                    }
+                }
+            }   
+            .todo-list {
+                align-self: center;
+                display: flex;
+                flex-direction:column;
+                width: 95%;
+                .dash-line {
+                    border-top: 1px dashed #D2D2D6;
+                    width: 100%;
+                    color: #292A31;
+                }
+                .todo-title {
+                    width: fit-content;
+                    background-color: white;
+                    font-size: $md;
+                    font-weight: bold;
+                    color: $text-color-dark;
+                    position: relative;
+                    bottom: 10px;
+                    align-self: center;
+                    .anticon-up {
+                        margin-left: 5px;
+                        font-size: 15px;
+                        color: #787885
+                    }
+                    .anticon-down {
+                        margin-left: 5px;
+                        font-size: 15px;
+                        color: #787885
+                    }
+                }
+                .todo-item {
+                    display: flex;
+                    justify-content: space-between;
+                    color: #787885;
+                    font-size: 14px;
+                    padding-bottom: 10px;
+                    .todo-info {
+                        display: flex;
+                        justify-content: space-between;
+                        }
+                        .assignee {
+                            margin-right: 15px;
+                        }
+                    }  
+                    .todo-name {
+                        color: $text-color-extreme-dark;
+                        margin-left: 10px;
+                    
+                }
+            }  
+            .activities-section {
+                width: 95%;
+                align-self: center;
+                margin-top: 20px;
+                .heading {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    .title {
+                        color: #787885;
+                        font-size: $lg;
+                        font-weight: bold;
+                    }
+                    .ant-checkbox-wrapper {
+                        color: #5A5B6A;
+                        font-size: $md;
+                    }
+                }
+                .adding-activities-box {
+                    display: flex;
+                    flex-direction: column;
+                    height: 54px;
+                    box-shadow: 0px 0px 4px 0px #2979FF;
+                    border-radius: 5px;
+                    margin-top: 10px;
+                    .adding-action {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-inline: 15px;
+                        margin-top: 5px;
+                        #emoji-icon {
+                            font-size: $lg;
+                            color: #2979FF;
+                            margin-top: 5px;
+                        }
+                    }
+                    .adding-input {
+                        border-style: none;
+                        margin-inline: 15px;
+                    }
+                    .adding-input:focus {
+                        outline: none;
+                    }
+                    
+                }
+                .activities-list {
+                    .activities-item {
+                        display: flex;
+                        flex-direction: column;
+                        margin-top: 15px;
+                        .activities-info {
+                            display: flex;
+                            justify-content: space-between;
+                            .info-group {
+                                display: flex;
+                                align-items: center;
+                                span {
+                                    margin-right: 15px;
+                                }
+                                .assignee {
+                                    font-size: $md;
+                                    // font-weight: bold;
+                                    color: #292A31;
+                                }
+                                .created-time {
+                                    font-style: italic;
+                                    color: #787885;
+                                    font-size: $sm;
+                                }
+                                .activities-tag {
+                                    height: fit-content;
+                                    width: fit-content;
+                                    padding: 2px 10px;
+                                    background-color: #43A047;
+                                    color: white;
+                                    font-size: 12px;
+                                    text-align: center;
+                                    border-radius: 4px;
+                                }
+                            }
+                            .activities-actions {
+                                font-size: $xl;
+                                #delete-icon{
+                                    margin-right: 10px;
+                                }
+                                #comment-icon {
+                                    color: #2979FF;
+                                }
+                            }
+                        }
+                        .activities-title {
+                            color: $text-color-extreme-dark;
+                            font-size: $md;
+                            margin-top: 5px;
+                        }
+                        hr {
+                            border-top: 1px solid #E1E1E3;
+                        }
+                    }
+                }
             }
         }
-        .item-description {
+        .detail-view-right {
+            width: 30%;
             display: flex;
-            font-size: 18px;
-            color: #5A5B6A;
-            padding: 10px 15px;
-            .anticon-edit {
-                margin-left: 15px;
-                &:hover {
-                    color: $text-hover-color;
+            flex-direction: column;
+            .assigment-section {
+                .title {
+                    font-size: $md;
+                    color: $text-color-dark;
+                }
+                .owner-section {
+                    margin: 15px 15px 0px 15px;
+                    .owner-info-group {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-top: 10px;
+                        .owner-name {
+                            font-size: $lg;
+                            color: $text-color-extreme-dark;
+                            display: flex;
+                            align-items: center;
+                            font-weight: bold;
+                            span {
+                                margin-left: 10px;
+                            }
+                            img {
+                                border-radius: 100px;
+                                height: 40px;
+                                width: 40px;
+                            }
+                        }
+                        .transfer-btn {
+                            width: 120px;
+                            height: 26px;
+                            background-color: #40A9FF;
+                            color: white;
+                            font-size: 14px;
+                            border-radius: 100px;
+                            line-height: 25px;
+                            text-align: center;
+                            align-self: center;
+                        }
+                    } 
+                }
+                .participant-section {
+                    display: flex;
+                    flex-direction: column;
+                    margin: 15px 5px 0px 5px;
+                    .participant-header {
+                        display: flex;
+                        justify-content: space-between;
+                        .title {
+                            margin-left: 10px;
+                        }
+                        .participant-group-btn {
+                            color: #2979FF;
+                            font-size: 16px;
+                            span {
+                                margin-right: 10px;
+                            }
+                        }
+                    }
+                    .participant-info-group {
+                        margin-top: 10px;
+                        img {
+                            border-radius: 100px;
+                            height: 40px;
+                            width: 40px;
+                            margin-left: 10px;
+                        }
+                    }
+                }
+                .date-section {
+                    font-size: 16px;
+                    color: #5A5B6A;
+                    margin: 15px 15px 0 15px;
+                    .created-date {
+                        margin-top: 5px;
+                    }
+                }
+            }
+            .attachment-section {
+                .attachment-title {
+                    margin: 15px 15px 0 15px;
+                    span {
+                        height: 20px;
+                        position: relative;
+                        top: 10px;
+                        background-color: white;
+                        color: #2979FF;
+                    }
+                    .attachment-dash-line {
+                        border-top: 1px dashed #D2D2D6;
+                    }
+                }
+                .attachment-list {
+                    margin-top: 20px;
+                    .attachment-item {
+                        @include display-flex;
+                        padding: 5px 15px;
+                        &:hover {
+                            background-color: $background-hover-color;
+                            #delete-icon {
+                                font-size: $xl;
+                                display: block;
+                            }
+                        }
+                        span {
+                            color: #5A5B6A;
+                            font-size: 12px;
+                            margin-right: 10px
+                        }
+                        .anticon {
+                            font-size: $md;
+                        }
+                        .anticon-file-pdf {
+                            color: #FFB41F;
+                        }
+                        .anticon-file-image {
+                            color: #43A047;
+                        }
+                        .anticon-file-word {
+                            color: $text-hover-color;
+                        }
+                        #delete-icon {
+                            display: none;
+                        }
+                    }
                 }
             }
         }   
-        
     }
-}
-.detail-view {
-    display: flex;
-    justify-content: space-between;
-}
-.todo-list {
-    align-self: center;
-    display: flex;
-    flex-direction:column;
-    width: 95%;
-}
-.todo-list .dash-line {
-    border-top: 1px dashed #D2D2D6;
-    width: 100%;
-    color: #292A31;
-}
-.todo-title {
-    width: fit-content;
-    background-color: white;
-    font-size: 14px;
-    position: relative;
-    bottom: 10px;
-    align-self: center;
-}
-.todo-title i {
-    color: #787885;
-}
-.todo-item {
-    display: flex;
-    justify-content: space-between;
-    color: #787885;
-    font-size: 14px;
-    padding-bottom: 10px;
-}
-.todo-name span {
-    vertical-align: top;
-}
-#assignee-selection {
-    font-size: 15px;
-    color: #787885
-}
-#delete-icon {
-    color: #FF4D4F;
-    padding-left: 10px;
-    font-size: 18px;
-}
-.activities-section {
-    width: 95%;
-    align-self: center;
-    padding: 10px;
-}
-.heading {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-.heading span {
-    color: #787885;
-    font-size: 18px;
-    font-weight: bold;
-}
-.heading .filter {
-    color: #5A5B6A;
-    font-size: 14px;
-}
-.adding-activities-box {
-    display: flex;
-    flex-direction: column;
-    height: 54px;
-    box-shadow: 0px 0px 4px 0px #2979FF;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-.adding-action {
-    display: flex;
-    justify-content: space-between;
-    margin-inline: 15px;
-    margin-top: 5px;
-}
-.adding-action span{
-    font-size: 14px;
-    color: #2979FF;
-}
-.adding-action i {
-    font-size: 20px;
-}
-#emoji {
-    color: #787885;
-}
-#reply-icon {
-    color: #2979FF;
-}
-.adding-input {
-    border-style: none;
-    margin-inline: 15px;
-}
-.adding-input:focus {
-    outline: none;
-}
-.activities-item {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-}
-.activities-info {
-    display: flex;
-    justify-content: space-between;
-}
-.info-group {
-    display: flex;
-    align-items: center;
-}
-.info-group span {
-    margin-right: 15px;
-}
-
-.assignee {
-    font-size: 14px;
-    font-weight: bold;
-    color: #292A31;
-}
-.created-time {
-    font-style: italic;
-    color: #787885;
-    font-size: 12px;
-}
-.activities-tag {
-    height: 20px;
-    width: 100px;
-    background-color: #43A047;
-    color: white;
-    font-size: 12px;
-    text-align: center;
-    border-radius: 4px;
-}
-.activities-title {
-    color: #292A31;
-    font-size: 14px;
-    margin-top: 10px;
-}
-.activities-actions {
-    font-size: 18px;
-}
-#comment {
-    color: #2979FF;
-    padding-left: 10px;
-}
-.activities-item hr {
-    border-top: 1px solid #E1E1E3;
-}
-.detail-view-right {
-    display: flex;
-    flex-direction: column;
-}
-.owner-section {
-    margin-inline: 15px;
-    margin-top: 15px;
-}
-.owner-title {
-    font-size: 14px;
-    color: #787885;
-}
-.owner-info-group {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-.owner-name {
-    font-size: 18px;
-    color: #5A5B6A;
-    display: flex;
-    align-items: center;
-}
-.owner-name img {
-    border-radius: 100px;
-    height: 40px;
-    width: 40px;
-}
-.owner-name span {
-    margin-left: 10px;
-}
-.transfer-btn {
-    width: 120px;
-    height: 26px;
-    background-color: #40A9FF;
-    color: white;
-    font-size: 14px;
-    border-radius: 100px;
-    line-height: 25px;
-    text-align: center;
-    align-self: center;
-}
-.participant-section {
-    display: flex;
-    flex-direction: column;
-    margin-inline: 15px;
-    margin-top: 15px;
-}
-.participant-header {
-    display: flex;
-    justify-content: space-between;
-}
-.participant-info-group {
-    margin-top: 10px;
-}
-.participant-info-group img {
-    padding-right: 10px;
-}
-.participant-group-btn {
-    color: #2979FF;
-    font-size: 16px;
-}
-.date-section {
-    font-size: 16px;
-    color: #5A5B6A;
-    margin-inline: 15px;
-    margin-top: 15px;
-}
-.created-date {
-    margin-top: 5px;
-}
-.attachment-section {
-    margin-inline: 15px;
-    margin-top: 15px;
-}
-.attachment-title span {
-    height: 20px;
-    position: relative;
-    top: 8px;
-    background-color: white;
-    color: #2979FF;
-}
-.attachment-dash-line {
-    border-top: 1px dashed #D2D2D6;
-}
-.attachment-list {
-    margin-top: 20px;
-}
-.attachment-item {
-    display: flex;
-    padding-bottom: 10px;
-}
-.attachment-item span {
-    color: #5A5B6A;
-    font-size: 12px;
-    margin-right: 10px
-}
-.attachment-item i {
-    width: 15px;
-    height: 20px;
-    color: #FFB41F;
-    margin-right: 10px
-}
-.reference-section {
-    margin-inline: 15px;
 }
 @media (max-width: 1536px) {
     .work-detail {

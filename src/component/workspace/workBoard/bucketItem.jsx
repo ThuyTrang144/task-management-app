@@ -7,19 +7,21 @@ import '../workStream/styles.scss';
 class BucketItem extends React.Component {
     render() { 
         return ( 
-            <div key={this.props.index} className="bucket-item">
+            <div className="bucket-item" onClick={this.viewWorkDetailOfBucket}>
                 <div className="item-actions">
                     <Checkbox/>
                     <FontAwesomeIcon className='favourite-icon' icon={faStar}/>
                 </div>
                 <div className='bucket-item-card'>
                     <ItemCard 
+                        key={this.props.name} 
+                        index={this.props.index}
                         name={this.props.name} 
                         status={this.props.status} 
                         assignee={this.props.assignee} 
                         createdDate={this.props.createdDate} 
                         dueDate={this.props.dueDate}
-                        viewWorkDetail={this.props.viewWorkDetail}
+                        viewWorkDetailOfBucket={this.props.viewWorkDetailOfBucket}
                          />
                 </div>
             </div>

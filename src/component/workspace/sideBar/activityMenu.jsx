@@ -1,21 +1,16 @@
 import React from 'react';
-import {faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class ActivityMenu extends React.PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            menuItem: [
-                {icon: faArrowRight, name:"Incoming"}, 
-                {icon: faArrowLeft, name: "Outgoing"}
-            ]
+            activityMenu: this.props.activityMenu
         }
     }
     renderMenu() {
-        const { menuItem } = this.state
-        return menuItem.map((item, index) => 
-            <li className='item' key={index}>
+        return this.state.activityMenu.map(item => 
+            <li className='item' key={item.name}>
                 <FontAwesomeIcon className='item-icon' icon={item.icon}></FontAwesomeIcon>
                 <span className='item-name'>{item.name}</span>
             </li>
