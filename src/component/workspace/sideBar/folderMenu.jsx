@@ -7,16 +7,12 @@ class FolderMenu extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      menuItem: [
-        'Important Tasks',
-        'In Progress Tasks',
-        'Daily Checklist'
-      ]
+      folderMenu: this.props.folderMenu
     }
   }
   renderMenu() {
-    return this.state.menuItem.map((item, index) => 
-      <Menu.Item className='item' key={index}>{item}</Menu.Item>
+    return this.state.folderMenu.map(item => 
+      <Menu.Item className='item' key={item}>{item}</Menu.Item>
     )
   }
   render() {
@@ -25,7 +21,7 @@ class FolderMenu extends React.Component {
         <Menu 
         mode="inline"
         >          
-        <SubMenu title={<p className='folder-title'>FOlDERS</p>}>
+        <SubMenu key="SubMenu" title={<p className='folder-title'>FOlDERS</p>}>
           {this.renderMenu()}
           </SubMenu>
         </Menu>

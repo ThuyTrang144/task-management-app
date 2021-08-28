@@ -125,7 +125,7 @@
                         position: relative;
                         left: 10px;
                         &:hover {
-                            background: unset;
+                            background: unset !important;
                         }
                         .work-item-name {
                             &:hover {

@@ -8,10 +8,14 @@ class SideBar extends React.PureComponent {
     render() { 
         return ( 
             <div className="sidebar">
-                <WorkItemMenu />
-                <ActivityMenu />
-                <FolderMenu />
-                <Filter />
+                <WorkItemMenu workItemMenu={this.props.workItemMenu}/>
+                <ActivityMenu activityMenu={this.props.activityMenu}/>
+                <FolderMenu folderMenu={this.props.folderMenu}/>
+                <Filter 
+                    assignee={this.props.assignee} 
+                    tag={this.props.tag} 
+                    status={this.props.status}
+                    importanceLevel={this.props.importanceLevel}/>
             </div>
          );
     }
