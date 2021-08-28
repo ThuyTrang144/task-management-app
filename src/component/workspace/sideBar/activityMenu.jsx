@@ -10,18 +10,18 @@ class ActivityMenu extends React.PureComponent {
                     <span className='item-name'>{item.name}</span>
                 </li>
             )
-        )
+        );
     }
-    render() { 
-        return ( 
+    render() {
+        return (
             <div className="menu-section">
                 <p className="menu-title">ACTIVITIES</p>
-                <ul className="work-item-list">        
+                <ul className="work-item-list">
                     {this.renderMenu()}
                 </ul>
             </div>
-         );
+        );
     }
 }
- 
+
 export default ActivityMenu;

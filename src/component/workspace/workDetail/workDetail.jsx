@@ -18,7 +18,7 @@ class WorkDetail extends React.PureComponent {
             isEditDes: false,
             isOpen: false,
             todoValue: ''
-         }
+        };
     }
     openEditView = () => {
         if (this.state.isEditDes) {
@@ -42,17 +42,17 @@ class WorkDetail extends React.PureComponent {
         }
     }
     renderTodoList() {
-        return this.props.todoList.map((item, index) => 
-            <Todo 
-                key={item.name} 
-                index={index} 
-                name={item.name} 
+        return this.props.todoList.map((item, index) =>
+            <Todo
+                key={item.name}
+                index={index}
+                name={item.name}
                 assignee={item.assignee}
                 deleteTodo={this.deleteTodo}
-                />
-        )
+            />
+        );
     }
-    openTodo = () => {        
+    openTodo = () => {
         if (this.state.isOpen) {
             this.setState({ isOpen: false});
         } else {
@@ -60,10 +60,10 @@ class WorkDetail extends React.PureComponent {
         }
     }
     addNewTodo = (text) => {
-            const { todoList } = this.props;
-            todoList.push({name: text, assignee:''});
-            this.setState({ todoList: [...todoList] });
-            this.setState( {todoValue: ''})
+        const { todoList } = this.props;
+        todoList.push({name: text, assignee:''});
+        this.setState({ todoList: [...todoList] });
+        this.setState( {todoValue: ''});
     }
     onKeyPress = (e) => {
         if (e.charCode === 13) {
@@ -73,21 +73,21 @@ class WorkDetail extends React.PureComponent {
     deleteTodo = (index) => {
         const { todoList } = this.props;
         todoList.splice(index, 1);
-        this.setState({ todoList: [...todoList] })
+        this.setState({ todoList: [...todoList] });
     }
-    render() { 
-        return ( 
+    render() {
+        return (
             <div id="work-detail-board" className="work-detail">
                 <WorkDetailHeader backToBucketBoard={this.props.backToBucketBoard} workDetailHeaderTitle={this.props.workDetailHeaderTitle}/>
                 <div className='detail-view'>
                     <div className='detail-view-left'>
                         <TagList />
                         <div className="item-description">
-                            {this.state.isEditDes ? 
-                            <Input 
-                                value={this.state.description} 
-                                onChange={this.onChange} 
-                                onKeyPress={this.onKeyPress}/> : 
+                            {this.state.isEditDes ?
+                                <Input
+                                    value={this.state.description}
+                                    onChange={this.onChange}
+                                    onKeyPress={this.onKeyPress}/> :
                                 <p>{this.state.description}<EditOutlined onClick={this.openEditView}/></p>}
                         </div>
                         <div className="todo-list">
@@ -98,11 +98,11 @@ class WorkDetail extends React.PureComponent {
                             </div>
                             <div style={this.state.isOpen ? {display:'block'} : {display:'none'}}>
                                 {this.renderTodoList()}
-                                <Input 
-                                    type='text' 
-                                    placeholder='Add new todo here' 
-                                    onChange={(e) => this.setState({ todoValue: e.target.value })} 
-                                    value={this.state.todoValue} 
+                                <Input
+                                    type='text'
+                                    placeholder='Add new todo here'
+                                    onChange={(e) => this.setState({ todoValue: e.target.value })}
+                                    value={this.state.todoValue}
                                     onKeyPress={this.onKeyPress}/>
                             </div>
                         </div>
@@ -112,10 +112,10 @@ class WorkDetail extends React.PureComponent {
                         <AssignmentSection owner={this.props.owner} participant={this.props.participant}/>
                         <Attachment attachmentList={this.props.attachmentList}/>
                     </div>
-                </div>        
+                </div>
             </div>
-         );
+        );
     }
 }
- 
+
 export default WorkDetail;

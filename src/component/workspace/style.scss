@@ -1,7 +1,6 @@
-@import '.././colors.scss';
 body {
     margin: 0;
-    background-color: $body-background-color;;
+    background-color: var(--body-background-color);
 }
 .workspace {
     height: 1080px;

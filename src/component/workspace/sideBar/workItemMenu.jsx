@@ -8,18 +8,18 @@ class WorkItemMenu extends React.PureComponent {
                 <FontAwesomeIcon className='item-icon' icon={item.icon}></FontAwesomeIcon>
                 <span className='item-name'>{item.name}</span>
             </li>
-        )
+        );
     }
-    render() { 
-        return ( 
+    render() {
+        return (
             <div className="menu-section">
                 <p className="menu-title">WORK ITEM</p>
-                <ul className="work-item-list">        
+                <ul className="work-item-list">
                     {this.renderMenu()}
                 </ul>
             </div>
-         );
+        );
     }
 }
- 
+
 export default WorkItemMenu;

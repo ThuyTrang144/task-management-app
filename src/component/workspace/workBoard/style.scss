@@ -1,15 +1,14 @@
-@import '../.././font-size.scss';
-@import '../.././colors.scss';
-@import '../../mixin.scss';
+@import "../../../style/mixin.scss";
 .bucket-board {
     width: 1180px;
     .bucket-actions {
         @include display-flex;
+
         margin: 15px 15px 0px 15px;
         .search-box {
             width: 560px;
             height: 40px;
-            border-radius: 100px; 
+            border-radius: 100px;
             border: 1px solid #D2D2D6;
             background-color: white;
             display: flex;
@@ -37,12 +36,12 @@
             @include display-flex;
             .ant-select.bucket-selector {
                 width: 162px;
-                height: 40px;  
+                height: 40px;
                 margin-right: 20px;
                 @include display-flex;
-                border: 1px solid #D2D2D6;    
-                border-radius: 100px; 
-                background-color: $header-background-color;
+                border: 1px solid #D2D2D6;
+                border-radius: 100px;
+                background-color: var(--header-background-color);
                 .ant-select-selector {
                     background-color: unset;
                     border-style: unset;
@@ -64,7 +63,7 @@
                     margin-right: 10px;
                 }
             }
-        }   
+        }
     }
     .bucket-listing {
         width: 100%;
@@ -92,7 +91,7 @@
                     font-size: 30px;
                     color: #787885;
                     .bucket-icon {
-                        font-size: $three-xl;
+                        font-size: var(--three-xl);
                         margin-right: 10px;
                     }
                 }
@@ -132,9 +131,9 @@
                                 color: #2979FF;
                             }
                         }
-                    }   
+                    }
                 }
-                             
+
             }
         }
     }

@@ -4,10 +4,10 @@ import Checkbox from 'antd/lib/checkbox/Checkbox';
 
 class Todo extends React.Component {
     deleteTodo = () => {
-        this.props.deleteTodo(this.props.index)
+        this.props.deleteTodo(this.props.index);
     }
-    render() { 
-        return ( 
+    render() {
+        return (
             <div className="todo-item">
                 <div>
                     <Checkbox />
@@ -21,13 +21,13 @@ class Todo extends React.Component {
                     <DeleteOutlined id="delete-icon" onClick={this.deleteTodo}/>
                 </div>
             </div>
-         );
+        );
     }
 }
- 
+
 export default Todo;
 
-// 
+//
 
 // const text = `
 //   A dog is a type of domesticated animal.

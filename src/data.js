@@ -1,5 +1,5 @@
 import { FilePdfOutlined, FileWordOutlined, FileImageOutlined } from '@ant-design/icons';
-import {faTasks, faUser, faUsers, faArchive, faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import {faTasks, faUser, faUsers, faArchive, faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const DATA = {
     channelList: [
@@ -249,14 +249,14 @@ const DATA = {
         },
     ],
     workItemMenu: [
-        { icon: faTasks, name:"Work Stream" }, 
-        { icon: faUser, name: "Owned Works" }, 
-        { icon: faUsers, name: "Participated Works" }, 
-        { icon: faArchive, name: "Archived Works" }
+        { icon: faTasks, name:'Work Stream' }, 
+        { icon: faUser, name: 'Owned Works' }, 
+        { icon: faUsers, name: 'Participated Works' }, 
+        { icon: faArchive, name: 'Archived Works' }
     ],
     activityMenu: [
-        { icon: faArrowRight, name:"Incoming" }, 
-        { icon: faArrowLeft, name: "Outgoing" } 
+        { icon: faArrowRight, name:'Incoming' }, 
+        { icon: faArrowLeft, name: 'Outgoing' } 
     ],
     isViewDetail: false,
     isWorkStream: false,
@@ -272,7 +272,7 @@ const DATA = {
     //     {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
     //     {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
     // ]
-}
+};
 
 function findStatusById(id) {
     return DATA.status.find(element => element.id === id);
@@ -295,4 +295,4 @@ function findParticipantsById(id) {
 function findTagsById(id) {
     return DATA.tagList.filter(element => element.id === id);
 }
-export {DATA, findStatusById, findChannelById, findOwnerById}
+export {DATA, findStatusById, findChannelById, findOwnerById};

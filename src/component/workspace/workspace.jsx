@@ -1,7 +1,7 @@
 import React from 'react';
 import SideBar from './sideBar/sideBar';
 import { FilePdfOutlined, FileWordOutlined, FileImageOutlined } from '@ant-design/icons';
-import './style.scss'
+import './style.scss';
 import BucketList from './workBoard/bucketList';
 import WorkDetail from './workDetail/workDetail';
 import WorkStream from './workStream/workStream';
@@ -9,7 +9,7 @@ import WorkStream from './workStream/workStream';
 class WorkSpace  extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.state = this.props.DATA
+        this.state = this.props.DATA;
     }
     // viewWorkDetailOfWorkStream = (keyIndex) => {
     // this.state.workItemList.map((item, index) => {
@@ -43,15 +43,15 @@ class WorkSpace  extends React.PureComponent {
                     tagList={this.state.tagList}
                     status={this.state.status}
                     importanceLevel={this.state.importanceLevel}
-                    />
-                <WorkStream 
+                />
+                <WorkStream
                     workItemList={this.state.workItemList}
                     // viewWorkDetailOfWorkStream={this.viewWorkDetailOfWorkStream}
                     // isViewDetail={this.state.isViewDetail}
                     // setSelectedItem={this.state.setSelectedItem}
                     // isWorkStream={this.state.isWorkStream}
                 />
-                    {/* {this.state.isViewDetail ? <BucketList 
+                {/* {this.state.isViewDetail ? <BucketList 
                         viewWorkDetailOfBucket={this.viewWorkDetailOfBucket} 
                         bucketList={this.state.bucketList}
                         bucketItemList={this.state.bucketItemList}
@@ -66,7 +66,7 @@ class WorkSpace  extends React.PureComponent {
                         backToBucketBoard={this.backToBucketBoard} /> 
                         
                     } */}
-                    {/* {this.state.isViewDetail ? 
+                {/* {this.state.isViewDetail ? 
                         <WorkDetail  
                             attachmentList={this.state.attachmentList}
                             owner={this.state.owner}
@@ -75,16 +75,16 @@ class WorkSpace  extends React.PureComponent {
                             todoList={this.state.todoList}
                             workDetailHeaderTitle={this.state.workDetailHeaderTitle}
                             backToBucketBoard={this.backToBucketBoard} /> :
-                        <BucketList 
-                            viewWorkDetailOfBucket={this.viewWorkDetailOfBucket} 
+                        <BucketList
+                            viewWorkDetailOfBucket={this.viewWorkDetailOfBucket}
                             bucketList={this.state.bucketList}
                             bucketItemList={this.state.bucketItemList}
                             isWorkStream={this.state.isWorkStream}
                             />
                     } */}
             </div>
-         );
+        );
     }
 }
- 
+
 export default WorkSpace ;

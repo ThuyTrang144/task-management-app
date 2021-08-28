@@ -9,7 +9,7 @@ class ActivitiesList extends React.PureComponent {
         this.state = { 
             activitiesList: this.props.activitiesList,
             newActivity: ''
-         }
+        };
     }
     renderActivities() {
         return this.state.activitiesList.map((item, index) => 
@@ -17,30 +17,30 @@ class ActivitiesList extends React.PureComponent {
                 key={item.name} 
                 index={index} 
                 name={item.name}
-                assignee={item.assignee} 
-                createdTime={item.createdTime} 
+                assignee={item.assignee}
+                createdTime={item.createdTime}
                 label={item.label}>
             </Activity> )
-        )
+        );
     }
     addNewActivity = (text) => {
-        const { activitiesList } = this.state
-        activitiesList.splice(0, 0, {name: text, assignee: 'Trang Nguyen', createdTime: <Moment fromNow>{new Date().toLocaleString() + ""}</Moment>, label: 'User'  });
+        const { activitiesList } = this.state;
+        activitiesList.splice(0, 0, {name: text, assignee: 'Trang Nguyen', createdTime: <Moment fromNow>{new Date().toLocaleString() + ''}</Moment>, label: 'User'  });
         this.setState({ activitiesList: [...activitiesList] });
-        console.log('im here')
+        console.log('im here');
     }
     onChange = (e) => {
         const newActivity = e.target.value;
-        this.setState({ newActivity })
+        this.setState({ newActivity });
     }
     onKeyPress = (e) => {
         if (e.charCode === 13) {
-            this.addNewActivity(this.state.newActivity)
+            this.addNewActivity(this.state.newActivity);
         }
     }
     render() { 
         return ( 
-             <div className="activities-section">
+            <div className="activities-section">
                 <div className="heading">
                     <span className='title'>Activities</span>
                     <div className="filter">
@@ -56,12 +56,12 @@ class ActivitiesList extends React.PureComponent {
                     </div>
                     <input className="adding-input" type="text" placeholder='Add new activity here' onChange={this.onChange} value={this.state.newActivity} onKeyPress={this.onKeyPress}></input>
                 </div>
-                <div className="activities-list"> 
+                <div className="activities-list">
                     {this.renderActivities()}
                 </div>
             </div>
-            );
+        );
     }
 }
- 
+
 export default ActivitiesList;

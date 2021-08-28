@@ -1,35 +1,35 @@
 import React from 'react';
 import { Select } from 'antd';
 const { Option } = Select;
+
 class ChannelSelector extends React.PureComponent {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             value: this.props.channelList[0].name
-        }
+        };
     }
     onChange = (option) => {
-        const value = option
-        this.setState({ value })
+        const value = option;
+        this.setState({ value });
     }
     rederChannelName() {
         return this.props.channelList.map(item => {
-            return <Option key={item.id} value={item.name}>{item.name}</Option>
-        })
+            return <Option key={item.id} value={item.name}>{item.name}</Option>;
+        });
     }
-    render() { 
+    render() {
         return (
-            <Select 
-                id='selector'
-                className='channel-selector' 
-                defaultValue={"Channel: " + this.props.channelList[0].name.toLocaleUpperCase()} 
+            <Select
+                className='channel-selector'
+                defaultValue={'Channel: ' + this.props.channelList[0].name.toLocaleUpperCase()}
                 onChange={this.onChange}
-                value={"Channel: " + this.state.value.toLocaleUpperCase()}   
-                >
+                value={'Channel: ' + this.state.value.toLocaleUpperCase()}
+            >
                 {this.rederChannelName()}
-            </Select> 
-         );
+            </Select>
+        );
     }
 }
- 
+
 export default ChannelSelector;

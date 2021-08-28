@@ -7,11 +7,11 @@ class ItemCard extends React.Component {
         if (this.props.viewWorkDetailOfWorkStream) {
             this.props.viewWorkDetailOfWorkStream(this.props.index);
             this.props.changeSelectedStatus(this.props.index);
-            this.setState( {isWorkStream: true})
+            this.setState( {isWorkStream: true});
         }
         if (this.props.viewWorkDetailOfBucket) {
             this.props.viewWorkDetailOfBucket(this.props.index);
-            this.setState( {isWorkStream: false})
+            this.setState( {isWorkStream: false});
         }
     }
     render() { 
@@ -19,7 +19,7 @@ class ItemCard extends React.Component {
             <div className='item-card'  
                 onClick={this.viewWorkDetail}
                 style={(this.props.isSelected && this.props.isViewDetail && this.props.isWorkStream) ? {backgroundColor: '#CEE5FF'} : {backgroundColor: 'unset'}} 
-                >
+            >
                 <div className="item-title">
                     <span 
                         className="work-item-name" 
@@ -40,8 +40,8 @@ class ItemCard extends React.Component {
                     </div>
                 </div>
             </div>
-         );
+        );
     }
 }
- 
+
 export default ItemCard;
