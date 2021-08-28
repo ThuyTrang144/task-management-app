@@ -22,9 +22,7 @@ class ChannelSelector extends React.PureComponent {
     rederChannelName() {
         return this.state.channelName.map((item, index) => (
             <Option key={index} value={item}>{item}</Option>
-        )
-
-        );
+        ));
     }
     render() {
         return (
