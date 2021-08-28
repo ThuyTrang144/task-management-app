@@ -14,7 +14,7 @@ class WorkDetail extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = { 
-            description: 'This is a work item',
+            workItemList: this.props.workItemList,
             isEditDes: false,
             isOpen: false,
             todoValue: ''
@@ -31,10 +31,10 @@ class WorkDetail extends React.PureComponent {
         const description = e.target.value;
         this.setState({ description });
     }
-    editDescription = (text) => {
-        this.setState( { description: text });
-        return this.state.description;
-    }
+    // editDescription = (text) => {
+    //     this.setState( { description: text });
+    //     return this.state.description;
+    // }
     onKeyPress = (e) => {
         if (e.charCode === 13) {
             this.editDescription(this.state.description);

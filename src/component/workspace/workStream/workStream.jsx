@@ -2,6 +2,7 @@ import React from 'react';
 import AddingBox from './addingBox';
 import ItemCard from './itemCard';
 import './styles.scss';
+import { findStatusById, findChannelById, findOwnerById } from '../../../data';
 class WorkStream extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -17,32 +18,40 @@ class WorkStream extends React.PureComponent {
         if (searchResult.length === 0 && searchValue.length !== 0) {
             return <p className="search-result">There is no work item match with your search. Please add a new one.</p>
         }
-        return newList.map((item, index) => 
-            <ItemCard 
-                key={item.name} 
-                index={index}
-                name={item.name} 
-                status={item.status} 
-                assignee={item.assignee} 
-                createdDate={item.createdDate} 
-                dueDate={item.dueDate} 
-                isSelected={item.isSelected}
-                viewWorkDetailOfWorkStream={this.props.viewWorkDetailOfWorkStream}
-                isViewDetail={this.props.isViewDetail}
-                changeSelectedStatus={this.changeSelectedStatus}
-            />
-        )
+        return newList.map((item, index) => {
+            const statusItem = findStatusById(item.statusId);
+            const channel = findChannelById(item.channelId);
+            const owner = findOwnerById(item.ownerId);
+            return <ItemCard 
+                        key={item.id} 
+                        index={index}
+                        name={item.name} 
+                        channelName={channel.name}
+                        status={statusItem.name} 
+                        owner={owner.name} 
+                        createdDate={item.createdDate} 
+                        dueDate={item.dueDate} 
+                        // viewWorkDetailOfWorkStream={this.props.viewWorkDetailOfWorkStream}
+                        // isViewDetail={this.props.isViewDetail}
+                        // changeSelectedStatus={this.changeSelectedStatus}
+                        // isWorkStream={this.props.isWorkStream}
+                    />
+                }
+     
+            )
     }
     changeSelectedStatus = (keyIndex) => {
         const newList = this.state.workItemList.map((item, index) => {
             if (keyIndex === index) {
                 item = {...item, isSelected: true}
+                console.log('is Selected', this.props.workItemList[0].isSelected);
             } else  {
                 item = {...item, isSelected: false}
             }
             return item
         })
         this.setState({workItemList: newList})    
+        console.log('newList', newList);
     }
     addWorkItem = (text) => {
         const { workItemList } = this.state;

@@ -2,15 +2,17 @@ import Checkbox from 'antd/lib/checkbox/Checkbox';
 import React from 'react';
 import Activity from './activity';
 import { SmileOutlined } from '@ant-design/icons';
+import Moment from 'react-moment';
 class ActivitiesList extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = { 
-            
+            activitiesList: this.props.activitiesList,
+            newActivity: ''
          }
     }
     renderActivities() {
-        return this.props.activitiesList.map((item, index) => 
+        return this.state.activitiesList.map((item, index) => 
             (<Activity 
                 key={item.name} 
                 index={index} 
@@ -20,6 +22,21 @@ class ActivitiesList extends React.PureComponent {
                 label={item.label}>
             </Activity> )
         )
+    }
+    addNewActivity = (text) => {
+        const { activitiesList } = this.state
+        activitiesList.splice(0, 0, {name: text, assignee: 'Trang Nguyen', createdTime: <Moment fromNow>{new Date().toLocaleString() + ""}</Moment>, label: 'User'  });
+        this.setState({ activitiesList: [...activitiesList] });
+        console.log('im here')
+    }
+    onChange = (e) => {
+        const newActivity = e.target.value;
+        this.setState({ newActivity })
+    }
+    onKeyPress = (e) => {
+        if (e.charCode === 13) {
+            this.addNewActivity(this.state.newActivity)
+        }
     }
     render() { 
         return ( 
@@ -37,7 +54,7 @@ class ActivitiesList extends React.PureComponent {
                         <span>New Activities</span>
                         <SmileOutlined id='emoji-icon'/>
                     </div>
-                    <input className="adding-input" type="text" placeholder='Add new activity here'></input>
+                    <input className="adding-input" type="text" placeholder='Add new activity here' onChange={this.onChange} value={this.state.newActivity} onKeyPress={this.onKeyPress}></input>
                 </div>
                 <div className="activities-list"> 
                     {this.renderActivities()}

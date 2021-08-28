@@ -6,23 +6,12 @@ import UserInfo from './userInfo';
 import Notification from './notification';
 
 class Header extends React.PureComponent {
-    constructor(props) {
-        super(props)
-        this.state = {
-            channelName: [
-                'Personal',
-                'Public',
-                'Reading',
-                'Learning Languages'
-            ]
-        }
-    }
     render() { 
         return ( 
             <div className='header'>
                 <div className='left'>
                     <Logo />
-                    <ChannelSelector />
+                    <ChannelSelector channelList={this.props.channelList}/>
                 </div> 
                 <div className='right'>  
                     <Notification />

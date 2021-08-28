@@ -7,13 +7,11 @@
     background-color: white;
     margin: 15px;
     width: 1150px;
+    border-radius: 4px 4px 0 0;
     .work-item-header {
         height: 62px;
         @include display-flex;
-        box-shadow: 0px 1px 4px 0px $shadow-color-dark;
-        border-radius: 4px 4px 0px 0px;
-        position: relative;
-        z-index: 1;
+        border-bottom: 1px solid $border-color-light;
         .work-item-title {
             margin-left: 15px;   
             font-size: $two-xl;
@@ -181,11 +179,14 @@
                     bottom: 10px;
                     align-self: center;
                     .anticon-up {
+                        cursor: pointer;
                         margin-left: 5px;
                         font-size: 15px;
                         color: #787885
+
                     }
                     .anticon-down {
+                        cursor: pointer;
                         margin-left: 5px;
                         font-size: 15px;
                         color: #787885

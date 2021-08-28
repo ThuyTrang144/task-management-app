@@ -20,6 +20,7 @@ class Bucket extends React.Component {
                     createdDate={item.createdDate} 
                     dueDate={item.dueDate}
                     viewWorkDetailOfBucket={this.props.viewWorkDetailOfBucket}
+                    isWorkStream={this.props.isWorkStream}
                     />
          
         )

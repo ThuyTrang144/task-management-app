@@ -13,7 +13,7 @@ class SideBar extends React.PureComponent {
                 <FolderMenu folderMenu={this.props.folderMenu}/>
                 <Filter 
                     assignee={this.props.assignee} 
-                    tag={this.props.tag} 
+                    tagList={this.props.tagList} 
                     status={this.props.status}
                     importanceLevel={this.props.importanceLevel}/>
             </div>

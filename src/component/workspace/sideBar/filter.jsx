@@ -6,22 +6,30 @@ const { Option } = Select;
 class Filter extends React.PureComponent {
     renderAssignee() {
         return this.props.assignee.map(item => 
-            <Option className='selector-input' key={item} value={item}>{item}</Option>
+            (
+                <Option className='selector-input' key={item.id} value={item.name}>{item.name}</Option>
+            )
         )
     }
     renderTags() {
-        return this.props.tag.map(item => 
-            <Option className='selector-input' key={item} value={item}>{item}</Option>
+        return this.props.tagList.map(item => 
+            (
+                <Option className='selector-input' key={item.id} value={item.name}>{item.name}</Option>
+            )
         )
     }
     renderStatus() {
         return this.props.status.map(item => 
-            <Checkbox key={item} >{item}</Checkbox>
+            (
+                <Checkbox key={item.id} >{item.name}</Checkbox>
+            )
         )
     }
     renderImportanceLevel() {
         return this.props.importanceLevel.map(item => 
-            <Checkbox key={item}>{item}</Checkbox>
+            (
+                <Checkbox key={item.id}>{item.name}</Checkbox>
+            )
         )
     }
     render() { 

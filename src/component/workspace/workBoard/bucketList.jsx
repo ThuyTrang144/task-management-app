@@ -27,6 +27,7 @@ class BucketList extends React.PureComponent {
                 <Bucket  
                     bucketItemList={this.props.bucketItemList}
                     viewWorkDetailOfBucket={this.props.viewWorkDetailOfBucket}
+                    isWorkStream={this.props.isWorkStream}
                     />
             </div>
         )
