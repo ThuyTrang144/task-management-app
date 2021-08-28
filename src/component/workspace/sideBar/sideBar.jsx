@@ -11,9 +11,9 @@ class SideBar extends React.PureComponent {
                 <WorkItemMenu workItemMenu={this.props.workItemMenu}/>
                 <ActivityMenu activityMenu={this.props.activityMenu}/>
                 <FolderMenu folderMenu={this.props.folderMenu}/>
-                <Filter
-                    assignee={this.props.assignee}
-                    tag={this.props.tag}
+                <Filter 
+                    assignee={this.props.assignee} 
+                    tagList={this.props.tagList} 
                     status={this.props.status}
                     importanceLevel={this.props.importanceLevel}/>
             </div>

@@ -9,19 +9,20 @@ class Bucket extends React.Component {
     }
     renderItemList() {
         const { bucketItemList } = this.state;
-        return bucketItemList.map((item, index) =>
-            <BucketItem
+        return bucketItemList.map((item, index) => 
+            <BucketItem  
                 className='bucket-item-card'
-                key={item.name}
+                key={item.name} 
                 index={index}
-                name={item.name}
-                status={item.status}
-                assignee={item.assignee}
-                createdDate={item.createdDate}
+                name={item.name} 
+                status={item.status} 
+                assignee={item.assignee} 
+                createdDate={item.createdDate} 
                 dueDate={item.dueDate}
                 viewWorkDetailOfBucket={this.props.viewWorkDetailOfBucket}
+                isWorkStream={this.props.isWorkStream}
             />
-
+         
         );
     }
     render() {
