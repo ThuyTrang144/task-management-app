@@ -4,11 +4,11 @@ class AssignmentSection extends React.PureComponent {
     renderParticipant() {
         return this.props.participant.map((item, index) => (
             <img key={item.name} index={index} src={item.avatar}></img>
-        ))
+        ));
     }
-    render() { 
+    render() {
         const { owner, participant } = this.props;
-        return ( 
+        return (
             <div className='assigment-section'>
                 <div className="owner-section">
                     <span className="title">OWNER</span><br></br>
@@ -24,7 +24,7 @@ class AssignmentSection extends React.PureComponent {
                     <div className="participant-header">
                         <span className="title">PARTICIPANTS ({participant.length})</span>
                         <div className="participant-group-btn">
-                            <span>Leave</span> 
+                            <span>Leave</span>
                             <span>|</span>
                             <span>Edit</span>
                         </div>
@@ -40,8 +40,8 @@ class AssignmentSection extends React.PureComponent {
                     </div>
                 </div>
             </div>
-         );
+        );
     }
 }
- 
+
 export default AssignmentSection;

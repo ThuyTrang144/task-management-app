@@ -3,8 +3,8 @@ import { Select } from 'antd';
 import React from 'react';
 const { Option } = Select;
 class WorkDetailHeader extends React.Component {
-    render() { 
-        return ( 
+    render() {
+        return (
             <div className="work-item-header">
                 <div className="work-item-title">
                     <LeftOutlined onClick={this.props.backToBucketBoard} className='back-icon'/>
@@ -30,22 +30,22 @@ class WorkDetailHeader extends React.Component {
                     <h2 className="vertical-line"></h2>
                     <div className="group-btn">
                         <button className="btn-action mark-done">
-                        <CheckOutlined />
+                            <CheckOutlined />
                         </button>
                         <button className="btn-action change-privacy">
-                        <GlobalOutlined />
+                            <GlobalOutlined />
                         </button>
                         <button className="btn-action edit-work-item">
-                        <EditOutlined />
+                            <EditOutlined />
                         </button>
                         <button className="btn-action menu-action">
-                        <MenuOutlined />
+                            <MenuOutlined />
                         </button>
                     </div>
                 </div>
             </div>
-         );
+        );
     }
 }
- 
+
 export default WorkDetailHeader;

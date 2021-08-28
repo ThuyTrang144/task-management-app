@@ -1,30 +1,30 @@
 import React from 'react';
 import SideBar from './sideBar/sideBar';
-import './style.scss'
+import './style.scss';
 import BucketList from './workBoard/bucketList';
 import WorkDetail from './workDetail/workDetail';
 import WorkStream from './workStream/workStream';
 import { FilePdfOutlined, FileWordOutlined, FileImageOutlined } from '@ant-design/icons';
-import {faTasks, faUser, faUsers, faArchive, faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import {faTasks, faUser, faUsers, faArchive, faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 class WorkSpace  extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             workItemMenu: [
-                {icon: faTasks, name:"Work Stream"}, 
-                {icon: faUser, name: "Owned Works"}, 
-                {icon: faUsers, name: "Participated Works"}, 
-                {icon: faArchive, name: "Archived Works"}
+                {icon: faTasks, name:'Work Stream'},
+                {icon: faUser, name: 'Owned Works'},
+                {icon: faUsers, name: 'Participated Works'},
+                {icon: faArchive, name: 'Archived Works'}
             ],
             activityMenu: [
-                {icon: faArrowRight, name:"Incoming"}, 
-                {icon: faArrowLeft, name: "Outgoing"} 
+                {icon: faArrowRight, name:'Incoming'},
+                {icon: faArrowLeft, name: 'Outgoing'}
             ],
             folderMenu: [
                 'Important Tasks',
                 'In Progress Tasks',
                 'Daily Checklist'
-              ],
+            ],
             assignee: [
                 'Anros Nguyen',
                 'Trang Nguyen',
@@ -43,8 +43,8 @@ class WorkSpace  extends React.PureComponent {
             ],
             importanceLevel: [
                 'Urgent',
-                'High', 
-                'Normal', 
+                'High',
+                'Normal',
                 'Low',
             ],
             workItemList: [
@@ -80,7 +80,7 @@ class WorkSpace  extends React.PureComponent {
                 {name: 'Listening', assignee: 'Trang Nguyen'},
                 {name: 'Reading', assignee: 'Trang Nguyen'},
                 {name: 'Speaking', assignee: 'Trang Nguyen'}
-            ], 
+            ],
             activitiesList: [
                 {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
                 {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
@@ -90,7 +90,7 @@ class WorkSpace  extends React.PureComponent {
             ],
             owner: [
                 {name: 'Trang Nguyen', avatar: 'https://yolo.vn/wp-content/uploads/2019/08/hinh-anh-cho-pomsky-dep-45.jpg'}
-            ], 
+            ],
             participant: [
                 {name: 'Thien Huynh', avatar: 'https://vcdn-vnexpress.vnecdn.net/2020/09/23/01-4451-1600828895.jpg'},
                 {name: 'Mai Thao', avatar: 'https://dogily.vn/wp-content/uploads/2019/09/Chu-cho-Anuko-noi-tieng-tren-mang-xa-hoi.jpg'},
@@ -103,62 +103,62 @@ class WorkSpace  extends React.PureComponent {
                 {name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
                 {name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
             ]
-        }
+        };
     }
     viewWorkDetailOfWorkStream = (keyIndex) => {
         this.state.workItemList.map((item, index) => {
             if (keyIndex === index) {
-                this.setState({ workDetailHeaderTitle: item.name})
+                this.setState({ workDetailHeaderTitle: item.name});
             }
-        })
-        this.setState( { isViewDetail: true })
+        });
+        this.setState( { isViewDetail: true });
     }
     viewWorkDetailOfBucket = (keyIndex) => {
         this.state.bucketItemList.map((item, index) => {
             if (keyIndex === index) {
-                this.setState({ workDetailHeaderTitle: item.name})
+                this.setState({ workDetailHeaderTitle: item.name});
             }
-        console.log('title', this.state.workDetailHeaderTitle)
-        })
-        this.setState({ isViewDetail: true })
+            console.log('title', this.state.workDetailHeaderTitle);
+        });
+        this.setState({ isViewDetail: true });
     }
     backToBucketBoard = () => {
-        this.setState({ isViewDetail: false})
+        this.setState({ isViewDetail: false});
     }
-    render() { 
-        return ( 
+    render() {
+        return (
             <div className='workspace'>
-                <SideBar 
-                    workItemMenu={this.state.workItemMenu} 
-                    activityMenu={this.state.activityMenu} 
+                <SideBar
+                    workItemMenu={this.state.workItemMenu}
+                    activityMenu={this.state.activityMenu}
                     folderMenu={this.state.folderMenu}
                     assignee={this.state.assignee}
                     tag={this.state.tag}
                     status={this.state.status}
                     importanceLevel={this.state.importanceLevel}
-                    />
-                <WorkStream 
+                />
+                <WorkStream
                     workItemList={this.state.workItemList}
                     viewWorkDetailOfWorkStream={this.viewWorkDetailOfWorkStream}
                     isViewDetail={this.state.isViewDetail}
-                    />
-                    {this.state.isViewDetail ? <BucketList 
-                        viewWorkDetailOfBucket={this.viewWorkDetailOfBucket} 
-                        bucketList={this.state.bucketList}
-                        bucketItemList={this.state.bucketItemList}
-                        />: 
-                        <WorkDetail  
+                />
+                {this.state.isViewDetail ? <BucketList
+                    viewWorkDetailOfBucket={this.viewWorkDetailOfBucket}
+                    bucketList={this.state.bucketList}
+                    bucketItemList={this.state.bucketItemList}
+                />:
+                    <WorkDetail
                         attachmentList={this.state.attachmentList}
                         owner={this.state.owner}
                         participant={this.state.participant}
                         activitiesList={this.state.activitiesList}
                         todoList={this.state.todoList}
                         workDetailHeaderTitle={this.state.workDetailHeaderTitle}
-                        backToBucketBoard={this.backToBucketBoard} /> 
-                        
-                    }
-                    {/* {this.state.isViewDetail ? 
-                        <WorkDetail  
+                        backToBucketBoard={this.backToBucketBoard} />
+
+                }
+                {/* {this.state.isViewDetail ?
+                        <WorkDetail
                             attachmentList={this.state.attachmentList}
                             owner={this.state.owner}
                             participant={this.state.participant}
@@ -166,15 +166,15 @@ class WorkSpace  extends React.PureComponent {
                             todoList={this.state.todoList}
                             workDetailHeaderTitle={this.state.workDetailHeaderTitle}
                             backToBucketBoard={this.backToBucketBoard} /> :
-                        <BucketList 
-                            viewWorkDetailOfBucket={this.viewWorkDetailOfBucket} 
+                        <BucketList
+                            viewWorkDetailOfBucket={this.viewWorkDetailOfBucket}
                             bucketList={this.state.bucketList}
                             bucketItemList={this.state.bucketItemList}
                             />
                     } */}
             </div>
-         );
+        );
     }
 }
- 
+
 export default WorkSpace ;

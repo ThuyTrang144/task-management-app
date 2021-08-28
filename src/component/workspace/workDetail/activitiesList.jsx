@@ -5,25 +5,25 @@ import { SmileOutlined } from '@ant-design/icons';
 class ActivitiesList extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.state = { 
-            
-         }
+        this.state = {
+
+        };
     }
     renderActivities() {
-        return this.props.activitiesList.map((item, index) => 
-            (<Activity 
-                key={item.name} 
-                index={index} 
+        return this.props.activitiesList.map((item, index) =>
+            (<Activity
+                key={item.name}
+                index={index}
                 name={item.name}
-                assignee={item.assignee} 
-                createdTime={item.createdTime} 
+                assignee={item.assignee}
+                createdTime={item.createdTime}
                 label={item.label}>
             </Activity> )
-        )
+        );
     }
-    render() { 
-        return ( 
-             <div className="activities-section">
+    render() {
+        return (
+            <div className="activities-section">
                 <div className="heading">
                     <span className='title'>Activities</span>
                     <div className="filter">
@@ -39,12 +39,12 @@ class ActivitiesList extends React.PureComponent {
                     </div>
                     <input className="adding-input" type="text" placeholder='Add new activity here'></input>
                 </div>
-                <div className="activities-list"> 
+                <div className="activities-list">
                     {this.renderActivities()}
                 </div>
             </div>
-            );
+        );
     }
 }
- 
+
 export default ActivitiesList;

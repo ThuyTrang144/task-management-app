@@ -1,23 +1,19 @@
-@import '~antd/dist/antd.css';
-@import '../.././colors.scss';
-@import '../.././font-size.scss';
-
 @mixin menu-title {
-    color: $text-color-dark;
-    font-size: $md;
+    color: var(--text-color-dark);
+    font-size: var(--md);
     font-weight: bold;
 }
 @mixin menu-title-underline {
     content:"";
     display:block;
-    border-bottom: 1px solid $border-color-light;
+    border-bottom: 1px solid var(--border-color-light);
 }
 .sidebar {
     width: 320px;
     margin-left: 15px;
-    background-color: $body-background-color;
+    background-color: var(--body-background-color);
     height: 100%;
-    color: $text-color-dark;
+    color: var(--text-color-dark);
     display: flex;
     flex-direction: column;
     .menu-section {
@@ -38,10 +34,10 @@
             }
         }
         .ant-menu {
-            background-color: $body-background-color;
+            background-color: var(--body-background-color);
             .ant-menu-sub {
                 .ant-menu-inline {
-                    background-color: $body-background-color;
+                    background-color: var(--body-background-color);
                     margin-left: 20px;
                 }
             }
@@ -55,9 +51,9 @@
             }
             .ant-menu-item {
                 height: 46px;
-                font-size: $xl;
+                font-size: var(--xl);
                 &:hover {
-                    background-color: $background-hover-color;
+                    background-color: var(--background-hover-color);
                 }
                 &:active {
                     background: unset;
@@ -66,7 +62,7 @@
             .ant-menu-title-content {
                 position: relative;
                 right: 20px;
-                color: $text-color-dark;
+                color: var(--text-color-dark);
             }
             .ant-menu-submenu-arrow {
                 position: absolute;
@@ -81,25 +77,25 @@
                 display: flex;
                 align-items: center;
                 &:hover {
-                    color: $text-hover-color;
-                    background-color: $background-hover-color;
+                    color: var(--text-hover-color);
+                    background-color: var(--background-hover-color);
                 }
                 .item-icon {
                     display: inherit;
                     align-items: center;
                     width: 30px;
                     height: 30px;
-                    font-size: $md;
+                    font-size: var(--md);
                     width: 20px;
                     height: 20px;
-                    color: $icon-color-dark;
+                    color: var(--icon-color-dark);
                 }
                 .item-name {
-                    font-size: $xl;
+                    font-size: var(--xl);
                     margin-left: 10px;
                 }
             }
-        } 
+        }
         .sub-filter {
             margin-top: 15px;
             .ant-select.selector.ant-select-single.ant-select-show-arrow {
@@ -112,14 +108,14 @@
                     margin-left: unset;
                     padding-bottom: 10px;
                     span {
-                        font-size: $lg;
-                        color: $text-color-dark;
+                        font-size: var(--lg);
+                        color: var(--text-color-dark);
                     }
                 }
             }
-        } 
+        }
         .filter-name {
-            font-size: $lg;
+            font-size: var(--lg);
             font-weight: bold;
         }
     }

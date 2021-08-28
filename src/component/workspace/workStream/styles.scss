@@ -1,6 +1,5 @@
-@import '../.././font-size.scss';
-@import '../.././colors.scss';
-@import '../.././mixin.scss';
+@import "../../../style/mixin.scss";
+
 .work-stream {
     margin-top: 15px;
     margin-left: 15px;
@@ -13,15 +12,15 @@
     .creation-box {
         width: 100%;
         height: fit-content;
-        background-color: $header-background-color;
+        background-color: var(--header-background-color);
         display: inherit;
         flex-direction: column;
-        padding-bottom: 15px;   
+        padding-bottom: 15px;
         .box-heading {
             width: 100%;
             height: 62px;
             background-color: #4F91FF;
-            color: $text-color-light;
+            color: var(--text-color-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -30,17 +29,17 @@
             .text-heading {
                 margin-left: 20px;
                 .title {
-                    font-size: $xl;
+                    font-size: var(--xl);
                     font-weight: bold;
                 }
                 .total-work {
-                    font-size: $lg;
+                    font-size: var(--lg);
                 }
             }
             .search-icon {
-                color: $text-color-light;
+                color: var(--text-color-light);
                 margin-right: 20px;
-                font-size: $two-xl;
+                font-size: var(--two-xl);
             }
         }
         .search-box {
@@ -61,7 +60,7 @@
             border-bottom: 0.5px solid grey;
             align-self: center;
             &:hover {
-                border-bottom: 0.5px solid $text-hover-color;
+                border-bottom: 0.5px solid var(--text-hover-color);
             }
             .adding-box {
                 width: 95%;
@@ -84,8 +83,8 @@
             }
         }
         .instruction {
-            color: $text-color-dark;
-            font-size: $lg;
+            color: var(--text-color-dark);
+            font-size: var(--lg);
             display: inherit;
             justify-content: space-between;
             position: relative;
@@ -94,7 +93,7 @@
                 margin-left: 20px;
             }
             .add-detail {
-                color: $text-hover-color;
+                color: var(--text-hover-color);
                 text-decoration: none;
                 margin-right: 20px;
             }
@@ -107,12 +106,12 @@
         .item-card {
             @include item-card;
             // &:visited {
-            //     background-color: $background-hover-color;
+            //     background-color: var(--background-hover-color);
             // }
         }
         .search-result {
-            font-size: $two-xl;
-            color: $text-color-dark;
+            font-size: var(--two-xl);
+            color: var(--text-color-dark);
         }
     }
 }
@@ -128,10 +127,10 @@
     .work-stream {
         width: 40%;
     }
-} 
+}
 @media (max-width: 1024px) {
     .work-stream {
         width: 70%;
         margin-right: 15px;
     }
-} 
+}

@@ -2,8 +2,8 @@ import React from 'react';
 import { DeleteOutlined, CommentOutlined } from '@ant-design/icons';
 class Activity extends React.Component {
     state = {  }
-    render() { 
-        return ( 
+    render() {
+        return (
             <div className="activities-item">
                 <div className="activities-info">
                     <div className="info-group">
@@ -20,9 +20,9 @@ class Activity extends React.Component {
                     <span>{this.props.name}</span>
                     <hr></hr>
                 </div>
-            </div> 
-         );
+            </div>
+        );
     }
 }
- 
+
 export default Activity;

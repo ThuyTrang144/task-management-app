@@ -4,7 +4,7 @@ import React from 'react';
 class TagList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             tagList: [
                 'language',
                 'code',
@@ -13,56 +13,56 @@ class TagList extends React.Component {
             ],
             isAdding: false,
             inputTag: ''
-         }
+        };
     }
     renderTags() {
         return this.state.tagList.map((item, index) => (
             <Tag className='tag-item' key={index} closable>{item}</Tag>
-        ))
+        ));
     }
     showInput = () => {
         if (this.state.isAdding) {
-            this.setState({ isAdding: false })
+            this.setState({ isAdding: false });
         } else {
-            this.setState({ isAdding: true })
+            this.setState({ isAdding: true });
         }
     }
     addTag = (text) => {
         const { tagList } = this.state;
-        tagList.push(text)
-        this.setState({ tagList: [...tagList] })
+        tagList.push(text);
+        this.setState({ tagList: [...tagList] });
     }
     onKeyPress = (e) => {
         if (e.charCode === 13) {
-            this.addTag(this.state.inputTag)
-            this.setState({ inputTag: '' }) 
+            this.addTag(this.state.inputTag);
+            this.setState({ inputTag: '' });
         }
     }
     onChange = (e) => {
-        const inputTag = e.target.value
-        this.setState({ inputTag })
+        const inputTag = e.target.value;
+        this.setState({ inputTag });
     }
-    render() { 
-        return ( 
+    render() {
+        return (
             <div className="tag">
                 {this.renderTags()}
-                {this.state.isAdding ? 
-                    <Input 
-                        type='text' 
+                {this.state.isAdding ?
+                    <Input
+                        type='text'
                         size="small"
                         className="tag-input add-tag-input"
                         placeholder='Type tag here'
                         value={this.state.inputTag}
-                        onChange={this.onChange} 
+                        onChange={this.onChange}
                         onKeyPress={this.onKeyPress}
-                        ></Input> : 
+                    ></Input> :
                     <Tag className='add-tag' onClick={this.showInput}>
                         <PlusOutlined /> New Tag
                     </Tag>
                 }
-           </div>
-         );
+            </div>
+        );
     }
 }
- 
+
 export default TagList;
