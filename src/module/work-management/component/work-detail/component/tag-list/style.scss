@@ -1,0 +1,20 @@
+.tag {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 15px;
+    .tag-item {
+        height: 22px;
+        margin-top: 15px;
+    }
+    .add-tag-input {
+        height: 22px;
+        width: auto;
+        margin-top: 15px;
+    }
+    .add-tag {
+        margin-top: 15px;
+        height: 22px;
+        border: 1px dashed var(--border-color-light);
+        cursor: pointer;
+    }
+}

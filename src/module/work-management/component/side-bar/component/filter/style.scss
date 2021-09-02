@@ -1,0 +1,22 @@
+.sub-filter {
+    margin-top: 15px;
+    .ant-select.selector.ant-select-single.ant-select-show-arrow {
+        width: 100%;
+    }
+    .checkbox-filter {
+        display: flex;
+        flex-direction: column;
+        .ant-checkbox-wrapper {
+            margin-left: unset;
+            padding-bottom: 10px;
+            span {
+                font-size: var(--lg);
+                color: var(--text-color-dark);
+            }
+        }
+    }
+}
+.filter-name {
+    font-size: var(--lg);
+    font-weight: bold;
+}

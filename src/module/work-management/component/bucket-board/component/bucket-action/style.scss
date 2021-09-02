@@ -1,0 +1,64 @@
+@import "../../../../../../style/mixin.scss";
+.bucket-actions {
+    @include display-flex;
+    margin: 0 10px;
+    .search-box {
+        width: 560px;
+        height: 40px;
+        border-radius: 100px;
+        border: 1px solid #D2D2D6;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        &:hover {
+            border: 1px solid #40A9FF
+        }
+        input {
+            border-style: hidden;
+            font-size: 16px;
+            &:hover {
+                outline: none;
+            }
+            &:focus {
+                outline: none;
+            }
+        }
+        .search-item {
+            font-size: 20px;
+            color: #9696A0;
+            margin-inline: 15px;
+        }
+    }
+    .action-group {
+        @include display-flex;
+        .ant-select.bucket-selector {
+            width: 162px;
+            height: 40px;
+            margin-right: 20px;
+            @include display-flex;
+            border: 1px solid #D2D2D6;
+            border-radius: 100px;
+            background-color: var(--header-background-color);
+            .ant-select-selector {
+                background-color: unset;
+                border-style: unset;
+                border-radius: 100px;
+            }
+        }
+        .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+            box-shadow: none;
+            border-color: unset;
+        }
+        .add-bucket {
+            width: 130px;
+            height:40px;
+            background-color: #2979FF;
+            border-radius: 100px;
+            color: white;
+            border-style: none;
+            .add-icon {
+                margin-right: 10px;
+            }
+        }
+    }
+}

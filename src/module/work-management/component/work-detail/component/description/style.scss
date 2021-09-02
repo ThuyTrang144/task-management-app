@@ -1,0 +1,12 @@
+.item-description {
+    display: flex;
+    font-size: 18px;
+    color: #5A5B6A;
+    padding: 10px 15px;
+    .anticon-edit {
+        margin-left: 15px;
+        &:hover {
+            color: var(--text-hover-color);
+        }
+    }
+}

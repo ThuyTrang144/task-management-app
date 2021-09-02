@@ -1,0 +1,57 @@
+
+.header {
+    background-color: var(--header-background-color);
+    position: relative;
+    z-index: 1;
+    height: 54px;
+    display: flex;
+    padding: 0 20px 0 20px;
+    justify-content: space-between;
+    box-shadow: 0 0px 8px 0 var(--shadow-color-dark); 
+    .left {
+        display: flex;
+        align-items: center;
+        .logo {
+            color: var(--logo-color);
+            display: flex;
+            align-items: center;
+            .menu-icon {
+                font-size: 35px;
+            }
+            .app-name {
+                font-size: var(--four-xl);
+                margin-left: 10px;
+            }
+        }
+    }
+    .right {
+        display: flex;
+        align-items: center;
+        .avatar {
+            color: var(--text-color-dark);
+            font-size: var(--lg);
+            font-weight: bold;
+            img {
+                height: 30px;
+                width: 30px;
+            }
+        }
+    }
+}
+@media (max-width: 768px) {
+    .header {
+        .logo {
+            span {
+                display: none;
+            }
+        }
+        .channel-selector {
+            margin-left: unset;
+        }
+        .select-button {
+            background-color: var(--text-color-light);
+            color: #13C2C2;
+        }
+    }
+
+}

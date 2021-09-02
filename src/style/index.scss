@@ -1,5 +1,5 @@
 @import "./mixin.scss";
-@import "./colors.scss";
+@import "./color.scss";
 @import "./font-size.scss";
 @import 'antd/dist/antd.css';
 
@@ -10,6 +10,7 @@ body {
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: var(--body-background-color);
   }
 
 code {

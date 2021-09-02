@@ -1,12 +1,12 @@
-import Header from './component/header/header';
-import WorkSpace from './component/workspace/workspace';
+import Header from './component/header/index';
+import WorkManagement from './module/work-management';
 import { DATA } from './data';
 
 function App() {
     return (
         <div>
             <Header channelList={DATA.channelList} />
-            <WorkSpace DATA={DATA} />
+            <WorkManagement DATA={DATA} />
         </div>
     );
 }
