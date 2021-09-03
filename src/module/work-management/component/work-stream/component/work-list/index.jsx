@@ -26,10 +26,6 @@ class WorkList extends React.PureComponent {
                 createdDate={item.createdDate} 
                 dueDate={item.dueDate} 
                 viewWorkDetail={this.props.viewWorkDetail}
-                // viewWorkDetailOfWorkStream={this.props.viewWorkDetailOfWorkStream}
-                // isViewDetail={this.props.isViewDetail}
-                // changeSelectedStatus={this.changeSelectedStatus}
-                // isWorkStream={this.props.isWorkStream}
             />; 
         } 
         );

@@ -1,5 +1,5 @@
 @import "../../../../../../style/mixin.scss";
-    .bucket-listing {
+.bucket-listing {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
@@ -9,14 +9,17 @@
             justify-content: space-between;
             padding: 10px;
             width: 50%;
-            .bucket-title {
+            .bucket-header {
                 @include display-flex;
-                span {
-                    text-decoration: none;
-                    font-size: 18px;
-                    color: black;
-                    &:hover{
-                        color: #40A9FF;
+                .bucket-title {
+                    width: 85%;
+                    span {
+                        text-decoration: none;
+                        font-size: 18px;
+                        color: black;
+                        &:hover{
+                            color: #40A9FF;
+                        }
                     }
                 }
                 .actions {
@@ -82,3 +85,8 @@
             }
         }
     }
+.ant-dropdown-menu-title-content {
+    span {
+        margin-left: 10px;
+    }
+}

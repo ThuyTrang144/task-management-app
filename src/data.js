@@ -409,13 +409,6 @@ const DATA = {
     ],
     isViewDetail: false,
     isWorkStream: false,
-    // participant: [
-    //     {id: 1, name: 'Thien Huynh', avatar: 'https://vcdn-vnexpress.vnecdn.net/2020/09/23/01-4451-1600828895.jpg'},
-    //     {id: 2, name: 'Mai Thao', avatar: 'https://dogily.vn/wp-content/uploads/2019/09/Chu-cho-Anuko-noi-tieng-tren-mang-xa-hoi.jpg'},
-    //     {id: 3, name: 'Anros Nguyen', avatar: 'https://thuthuatnhanh.com/wp-content/uploads/2020/01/cho-phoc-soc-long-mau-nau-cute-de-thuong.jpg'},
-    //     {id: 4, name: 'Thanh Van', avatar: 'https://upanh123.com/wp-content/uploads/2021/03/anh-cho-bong6-1.jpg'},
-    //     {id: 5, name: 'Diem Phuoc', avatar: 'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-%E1%BA%A3nh-ch%C3%BA-ch%C3%B3-d%E1%BB%85-th%C6%B0%C6%A1bg.jpg'},
-    // ],
     // attachmentList: [
     //     {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
     //     {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
@@ -437,9 +430,6 @@ function findBucketById(id) {
 }
 function findOwnerById(id) {
     return DATA.userList.find(element => element.id === id);
-}
-function findParticipantsById(id) {
-    return DATA.userList.filter(element => element.id === id);
 }
 function findTagsById(id) {
     return DATA.tagList.find(element => element.id === id);
@@ -498,6 +488,31 @@ function addNewBucket(text) {
         newBucket,
         ...DATA.bucketList
     ];
+    return DATA.bucketList;
+}
+function deleteBucket(bucketId) {
+    const bucketIndex = DATA.bucketList.findIndex(item => item.id === bucketId);
+    DATA.bucketList.splice(bucketIndex, 1);
+    DATA.bucketList = [...DATA.bucketList];
+    revertWorkItemToWorkStream(bucketId);
+    return DATA.bucketList;
+}
+function revertWorkItemToWorkStream(bucketId) {
+    for (let i = 0; i < DATA.workItemList.length; i++) {
+        if (DATA.workItemList[i].bucketId === bucketId) {
+            DATA.workItemList[i].bucketId = null;
+        }
+    }
+    DATA.workItemList = [...DATA.workItemList];
+    return DATA.workItemList;
+}
+function editBucketName(bucketId, text) {
+    const bucket = findBucketById(bucketId);
+    bucket.name = text;
+    // console.log('bucketName', DATA.bucketList[0].name);
+    // console.log('bucketList', DATA.bucketList);
+    return [...DATA.bucketList];
+
 }
 export { DATA, findStatusById, findChannelById, findOwnerById, findBucketById, findWorkItemById, findImportanceLevelById, findTagsById};
-export { addTag, addNewTodo, deleteTodo, editWorkItemDescription, addWorkItem, addNewBucket };
+export { addTag, addNewTodo, deleteTodo, editWorkItemDescription, addWorkItem, addNewBucket, deleteBucket, revertWorkItemToWorkStream, editBucketName };

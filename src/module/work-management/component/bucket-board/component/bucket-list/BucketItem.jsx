@@ -15,6 +15,7 @@ class BucketItem extends React.Component {
                 <div className='bucket-item-card'>
                     <ItemCard
                         key={this.props.id}
+                        id={this.props.id}
                         name={this.props.name}
                         status={this.props.status}
                         owner={this.props.owner}
