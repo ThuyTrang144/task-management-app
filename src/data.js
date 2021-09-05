@@ -62,6 +62,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            isFavourite: false
         },
         {
             id: 2,
@@ -88,6 +89,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            isFavourite: false
         },
         {
             id: 3,
@@ -114,6 +116,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            isFavourite: false
         },
         {
             id: 4,
@@ -140,6 +143,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            isFavourite: false
         },
         {
             id: 5,
@@ -150,7 +154,7 @@ const DATA = {
             participantId: [1, 2, 3, 4], 
             createdDate: '3 days ago', 
             dueDate: '1 day left', 
-            statusId: 1, 
+            statusId: 2, 
             importanceLevelId: 1,
             channelId: 1,
             bucketId: 2,
@@ -166,6 +170,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            isFavourite: false
         },
         {
             id: 6,
@@ -192,6 +197,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 3},
                 {id: 3, name: 'Speaking', assigneeId: 4}
             ], 
+            isFavourite: false
         },
         {
             id: 7,
@@ -218,6 +224,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 3},
                 {id: 3, name: 'Speaking', assigneeId: 4}
             ], 
+            isFavourite: false
         },
         {
             id: 8,
@@ -244,6 +251,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 1},
                 {id: 3, name: 'Speaking', assigneeId: 4}
             ], 
+            isFavourite: false
         },
         {
             id: 9,
@@ -270,6 +278,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            isFavourite: false
         },
         {
             id: 10,
@@ -296,6 +305,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            isFavourite: false
         },
         {
             id: 11,
@@ -322,6 +332,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            isFavourite: false
         },
         {
             id: 12,
@@ -348,6 +359,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            isFavourite: false
         },
         {
             id: 13,
@@ -374,6 +386,7 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            isFavourite: false
         },
         {
             id: 14,
@@ -399,7 +412,8 @@ const DATA = {
                 {id: 1, name: 'Listening', assigneeId: 1},
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
-            ], 
+            ],
+            isFavourite: false 
         },
     ],
     activityLabel: [
@@ -407,8 +421,8 @@ const DATA = {
         {id: 2, name: 'Communication'},
         {id: 3, name: 'User'},
     ],
-    isViewDetail: false,
     isWorkStream: false,
+    archivedWorkList: []
     // attachmentList: [
     //     {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
     //     {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
@@ -493,9 +507,8 @@ function addNewBucket(text) {
 function deleteBucket(bucketId) {
     const bucketIndex = DATA.bucketList.findIndex(item => item.id === bucketId);
     DATA.bucketList.splice(bucketIndex, 1);
-    DATA.bucketList = [...DATA.bucketList];
     revertWorkItemToWorkStream(bucketId);
-    return DATA.bucketList;
+    return [...DATA.bucketList];
 }
 function revertWorkItemToWorkStream(bucketId) {
     for (let i = 0; i < DATA.workItemList.length; i++) {
@@ -509,10 +522,52 @@ function revertWorkItemToWorkStream(bucketId) {
 function editBucketName(bucketId, text) {
     const bucket = findBucketById(bucketId);
     bucket.name = text;
-    // console.log('bucketName', DATA.bucketList[0].name);
-    // console.log('bucketList', DATA.bucketList);
     return [...DATA.bucketList];
-
+}
+function addFavouriteItem(workId) {
+    const workItemIndex = DATA.workItemList.findIndex(item => item.id === workId);
+    if (DATA.workItemList[workItemIndex].isFavourite) {
+        DATA.workItemList[workItemIndex].isFavourite = false;
+    } else {
+        DATA.workItemList[workItemIndex].isFavourite = true;
+    }
+    return [...DATA.workItemList];
+}
+function completeWorkItem(workId) {
+    const workItemIndex = DATA.workItemList.findIndex(item => item.id === workId); 
+    console.log('status', DATA.workItemList[workItemIndex].statusId);
+    if (DATA.workItemList[workItemIndex].statusId === 1 || DATA.workItemList[workItemIndex].statusId === 2) {
+        console.log('Im here');
+        DATA.workItemList[workItemIndex].statusId = 3;
+    } else if (DATA.workItemList[workItemIndex].statusId === 3) {
+        DATA.workItemList[workItemIndex].statusId = 1;
+    }
+    console.log('statusId', DATA.workItemList[workItemIndex].statusId);
+    console.log('workList', [...DATA.workItemList]);
+    return [...DATA.workItemList];
+}
+function archiveCompletedWorkItem(bucketId) {
+    console.log('im here');
+    for (let i = 0; i < DATA.workItemList.length; i++) {
+        if (DATA.workItemList[i].bucketId === bucketId && DATA.workItemList[i].statusId === 3) {
+            DATA.archivedWorkList.push(DATA.workItemList[i]);
+            DATA.workItemList.splice(i, 1);
+        }
+    }
+    console.log('archiveList', [...DATA.archivedWorkList]);
+    return [...DATA.workItemList];
 }
 export { DATA, findStatusById, findChannelById, findOwnerById, findBucketById, findWorkItemById, findImportanceLevelById, findTagsById};
-export { addTag, addNewTodo, deleteTodo, editWorkItemDescription, addWorkItem, addNewBucket, deleteBucket, revertWorkItemToWorkStream, editBucketName };
+export { addTag, 
+    addNewTodo, 
+    deleteTodo, 
+    editWorkItemDescription, 
+    addWorkItem, 
+    addNewBucket, 
+    deleteBucket, 
+    revertWorkItemToWorkStream, 
+    editBucketName, 
+    addFavouriteItem,
+    completeWorkItem,
+    archiveCompletedWorkItem
+};

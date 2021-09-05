@@ -1,22 +1,19 @@
-import React from 'react';
-import { editBucketName, findOwnerById, findStatusById } from '../../../../../../data';
+import React, { useState } from 'react';
+import { findOwnerById, findStatusById } from '../../../../../../data';
 import BucketItem from './BucketItem';
 import { faArchive, faBars, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dropdown, Input, Menu } from 'antd';
+import { Dropdown, Input, Menu, Tooltip} from 'antd';
 
-export class Bucket extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isEdit: false,
-            bucketName: props.workItemList.name
-        };
-    }
-    renderBucket() {
-        const { workItemList, id, searchValue } = this.props;
+export function Bucket(props) {
+    const [isEdit, setState] = useState(false);
+    function renderBucket() {
+        const { workItemList, id, searchValue } = props;
         const itemList = workItemList.filter(item => item.bucketId === id);
-        const searchList = itemList.filter(item => (item.name.toLocaleLowerCase().startsWith(searchValue) || item.name.toLocaleLowerCase().includes(searchValue)));
+        itemList.sort((a, b) => b.isFavourite - a.isFavourite );
+        const searchList = itemList.filter(item => 
+            (item.name.toLocaleLowerCase().startsWith(searchValue) || item.name.toLocaleLowerCase().includes(searchValue))
+        );
         const result = (searchValue.length !== 0) ? searchList : itemList;
         if (result.length === 0) {
             return <div className='empty-bucket'><p>There is no work item here</p></div>;
@@ -27,63 +24,82 @@ export class Bucket extends React.Component {
             return ( 
                 <BucketItem
                     key={item.id}
+                    id={item.id}
                     name={item.name}
                     owner={owner.name}
                     status={statusItem.name}
                     dueDate={item.dueDate}
-                    createdDate={item.createdDate}>
+                    createdDate={item.createdDate}
+                    addFavouriteItem={props.addFavouriteItem}
+                    workItemList={props.workItemList}
+                    completeWorkItem={props.completeWorkItem}
+                    viewWorkDetail={props.viewWorkDetail}
+                >
                 </BucketItem>
             );});
     }
-    renderMenuAction = () => {
+    function renderMenuAction() {
         return (
             <Menu>
-                <Menu.Item key="0" onClick={this.deleteBucket}>
+                <Menu.Item key="0" onClick={deleteBucket}>
                     <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                     <span>Delete Buket</span>
                 </Menu.Item>
-                <Menu.Item key="1" onClick={this.openEditBucketView}>
+                <Menu.Item key="1" onClick={openEditBucketView}>
                     <FontAwesomeIcon icon={faPen}></FontAwesomeIcon>
                     <span>Edit Buket Name</span>
                 </Menu.Item>
             </Menu> 
         );
+    };
+    function deleteBucket() {
+        props.deleteBucket(props.id);
     }
-    deleteBucket = () => {
-        this.props.deleteBucket(this.props.id);
+    function openEditBucketView() {
+        setState(true);
     }
-    openEditBucketView = () => {
-        this.setState({ isEdit: true});
-    }
-    editBucketName = (e) => {
+    function editBucketName(e) {
         const value = e.target.value;
-        this.props.editBucketName(this.props.id, value);
-        this.setState({ isEdit: false});
+        props.editBucketName(props.id, value);
+        setState(false);
     }
-    render() {
-        return (
-            <div key={this.props.id} className='bucket-box'>
-                <div className='bucket-header'>
-                    <div className="bucket-title">
-                        {this.state.isEdit ? 
-                            <Input 
-                                defaultValue={this.props.name} 
-                                className='input-text'
-                                onPressEnter={this.editBucketName}>
-                            </Input> : 
-                            <span>{this.props.name.toLocaleUpperCase()}</span>}
-                    </div>
-                    <div className="actions">
-                        <FontAwesomeIcon className='bucket-icon' icon={faArchive} />
-                        <Dropdown overlay={this.renderMenuAction} trigger={['click']} placement="bottomRight">
-                            <FontAwesomeIcon className='bucket-icon' icon={faBars}/>
-                        </Dropdown>         
-                    </div>
+    function archiveCompletedWorkItem () {
+        props.archiveCompletedWorkItem(props.id);
+    }
+    return (
+        <div 
+            key={props.id} 
+            className='bucket-box'>
+            <div className='bucket-header'>
+                <div className="bucket-title">
+                    {isEdit ? 
+                        <Input 
+                            defaultValue={props.name} 
+                            className='input-text'
+                            onPressEnter={editBucketName}>
+                        </Input> : 
+                        <span>{props.name.toLocaleUpperCase()}</span>}
                 </div>
-                <div  className="bucket-card">
-                    {this.renderBucket()}
+                <div className="actions">
+                    <Tooltip placement="top" 
+                        title='Archive completed work item'>
+                        <FontAwesomeIcon 
+                            className='bucket-icon' 
+                            icon={faArchive} 
+                            onClick={archiveCompletedWorkItem} />
+                    </Tooltip> 
+                    <Dropdown overlay={renderMenuAction} 
+                        trigger={['click']} 
+                        placement="bottomRight">
+                        <FontAwesomeIcon 
+                            className='bucket-icon' 
+                            icon={faBars}/>
+                    </Dropdown>         
                 </div>
             </div>
-        );
-    }
+            <div  className="bucket-card">
+                {renderBucket()}
+            </div>
+        </div>
+    );
 }

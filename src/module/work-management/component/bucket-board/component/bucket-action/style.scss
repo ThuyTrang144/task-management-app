@@ -1,7 +1,6 @@
 @import "../../../../../../style/mixin.scss";
 .bucket-actions {
     @include display-flex;
-    margin: 0 10px;
     .search-box {
         width: 560px;
         height: 40px;

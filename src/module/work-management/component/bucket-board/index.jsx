@@ -1,45 +1,55 @@
-import React from 'react';
-import { addNewBucket, editBucketName } from '../../../../data';
+import React, { useState } from 'react';
+import { addFavouriteItem, addNewBucket, archiveCompletedWorkItem, completeWorkItem, editBucketName } from '../../../../data';
 import { BucketList, BucketAction } from './component';
 import './style.scss';
 
-class BucketBoard extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            searchValue: '',
-            bucketList: props.bucketList
-        };
+export default function BucketBoard(data) {
+    const [searchValue, setValueState] = useState('');
+    const [bucketList, setBucketListState] = useState(data.bucketList);
+    const [workItemList, setWorkItemListState] = useState(data.workItemList);
+    function searchWorkItem (text) {
+        setValueState(text);
     }
-    searchWorkItem = (text) => {
-        this.setState({ searchValue: text });
+    function handleAddNewBucket(text) {
+        const newBucketList = addNewBucket(text);
+        setBucketListState(newBucketList);
     }
-    addNewBucket = (text) => {
-        const bucketList = addNewBucket(text);
-        this.setState({ bucketList });
+    function handleDeleteBucket(id) {
+        data.deleteBucket(id);
     }
-    deleteBucket = (id) => {
-        this.props.deleteBucket(id);
-        this.setState({ bucketList: this.props.bucketList});
-    }
-    editBucketName = (id, text) => {
+    function handleEditBucketName(id, text) {
         const bucketList = editBucketName(id, text);
-        this.setState({ bucketList });
+        setBucketListState(bucketList);
     }
-    render() {
-        return (
-            <div className='bucket-board'>
-                <BucketAction searchValue={this.state.searchValue} searchWorkItem={this.searchWorkItem} addNewBucket={this.addNewBucket}/>
-                <BucketList 
-                    bucketList={this.state.bucketList} 
-                    workItemList={this.props.workItemList} 
-                    searchValue={this.state.searchValue}
-                    deleteBucket={this.deleteBucket}
-                    editBucketName={this.editBucketName}
-                />
-            </div>
-        );
-    }
+    function handleAddFavouriteItem(id) {
+        const newWorkItemList = addFavouriteItem(id);
+        setWorkItemListState(newWorkItemList);
+    };
+    function handleCompleteWorkItem(id) {
+        const newWorkItemList = completeWorkItem(id);
+        setWorkItemListState(newWorkItemList);
+    };
+    function handleArchiveCompletedWorkItem(id) {
+        const newWorkItemList = archiveCompletedWorkItem(id);
+        setWorkItemListState(newWorkItemList);
+    };
+    return (
+        <div className='bucket-board'>
+            <BucketAction 
+                searchValue={searchValue} 
+                searchWorkItem={searchWorkItem} 
+                addNewBucket={handleAddNewBucket}/>
+            <BucketList 
+                bucketList={bucketList} 
+                workItemList={workItemList} 
+                searchValue={searchValue}
+                deleteBucket={handleDeleteBucket}
+                editBucketName={handleEditBucketName}
+                addFavouriteItem={handleAddFavouriteItem}
+                completeWorkItem={handleCompleteWorkItem}
+                archiveCompletedWorkItem={handleArchiveCompletedWorkItem}
+                viewWorkDetail={data.viewWorkDetail}
+            />
+        </div>
+    );
 }
-
-export default BucketBoard;

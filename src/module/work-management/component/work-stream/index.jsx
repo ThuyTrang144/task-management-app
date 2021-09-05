@@ -27,7 +27,10 @@ class WorkStream extends React.PureComponent {
                     addWorkItem={this.addWorkItem}
                     searchValue={this.state.searchValue}
                     searchWorkItem={this.searchWorkItem}/>
-                <WorkList workItemList={workItemList} searchValue={this.state.searchValue} viewWorkDetail={this.props.viewWorkDetail}/>
+                <WorkList 
+                    workItemList={workItemList} 
+                    searchValue={this.state.searchValue} 
+                    viewWorkDetail={this.props.viewWorkDetail}/>
             </div>
         );
     }
