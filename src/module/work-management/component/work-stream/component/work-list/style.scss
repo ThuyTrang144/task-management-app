@@ -1,0 +1,9 @@
+.work-listing {
+    margin-top: 10px;
+    align-self: center;
+    width: 90%;
+    .search-result {
+        font-size: var(--two-xl);
+        color: var(--text-color-dark);
+    }
+}

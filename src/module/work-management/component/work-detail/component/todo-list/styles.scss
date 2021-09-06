@@ -1,0 +1,53 @@
+.todo-list {
+    align-self: center;
+    display: flex;
+    flex-direction:column;
+    width: 95%;
+    .dash-line {
+        border-top: 1px dashed #D2D2D6;
+        width: 100%;
+        color: #292A31;
+    }
+    .todo-title {
+        width: fit-content;
+        background-color: white;
+        font-size: var(--md);
+        font-weight: bold;
+        color: var(--text-color-dark);
+        position: relative;
+        bottom: 10px;
+        align-self: center;
+        .anticon-up {
+            cursor: pointer;
+            margin-left: 5px;
+            font-size: 15px;
+            color: #787885
+
+        }
+        .anticon-down {
+            cursor: pointer;
+            margin-left: 5px;
+            font-size: 15px;
+            color: #787885
+        }
+    }
+    .todo-item {
+        display: flex;
+        justify-content: space-between;
+        color: #787885;
+        font-size: 14px;
+        padding-bottom: 10px;
+        .todo-info {
+            display: flex;
+            justify-content: space-between;
+            }
+            .assignee {
+                margin-right: 15px;
+            }
+        }
+        .todo-name {
+            color: var(--text-color-extreme-dark);
+            margin-left: 10px;
+
+    }
+}
