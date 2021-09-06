@@ -1,4 +1,5 @@
 import React from 'react';
+import { deleteBucket, revertWorkItemToWorkStream } from '../../data';
 import { SideBar, WorkStream, WorkDetail, BucketBoard } from './component';
 // import { FilePdfOutlined, FileWordOutlined, FileImageOutlined } from '@ant-design/icons';
 import './style.scss';
@@ -8,36 +9,33 @@ class WorkManagement  extends React.PureComponent {
         super(props);
         this.state = {
             data: props.DATA,
+            workItemList: props.DATA.workItemList,
+            isViewDetail: false,
+            bucketList: props.DATA.bucketList,
             activeId: undefined,
         };
     }
-    viewWorkDetail = (id) => {
+    viewWorkDetail = (id) => { 
         this.setState({ isViewDetail: true });
         this.setState({ activeId: id });
     }
-    // function deleteTodo(workItemId, todoId) {
-    //     console.log('work item id', workItemId, todoId);
-    //     const workItem = findWorkItemById(workItemId);
-    //     const todoIndex = workItem.todoList.findIndex(item => item.id === todoId);
-    //     workItem.todoList.splice(todoIndex, 1);
-    //     console.log('todoList', workItem.todoList);
-    //     return DATA;
-    // this.setState( { isViewDetail: true })
-    // this.setState({ isWorkStream: true })
-    // }
-    // viewWorkDetailOfBucket = (keyIndex) => {
-    //     this.state.bucketItemList.map((item, index) => {
-    //         if (keyIndex === index) {
-    //             this.setState({ workDetailHeaderTitle: item.name})
-    //         }
-    //     })
-    //     this.setState({ isViewDetail: true })
-    //     this.setState({ isWorkStream: false})
-    // }
-    // backToBucketBoard = () => {
-    //     this.setState({ isViewDetail: false})
-    // }
+    deleteBucket = (id) => {
+        const bucketList = deleteBucket(id);
+        this.setState({ bucketList});
+        const workItemList = revertWorkItemToWorkStream(id);
+        this.setState({ workItemList});
+    }
+    viewWorkDetailInStream = (id) => {
+        if (this.state.isViewDetail) {
+            this.setState({ isViewDetail: false });
+        } else {
+            this.setState({ isViewDetail: true });
+        }
+        this.setState({ activeId: id });
+        console.log('detail', this.state.isViewDetail);
+    }
     render() { 
+        console.log('detail', this.state.isViewDetail);
         return ( 
             <div className='work-management'>
                 <SideBar 
@@ -48,7 +46,7 @@ class WorkManagement  extends React.PureComponent {
                     importanceLevel={this.state.data.importanceLevel}
                 />
                 <WorkStream
-                    workItemList={this.state.data.workItemList}
+                    workItemList={this.state.workItemList}
                     viewWorkDetail={this.viewWorkDetail}
                 />       
                 {this.state.isViewDetail ? 
@@ -56,11 +54,13 @@ class WorkManagement  extends React.PureComponent {
                         status={this.state.data.status}
                         tagList={this.state.data.tagList}
                         activeId={this.state.activeId}
-
+                        onClick={() => this.setState({ isViewDetail: false })}
                     /> :
                     <BucketBoard
-                        bucketList={this.state.data.bucketList}
-                        workItemList={this.state.data.workItemList}
+                        bucketList={this.state.bucketList}
+                        workItemList={this.state.workItemList}
+                        deleteBucket={this.deleteBucket}
+                        viewWorkDetail={this.viewWorkDetail}
                     />
                 }
             </div>

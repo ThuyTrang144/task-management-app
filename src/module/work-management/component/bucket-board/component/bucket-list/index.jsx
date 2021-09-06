@@ -1,35 +1,28 @@
-import { faArchive, faBars } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Bucket } from './Bucket';
 import './style.scss';
 
-export class BucketList extends React.PureComponent {
-    renderBucketList() {
-        const { bucketList } = this.props;
-        return bucketList.map(item =>
-            <div key={item.id} className='bucket-box'>
-                <div className="bucket-title">
-                    <span>{item.name.toLocaleUpperCase()}</span>
-                    <div className="actions">
-                        <FontAwesomeIcon className='bucket-icon' icon={faArchive} />
-                        <FontAwesomeIcon className='bucket-icon' icon={faBars} />
-                    </div>
-                </div>
-                <Bucket
-                    workItemList={this.props.workItemList}
-                    id={item.id}
-                    bucketList={this.props.bucketList}
-                    searchValue={this.props.searchValue}
-                />
-            </div>
+export function BucketList(props) {
+    function renderBucketList() {
+        return props.bucketList.map(item =>
+            <Bucket
+                key={item.id}
+                name={item.name}
+                workItemList={props.workItemList}
+                id={item.id}
+                searchValue={props.searchValue}
+                deleteBucket={props.deleteBucket}
+                editBucketName={props.editBucketName}
+                addFavouriteItem={props.addFavouriteItem}
+                completeWorkItem={props.completeWorkItem}
+                archiveCompletedWorkItem={props.archiveCompletedWorkItem}
+                viewWorkDetail={props.viewWorkDetail}
+            />
         );
     }
-    render() {
-        return (
-            <div className='bucket-listing'>
-                {this.renderBucketList()}
-            </div>
-        );
-    }
+    return (
+        <div className='bucket-listing'>
+            {renderBucketList()}
+        </div>
+    );
 }

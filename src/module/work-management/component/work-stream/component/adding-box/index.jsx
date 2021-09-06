@@ -40,7 +40,10 @@ class AddingBox extends React.PureComponent {
                         <span className="title">Work Stream</span><br></br>
                         <span className="total-work">10 items</span>
                     </div>
-                    <FontAwesomeIcon className="search-icon" icon={this.state.isSearch ? faTimes : faSearch} onClick={this.openSearch}/>
+                    <FontAwesomeIcon 
+                        className="search-icon" 
+                        icon={this.state.isSearch ? faTimes : faSearch} 
+                        onClick={this.openSearch}/>
                 </div>
                 {this.state.isSearch ?   
                     <input

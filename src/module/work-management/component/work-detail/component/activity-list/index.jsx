@@ -2,8 +2,6 @@ import Checkbox from 'antd/lib/checkbox/Checkbox';
 import React from 'react';
 import Activity from './Activity';
 import { SmileOutlined } from '@ant-design/icons';
-import Moment from 'react-moment';
-
 
 class ActivitiesList extends React.PureComponent {
     constructor(props) {

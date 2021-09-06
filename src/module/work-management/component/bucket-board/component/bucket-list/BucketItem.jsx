@@ -1,29 +1,58 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { StarOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 import React from 'react';
 import ItemCard from '../../../item-card';
+import { findWorkItemById } from '../../../../../../data';
 
-class BucketItem extends React.Component {
-    render() {
-        return (
-            <div className="bucket-item" onClick={this.viewWorkDetailOfBucket}>
-                <div className="item-actions">
-                    <Checkbox/>
-                    <FontAwesomeIcon className='favourite-icon' icon={faStar}/>
-                </div>
-                <div className='bucket-item-card'>
-                    <ItemCard
-                        key={this.props.id}
-                        name={this.props.name}
-                        status={this.props.status}
-                        owner={this.props.owner}
-                        createdDate={this.props.createdDate}
-                        dueDate={this.props.dueDate}
-                    />
-                </div>
-            </div>
-        );
+export function BucketItem(props) {
+    function addFavouriteItem() {
+        props.addFavouriteItem(props.id);
     }
+    function completeWorkItem() {
+        console.log(props.id);
+        props.completeWorkItem(props.id);
+    }
+    const workItem = findWorkItemById(props.id);
+    let textDecoration;
+    if (props.status === 'Done') {
+        textDecoration = 'line-through';
+    }
+    return (
+        <div 
+            className="bucket-item">
+            <div className="item-actions">
+                {props.status === 'Done' ? 
+                    <Checkbox 
+                        onChange={completeWorkItem} 
+                        defaultChecked/> : 
+                    <Checkbox 
+                        onChange={completeWorkItem} />}
+                {workItem.isFavourite ? 
+                    <FontAwesomeIcon 
+                        className='favourite-icon' 
+                        icon={faStar} 
+                        onClick={addFavouriteItem}/> : 
+                    <StarOutlined 
+                        className='favourite-icon' 
+                        onClick={addFavouriteItem} />}
+            </div>
+            <div className='bucket-item-card'>
+                <ItemCard
+                    style={{textDecoration: textDecoration}}
+                    key={props.id}
+                    id={props.id}
+                    name={props.name}
+                    status={props.status}
+                    owner={props.owner}
+                    createdDate={props.createdDate}
+                    dueDate={props.dueDate}
+                    viewWorkDetail={props.viewWorkDetail}
+                />
+            </div>
+        </div>
+    );
+
 }
 export default BucketItem;

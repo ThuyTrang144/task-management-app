@@ -3,7 +3,7 @@ import { findStatusById, findChannelById, findOwnerById } from '../../../../../.
 import ItemCard from '../../../item-card';
 import './style.scss';
 
-class WorkList extends React.PureComponent {
+class WorkList extends React.Component {
     renderItemList() {
         const { workItemList, searchValue } = this.props;
         const workStreamItemList = workItemList.filter(item => !item.bucketId);
@@ -26,10 +26,6 @@ class WorkList extends React.PureComponent {
                 createdDate={item.createdDate} 
                 dueDate={item.dueDate} 
                 viewWorkDetail={this.props.viewWorkDetail}
-                // viewWorkDetailOfWorkStream={this.props.viewWorkDetailOfWorkStream}
-                // isViewDetail={this.props.isViewDetail}
-                // changeSelectedStatus={this.changeSelectedStatus}
-                // isWorkStream={this.props.isWorkStream}
             />; 
         } 
         );

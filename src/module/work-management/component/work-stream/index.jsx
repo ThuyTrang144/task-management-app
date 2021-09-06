@@ -19,6 +19,7 @@ class WorkStream extends React.PureComponent {
         this.setState({ searchValue: text });
     }
     render() {
+        const workItemList = [...this.state.workItemList];
         return (
             <div className="work-stream">
                 <AddingBox
@@ -26,7 +27,10 @@ class WorkStream extends React.PureComponent {
                     addWorkItem={this.addWorkItem}
                     searchValue={this.state.searchValue}
                     searchWorkItem={this.searchWorkItem}/>
-                <WorkList workItemList={this.state.workItemList} searchValue={this.state.searchValue} viewWorkDetail={this.props.viewWorkDetail}/>
+                <WorkList 
+                    workItemList={workItemList} 
+                    searchValue={this.state.searchValue} 
+                    viewWorkDetail={this.props.viewWorkDetail}/>
             </div>
         );
     }
