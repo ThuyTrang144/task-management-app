@@ -6,7 +6,7 @@ import React from 'react';
 import ItemCard from '../../../item-card';
 import { findWorkItemById } from '../../../../../../data';
 
-export function BucketItem(props) {
+export default function BucketItem(props) {
     function addFavouriteItem() {
         props.addFavouriteItem(props.id);
     }
@@ -55,4 +55,3 @@ export function BucketItem(props) {
     );
 
 }
-export default BucketItem;

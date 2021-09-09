@@ -4,7 +4,7 @@ import { Popover, Button, Input } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './style.scss';
 
-export function BucketAction(props) {
+export default function BucketAction(props) {
     const [newBucket, setNewBucketState] = useState('');
     function handleOnChange(e) {
         const newBucket = e.target.value;

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Bucket } from './Bucket';
+import Bucket from './Bucket';
 import './style.scss';
 
-export function BucketList(props) {
+export default function BucketList(props) {
     function renderBucketList() {
         return props.bucketList.map(item =>
             <Bucket

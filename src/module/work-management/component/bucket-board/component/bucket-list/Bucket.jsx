@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { findOwnerById, findStatusById } from '../../../../../../data';
+import { findUserById, findStatusById } from '../../../../../../data';
 import BucketItem from './BucketItem';
 import { faArchive, faBars, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown, Input, Menu, Tooltip} from 'antd';
 
-export function Bucket(props) {
+export default function Bucket(props) {
     const [isEdit, setState] = useState(false);
     function renderBucket() {
         const { workItemList, id, searchValue } = props;
@@ -19,7 +19,7 @@ export function Bucket(props) {
             return <div className='empty-bucket'><p>There is no work item here</p></div>;
         }
         else return result.map(item => {
-            const owner = findOwnerById(item.ownerId); 
+            const owner = findUserById(item.ownerId); 
             const statusItem = findStatusById(item.statusId);
             return ( 
                 <BucketItem

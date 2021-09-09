@@ -1,5 +1,5 @@
 import React from 'react';
-import { findStatusById, findChannelById, findOwnerById } from '../../../../../../data';
+import { findStatusById, findChannelById, findUserById } from '../../../../../../data';
 import ItemCard from '../../../item-card';
 import './style.scss';
 
@@ -15,7 +15,7 @@ class WorkList extends React.Component {
         return newList.map(item => {
             const statusItem = findStatusById(item.statusId);
             const channel = findChannelById(item.channelId);
-            const owner = findOwnerById(item.ownerId);
+            const owner = findUserById(item.ownerId);
             return <ItemCard 
                 key={item.id} 
                 id={item.id}
