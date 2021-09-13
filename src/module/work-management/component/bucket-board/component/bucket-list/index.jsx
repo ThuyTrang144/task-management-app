@@ -1,22 +1,24 @@
 import React from 'react';
-import { DataContext } from '../../../../../../context';
+import { BucketContext } from '../../../../context/bucket';
 import Bucket from './Bucket';
 import './style.scss';
 
-const BucketList = React.memo(function () {
+const BucketList = React.memo(function (props) {
     return (
         <div className='bucket-listing'>
-            <DataContext.Consumer>
+            <BucketContext.Consumer>
                 {value => {
-                    return value.state.bucketList.map(item =>
+                    console.log('props', props);
+                    return value.bucketList.map(item =>
                         <Bucket
                             key={item.id}
                             name={item.name}
                             id={item.id}
+                            searchValue={props.searchValue}
                         />
                     );
                 }}
-            </DataContext.Consumer>
+            </BucketContext.Consumer>
         </div>
     );
 });

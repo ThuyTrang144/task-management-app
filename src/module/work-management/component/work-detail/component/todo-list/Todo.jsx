@@ -1,14 +1,15 @@
 import React from 'react';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 import { DownOutlined, DeleteOutlined } from '@ant-design/icons';
-import { DataContext } from '../../../../../../context';
+import { WorkItemContext } from '../../../../context/workItem';
 
 class Todo extends React.PureComponent {
-    static contextType = DataContext;
+    static contextType = WorkItemContext;
     deleteTodo = () => {
-        this.context.deleteTodo(this.context.state.activeId, this.props.id);
+        this.context.deleteTodo(this.props.workId, this.props.id);
     }
     render() {
+        console.log('contex', this.context);
         return (
             <div className="todo-item">
                 <div>

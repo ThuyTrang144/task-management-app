@@ -1,32 +1,23 @@
-import React from 'react';
-import { DataContext } from '../../../../context';
+import React, { useState } from 'react';
 import { AddingBox, WorkList } from './component';
 import './styles.scss';
 
-class WorkStream extends React.PureComponent {
-    static contextType = DataContext;
-    constructor(props) {
-        super(props);
-        this.state = {
-            searchValue: '',
-        };
+const WorkStream = React.memo(function () {
+    const [searchValue, setSearchValueState] = useState('');
+    function searchWorkItem(text) {
+        setSearchValueState(text);
     }
-    searchWorkItem = (text) => {
-        this.setState({ searchValue: text });
-    }
-    render() {
-        return (
-            <div className="work-stream">
-                <AddingBox
-                    searchValue={this.state.searchValue}
-                    searchWorkItem={this.searchWorkItem}
-                />
-                <WorkList 
-                    searchValue={this.state.searchValue} 
-                />
-            </div>
-        );
-    }
-}
+    return (
+        <div className="work-stream">
+            <AddingBox
+                searchValue={searchValue}
+                searchWorkItem={searchWorkItem}
+            />
+            <WorkList 
+                searchValue={searchValue} 
+            />
+        </div>
+    );
+});
 
 export default WorkStream;

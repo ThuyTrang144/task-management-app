@@ -5,12 +5,14 @@ import './style.scss';
 import { DataContext } from '../../../../../../context';
 import { WorkDetailContext } from '../../context';
 import { useContext } from 'react/cjs/react.development';
+import { WorkItemContext } from '../../../../context/workItem';
 
 const TagList = React.memo(function () {
     const [ isAdding, setIsAddingState ] = useState(false);
     const [ inputTag, setInputtag ] = useState('');
     const dataContext = useContext(DataContext);
     const workContext = useContext(WorkDetailContext);
+    const workItemContext = useContext(WorkItemContext);
     function renderTags() {
         const tagId = workContext.workDetailData.tagId;
         const tagList = [];
@@ -30,7 +32,7 @@ const TagList = React.memo(function () {
     }
     function onKeyPress (e) {
         if (e.charCode === 13) {
-            dataContext.addTag(dataContext.state.activeId, inputTag);
+            workItemContext.addTag(dataContext.state.activeId, inputTag);
             setInputtag('');
             setIsAddingState(false);
         }
