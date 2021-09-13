@@ -1,55 +1,29 @@
 import React, { useState } from 'react';
-import { addFavouriteItem, addNewBucket, archiveCompletedWorkItem, completeWorkItem, editBucketName } from '../../../../data';
+import { useContext } from 'react/cjs/react.development';
 import {BucketList, BucketAction}  from './component'; 
 import './style.scss';
 
-export default function BucketBoard(data) {
-    const [searchValue, setValueState] = useState('');
-    const [bucketList, setBucketListState] = useState(data.bucketList);
-    const [workItemList, setWorkItemListState] = useState(data.workItemList);
+export const BucketContext = React.createContext({ 
+    searchValue: ''
+});
+const BucketBoard = React.memo( function() {
+    const bucketContext = useContext(BucketContext);
+    const [searchValue, setSearchValueState] = useState(bucketContext.searchValue);
     function searchWorkItem (text) {
-        setValueState(text);
+        setSearchValueState(text);
     }
-    function handleAddNewBucket(text) {
-        const newBucketList = addNewBucket(text);
-        setBucketListState(newBucketList);
-    }
-    function handleDeleteBucket(id) {
-        data.deleteBucket(id);
-    }
-    function handleEditBucketName(id, text) {
-        const bucketList = editBucketName(id, text);
-        setBucketListState(bucketList);
-    }
-    function handleAddFavouriteItem(id) {
-        const newWorkItemList = addFavouriteItem(id);
-        setWorkItemListState(newWorkItemList);
-    };
-    function handleCompleteWorkItem(id) {
-        const newWorkItemList = completeWorkItem(id);
-        setWorkItemListState(newWorkItemList);
-    };
-    function handleArchiveCompletedWorkItem(id) {
-        const newWorkItemList = archiveCompletedWorkItem(id);
-        setWorkItemListState(newWorkItemList);
-    };
     return (
         <div className='bucket-board'>
-            <BucketAction 
-                searchValue={searchValue} 
-                searchWorkItem={searchWorkItem} 
-                addNewBucket={handleAddNewBucket}/>
-            <BucketList 
-                bucketList={bucketList} 
-                workItemList={workItemList} 
-                searchValue={searchValue}
-                deleteBucket={handleDeleteBucket}
-                editBucketName={handleEditBucketName}
-                addFavouriteItem={handleAddFavouriteItem}
-                completeWorkItem={handleCompleteWorkItem}
-                archiveCompletedWorkItem={handleArchiveCompletedWorkItem}
-                viewWorkDetail={data.viewWorkDetail}
-            />
+            <BucketContext.Provider
+                value = {{
+                    searchValue: searchValue,
+                    searchWorkItem: searchWorkItem
+                }}
+            >
+                <BucketAction />
+                <BucketList />
+            </BucketContext.Provider>
         </div>
     );
-}
+});
+export default BucketBoard;

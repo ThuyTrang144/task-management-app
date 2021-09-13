@@ -1,7 +1,7 @@
-import Moment from 'react-moment';
-import { FilePdfOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
+import React from 'react';
+import { FilePdfOutlined, FileImageOutlined, FileWordOutlined} from '@ant-design/icons';
 
-const DATA = {
+export const DataContext = React.createContext({
     channelList: [
         { id: 1, name: 'Personal' },
         { id: 2, name: 'Public' },
@@ -19,17 +19,6 @@ const DATA = {
         { id: 2, name: '#coding' },
         { id: 3, name: '#reading' },
         { id: 4, name: '#cooking' }
-    ],
-    status: [
-        { id: 1, name: 'New' },
-        { id: 2, name: 'In Progress' },
-        { id: 3, name: 'Done' }
-    ],
-    importanceLevel: [
-        { id: 1, name: 'Urgent' },
-        { id: 2, name: 'High' },
-        { id: 3, name: 'High' },
-        { id: 4, name: 'Low' },
     ],
     userList: [
         { id: 1, name: 'Thien Huynh', avatar: 'https://vcdn-vnexpress.vnecdn.net/2020/09/23/01-4451-1600828895.jpg' },
@@ -53,11 +42,11 @@ const DATA = {
             channelId: 1,
             bucketId: null,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 2, name: 'Reading', assigneeId: 2},
@@ -84,11 +73,11 @@ const DATA = {
             channelId: 1,
             bucketId: null,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 1},
@@ -116,11 +105,11 @@ const DATA = {
             channelId: 1,
             bucketId: null,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 1},
@@ -140,7 +129,7 @@ const DATA = {
             description: 'This is a work item of Trang Nguyen',
             tagId: [1, 2, 3],
             ownerId: 4,
-            participantId: [1, 2, 4], 
+            participantId: [1, 2, 3, 4], 
             createdDate: '2 days ago', 
             dueDate: '2 day left', 
             statusId: 3, 
@@ -148,11 +137,11 @@ const DATA = {
             channelId: 1,
             bucketId: 1,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 1},
@@ -180,11 +169,11 @@ const DATA = {
             channelId: 1,
             bucketId: 2,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 1},
@@ -212,11 +201,11 @@ const DATA = {
             channelId: 1,
             bucketId: 3,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 1},
@@ -244,11 +233,11 @@ const DATA = {
             channelId: 1,
             bucketId: 1,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 1},
@@ -276,22 +265,17 @@ const DATA = {
             channelId: 1,
             bucketId: 2,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 3},
                 {id: 2, name: 'Reading', assigneeId: 1},
                 {id: 3, name: 'Speaking', assigneeId: 4}
             ], 
-            attachmentList: [
-                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
-                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
-                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
-            ],
             isFavourite: false
         },
         {
@@ -308,11 +292,11 @@ const DATA = {
             channelId: 1,
             bucketId: 4,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 1},
@@ -340,11 +324,11 @@ const DATA = {
             channelId: 1,
             bucketId: 4,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 1},
@@ -372,11 +356,11 @@ const DATA = {
             channelId: 1,
             bucketId: 2,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 1},
@@ -404,22 +388,22 @@ const DATA = {
             channelId: 1,
             bucketId: 1,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 1},
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
-            ], 
+            ],
             attachmentList: [
                 {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
                 {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
                 {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
-            ],
+            ], 
             isFavourite: false
         },
         {
@@ -436,11 +420,11 @@ const DATA = {
             channelId: 1,
             bucketId: 2,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 1},
@@ -468,11 +452,11 @@ const DATA = {
             channelId: 1,
             bucketId: 1,
             activitiesList: [
-                {name: 'Practice Listening', assignee: 'Trang Nguyen', createdTime:'15 mins ago', label:'User'},
-                {name: 'Trang Nguyen has change status from New to In Progress', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Write an English essay', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'},
-                {name: 'Trang Nguyen has delete todo: Listening', assignee: 'Trang Nguyen', createdTime:'2 days ago', label:'System'},
-                {name: 'Practice Speaking', assignee: 'Trang Nguyen', createdTime:'8 mins ago', label:'Communication'}
+                {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
+                {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
+                {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],
             todoList: [
                 {id: 1, name: 'Listening', assigneeId: 1},
@@ -487,157 +471,29 @@ const DATA = {
             isFavourite: false 
         },
     ],
-    activityLabel: [
-        {id: 1, name: 'System'},
-        {id: 2, name: 'Communication'},
-        {id: 3, name: 'User'},
-    ],
     isWorkStream: false,
-    archivedWorkList: []
-};
-
-function findStatusById(id) {
-    return DATA.status.find(element => element.id === id);
-}
-function findImportanceLevelById(id) {
-    return DATA.importanceLevel.find(element => element.id === id);
-}
-function findChannelById(id) {
-    return DATA.channelList.find(element => element.id === id);
-}
-function findBucketById(id) {
-    return DATA.bucketList.find(element => element.id === id);
-}
-function findUserById(id) {
-    return DATA.userList.find(element => element.id === id);
-}
-function findTagsById(id) {
-    return DATA.tagList.find(element => element.id === id);
-}
-function findWorkItemById(id) {
-    return DATA.workItemList.find(element => element.id === id);
-}
-function addTag(workId, text) {
-    DATA.tagList.push({ id: Math.random().toString().substring(2), name: text});
-    const workItem = findWorkItemById(workId);
-    workItem.tagId.push(DATA.tagList[DATA.tagList.length-1].id);
-}
-function addNewTodo(workId, text) {
-    const workItem = findWorkItemById(workId);
-    workItem.todoList.push({ id: Math.random().toString().substring(2), name: text, assigneeId: 1});
-}
-function addNewActivity(workId, text) {
-    const workItem = findWorkItemById(workId);
-    workItem.activitiesList.push({ id: Math.random().toString().substring(2), name: text, assigneeId: 1});
-}
-function deleteTodo(workId, todoId) {
-    const workItem = findWorkItemById(workId);
-    const todoIndex = workItem.todoList.findIndex(item => item.id === todoId);
-    workItem.todoList.splice(todoIndex, 1);
-}
-function editWorkItemDescription(workId, text) {
-    const workItem = findWorkItemById(workId);
-    workItem.description = text;
-}
-function addWorkItem(text) {
-    const newItem = {
-        id: Math.random().toString().substring(2), 
-        name: text, 
-        description: 'This is a new work item',
-        tagId: null,
-        ownerId: 3,
-        participantId: null,
-        createdDate: new Date().toLocaleString() + '', 
-        dueDate: null,
-        statusId: 1, 
-        importanceLevelId: null,
-        channelId: 1,
-        assignee: null, 
-        bucketId: null,
-        activitiesList: [
-            {name: 'Created a new work item', 
-                assigneeId: 3, 
-                createdTime:<Moment fromNow>{new Date().toLocaleString() + ''}</Moment>, 
-                labelId: 1}],
-        todoList: null};
-    DATA.workItemList = [
-        newItem,
-        ...DATA.workItemList
-    ];
-    return DATA.workItemList;
-}
-function addNewBucket(text) {
-    const newBucket = { id: Math.random().toString().substring(2), name: text };
-    DATA.bucketList = [
-        newBucket,
-        ...DATA.bucketList
-    ];
-    return DATA.bucketList;
-}
-function deleteBucket(bucketId) {
-    const bucketIndex = DATA.bucketList.findIndex(item => item.id === bucketId);
-    DATA.bucketList.splice(bucketIndex, 1);
-    revertWorkItemToWorkStream(bucketId);
-    return [...DATA.bucketList];
-}
-function revertWorkItemToWorkStream(bucketId) {
-    for (let i = 0; i < DATA.workItemList.length; i++) {
-        if (DATA.workItemList[i].bucketId === bucketId) {
-            DATA.workItemList[i].bucketId = null;
-        }
-    }
-    DATA.workItemList = [...DATA.workItemList];
-    return DATA.workItemList;
-}
-function editBucketName(bucketId, text) {
-    const bucket = findBucketById(bucketId);
-    bucket.name = text;
-    return [...DATA.bucketList];
-}
-function addFavouriteItem(workId) {
-    const workItemIndex = DATA.workItemList.findIndex(item => item.id === workId);
-    if (DATA.workItemList[workItemIndex].isFavourite) {
-        DATA.workItemList[workItemIndex].isFavourite = false;
-    } else {
-        DATA.workItemList[workItemIndex].isFavourite = true;
-    }
-    return [...DATA.workItemList];
-}
-function completeWorkItem(workId) {
-    const workItemIndex = DATA.workItemList.findIndex(item => item.id === workId); 
-    console.log('status', DATA.workItemList[workItemIndex].statusId);
-    if (DATA.workItemList[workItemIndex].statusId === 1 || DATA.workItemList[workItemIndex].statusId === 2) {
-        console.log('Im here');
-        DATA.workItemList[workItemIndex].statusId = 3;
-    } else if (DATA.workItemList[workItemIndex].statusId === 3) {
-        DATA.workItemList[workItemIndex].statusId = 1;
-    }
-    console.log('statusId', DATA.workItemList[workItemIndex].statusId);
-    console.log('workList', [...DATA.workItemList]);
-    return [...DATA.workItemList];
-}
-function archiveCompletedWorkItem(bucketId) {
-    console.log('im here');
-    for (let i = 0; i < DATA.workItemList.length; i++) {
-        if (DATA.workItemList[i].bucketId === bucketId && DATA.workItemList[i].statusId === 3) {
-            DATA.archivedWorkList.push(DATA.workItemList[i]);
-            DATA.workItemList.splice(i, 1);
-        }
-    }
-    console.log('archiveList', [...DATA.archivedWorkList]);
-    return [...DATA.workItemList];
-}
-export { DATA, findStatusById, findChannelById, findUserById, findBucketById, findWorkItemById, findImportanceLevelById, findTagsById};
-export { addTag, 
-    addNewTodo, 
-    deleteTodo, 
-    editWorkItemDescription, 
-    addWorkItem, 
-    addNewBucket, 
-    deleteBucket, 
-    revertWorkItemToWorkStream, 
-    editBucketName, 
-    addFavouriteItem,
-    completeWorkItem,
-    archiveCompletedWorkItem
-};
+    archivedWorkList: [],
+    activeId: undefined,
+    isViewDetail: false,
+    findStatusById: () => {},
+    findImportanceLevelById: () => {},
+    findChannelById: () => {},
+    findBucketById: () => {},
+    findOwnerById: () => {},
+    findTagsById: () => {},
+    findWorkItemById: () => {},
+    addTag: () => {},
+    addNewTodo: () => {},
+    addNewActivity: () => {},
+    deleteTodo: () => {},
+    editWorkItemDescription: () => {},
+    addWorkItem: () => {},
+    addNewBucket: () => {},
+    deleteBucket: () => {},
+    revertWorkItemToWorkStream: () => {},
+    editBucketName: () => {},
+    addFavouriteItem: () => {},
+    completeWorkItem: () => {},
+    archiveCompletedWorkItem: () => {},
+    deleteAttachment: () => {}
+});

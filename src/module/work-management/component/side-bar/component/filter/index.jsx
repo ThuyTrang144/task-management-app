@@ -1,7 +1,10 @@
 import { Select } from 'antd';
 import { Checkbox } from 'antd';
 import React from 'react';
+import { useContext } from 'react/cjs/react.development';
+import { DataContext } from '../../../../../../context';
 import { FilterPannel } from '../filter-panel';
+import { status, importanceLevel } from '../../../../../../constant';
 import './style.scss';
 const { Option } = Select;
 
@@ -14,60 +17,82 @@ export function SubFilter ({ title, children }) {
     );
 }
 
-class Filter extends React.PureComponent {
-    renderAssignee() {
-        return this.props.assignee.map(item => 
+const Filter = React.memo(function () {
+    const context = useContext(DataContext);
+    function renderAssignee() {
+        return context.state.userList.map(item => 
             (
-                <Option className='selector-input' key={item.id} value={item.name}>{item.name}</Option>
+                <Option 
+                    className='selector-input' 
+                    key={item.id} 
+                    value={item.name}>
+                    {item.name}
+                </Option>
             )
         );
     }
-    renderTags() {
-        return this.props.tagList.map(item => 
+    function renderTags() {
+        return context.state.tagList.map(item => 
             (
-                <Option className='selector-input' key={item.id} value={item.name}>{item.name}</Option>
+                <Option 
+                    className='selector-input' 
+                    key={item.id} 
+                    value={item.name}>
+                    {item.name}
+                </Option>
             )
         );
     }
-    renderStatus() {
-        return this.props.status.map(item => 
+    function renderStatus() {
+        return status.map(item => 
             (
-                <Checkbox key={item.id} >{item.name}</Checkbox>
+                <Checkbox 
+                    key={item.id}>
+                    {item.name}
+                </Checkbox>
             )
         );
     }
-    renderImportanceLevel() {
-        return this.props.importanceLevel.map(item => 
+    function renderImportanceLevel() {
+        return importanceLevel.map(item => 
             (
-                <Checkbox key={item.id}>{item.name}</Checkbox>
+                <Checkbox 
+                    key={item.id}>
+                    {item.name}
+                </Checkbox>
             )
         );
     }
-    render() {
-        return (
-            <FilterPannel title='FIlTERS'>
-                <SubFilter title='Assignee'>
-                    <Select className='selector' placeholder='Select Asignee'>
-                        {this.renderAssignee()}
-                    </Select>   
-                </SubFilter>
-                <SubFilter title='Tags'>
-                    <Select className='selector' placeholder='Select Tags'>
-                        {this.renderTags()}
-                    </Select>   
-                </SubFilter>
-                <SubFilter title='Status'>
-                    <div className='checkbox-filter'>
-                        {this.renderStatus()}
-                    </div>   
-                </SubFilter>
-                <SubFilter title='Importance Level'>
-                    <div className='checkbox-filter'>
-                        {this.renderImportanceLevel()}
-                    </div>   
-                </SubFilter>
-            </FilterPannel>
-        );
-    }
-}
+    return (
+        <FilterPannel title='FIlTERS'>
+            <SubFilter title='Assignee'>
+                <Select 
+                    className='selector' 
+                    placeholder='Select Asignee'>
+                    {renderAssignee()}
+                </Select>   
+            </SubFilter>
+            <SubFilter title='Tags'>
+                <Select 
+                    className='selector' 
+                    placeholder='Select Tags'>
+                    {renderTags()}
+                </Select>   
+            </SubFilter>
+            <SubFilter title='Status'>
+                <div 
+                    className='checkbox-filter'>
+                    {renderStatus()}
+                </div>   
+            </SubFilter>
+            <SubFilter title='Importance Level'>
+                <div 
+                    className='checkbox-filter'>
+                    {renderImportanceLevel()}
+                </div>   
+            </SubFilter>
+        </FilterPannel>
+    );
+});
+ 
 export default Filter;

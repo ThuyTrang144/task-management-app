@@ -1,50 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { EditOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import './style.scss';
-import { editWorkItemDescription } from '../../../../../../data';
+import { useContext } from 'react/cjs/react.development';
+import { DataContext } from '../../../../../../context';
+import { WorkDetailContext } from '../../context';
 
-class Description extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = { 
-            isEditDes: false,
-            defaultValue: props.description
-        };
-    }
-    static getDerivedStateFromProps(nextProps, prevState) {
-        console.log('next props', nextProps);
-        console.log('prev ', prevState);
-        if (nextProps.description !== prevState.description) {
-            return {
-                description: nextProps.description,
-                defaultValue: nextProps.description
-            };
-        } else return null;
-    }
-    openEditView = () => {
-        if (this.state.isEditDes) {
-            this.setState({ isEditDes: false });
+const Description = React.memo(function (props) {
+    const dataContext = useContext(DataContext);
+    const workContext = useContext(WorkDetailContext);
+    const { activeId } = dataContext.state;
+    const { workDetailData } = workContext;
+    const [isEdit, setIsEditState] = useState(false);
+    function openEditView() {
+        if (isEdit) {
+            setIsEditState(false);
         } else {
-            this.setState({ isEditDes: true });
+            setIsEditState(true);
         }
     }
-    onKeyPress = (e) => {
+    function onKeyPress(e) {
         const value = e.target.value;
-        editWorkItemDescription(this.props.activeId, value);
-        this.setState({ isEditDes: false }) ;
+        dataContext.editWorkItemDescription(activeId, value);
+        setIsEditState(false);
     }
-    render() { 
-        console.log('description', this.state.defaultValue);
-        return ( 
-            <div className="item-description">
-                {this.state.isEditDes ?
-                    <Input
-                        defaultValue={this.state.defaultValue}
-                        onPressEnter={this.onKeyPress}/> :
-                    <p>{this.state.defaultValue}<EditOutlined onClick={this.openEditView}/></p>}
-            </div> );
-    }
-}
+    return ( 
+        <div className="item-description">
+            { isEdit ?
+                <Input
+                    defaultValue={workDetailData.description}
+                    onPressEnter={onKeyPress}
+                /> :
+                <p>{workDetailData.description}<EditOutlined onClick={openEditView}/></p>}
+        </div> );
+});
  
 export default Description;

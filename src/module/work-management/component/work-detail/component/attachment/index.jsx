@@ -1,16 +1,27 @@
 import React from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
+import { useContext } from 'react/cjs/react.development';
+import { WorkDetailContext } from '../../context';
+import { DataContext } from '../../../../../../context';
 
-export default function Attachment(props) {
+const Attachment = React.memo(function () {
+    const workContext = useContext(WorkDetailContext);
     function renderAttachmentList() {
-        return props.attachmentList.map(item =>
+        return workContext.workDetailData.attachmentList.map(item =>
             ( <div key={item.id} className="attachment-item">
                 <div>
                     {item.type}
                     <span>{item.size}</span>
                     <span>{item.name}</span>
                 </div>
-                <DeleteOutlined id="delete-icon"/>
+                <DataContext.Consumer>
+                    {value => {
+                        function deleteAttachment() {
+                            value.deleteAttachment(value.state.activeId, item.id);
+                        }
+                        return <DeleteOutlined id="delete-icon" onClick={deleteAttachment}/>;
+                    }}
+                </DataContext.Consumer>
             </div> )
         );
     }
@@ -25,4 +36,5 @@ export default function Attachment(props) {
             </div>
         </div>
     );
-}
+});
+export default Attachment;

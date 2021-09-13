@@ -2,25 +2,15 @@ import './style.scss';
 import { faUser, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { DataContext } from '../../../../context';
 
 class ItemCard extends React.PureComponent {
+    static contextType = DataContext;
     viewWorkDetail = () => {
-        if (this.props.viewWorkDetail) {
-            this.props.viewWorkDetail(this.props.id);
+        if (this.context.viewWorkDetail) {
+            this.context.viewWorkDetail(this.props.id);
         }
-        // } else if (this.props.viewWorkDetailInBucket) {
-        //     this.props.viewWorkDetailInBucket(this.props.id);
-        // }
-        console.log('im here', this.props.id);
-        //     this.props.changeSelectedStatus(this.props.index);
-        //     this.setState( {isWorkStream: true});
-        // }
-        // if (this.props.viewWorkDetailOfBucket) {
-        //     this.props.viewWorkDetailOfBucket(this.props.index);
-        //     this.setState( {isWorkStream: false});
-        // }
     }
-
     render() { 
         let color;
         if (this.props.status === 'New') {

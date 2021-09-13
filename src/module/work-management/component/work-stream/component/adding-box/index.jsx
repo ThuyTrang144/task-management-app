@@ -1,9 +1,11 @@
 import { faPlus, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { DataContext } from '../../../../../../context';
 import './style.scss';
 
 class AddingBox extends React.PureComponent {
+    static contextType = DataContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +19,8 @@ class AddingBox extends React.PureComponent {
     }
     onSubmit = (e) => {
         if (e.charCode === 13) {
-            this.props.addWorkItem(this.state.value);
+            console.log('Im here');
+            this.context.addWorkItem(this.state.value);
             this.setState({ value: ''});
         }
     }

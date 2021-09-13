@@ -1,12 +1,15 @@
 import React from 'react';
+import { DataContext } from '../../../../../../context';
 import { findStatusById, findChannelById, findUserById } from '../../../../../../data';
 import ItemCard from '../../../item-card';
 import './style.scss';
 
 class WorkList extends React.Component {
+    static contextType = DataContext;
     renderItemList() {
-        const { workItemList, searchValue } = this.props;
-        const workStreamItemList = workItemList.filter(item => !item.bucketId);
+        const { searchValue } = this.props;
+        console.log('search value', searchValue);
+        const workStreamItemList = this.context.state.workItemList.filter(item => !item.bucketId);
         const searchResult = workStreamItemList.filter(item => item.name.toLocaleLowerCase().startsWith(searchValue) || item.name.toLocaleLowerCase().includes(searchValue));
         const newList = (searchValue.length !== 0) ? searchResult : workStreamItemList;
         if (searchResult.length === 0 && searchValue.length !== 0) {
@@ -25,7 +28,7 @@ class WorkList extends React.Component {
                 owner={owner.name} 
                 createdDate={item.createdDate} 
                 dueDate={item.dueDate} 
-                viewWorkDetail={this.props.viewWorkDetail}
+                // viewWorkDetail={this.props.viewWorkDetail}
             />; 
         } 
         );
