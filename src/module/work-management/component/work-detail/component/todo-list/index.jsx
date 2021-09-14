@@ -3,7 +3,7 @@ import React from 'react';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import Todo from './Todo';
-import { findOwnerById, addNewTodo, deleteTodo } from '../../../../../../data';
+import { findUserById, addNewTodo, deleteTodo } from '../../../../../../data';
 
 class TodoList extends React.PureComponent {
     constructor(props) {
@@ -22,7 +22,7 @@ class TodoList extends React.PureComponent {
     }
     renderTodoList() {
         return this.props.todoList.map(item => {
-            const assignee = findOwnerById(item.assigneeId);
+            const assignee = findUserById(item.assigneeId);
             return <Todo
                 key={item.id}
                 id={item.id}

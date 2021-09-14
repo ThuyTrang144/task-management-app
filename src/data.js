@@ -1,4 +1,5 @@
 import Moment from 'react-moment';
+import { FilePdfOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
 
 const DATA = {
     channelList: [
@@ -62,6 +63,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -89,6 +95,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -116,6 +127,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -124,7 +140,7 @@ const DATA = {
             description: 'This is a work item of Trang Nguyen',
             tagId: [1, 2, 3],
             ownerId: 4,
-            participantId: [1, 2, 3, 4], 
+            participantId: [1, 2, 4], 
             createdDate: '2 days ago', 
             dueDate: '2 day left', 
             statusId: 3, 
@@ -143,6 +159,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -170,6 +191,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -197,6 +223,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 3},
                 {id: 3, name: 'Speaking', assigneeId: 4}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -224,6 +255,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 3},
                 {id: 3, name: 'Speaking', assigneeId: 4}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -251,6 +287,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 1},
                 {id: 3, name: 'Speaking', assigneeId: 4}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -278,6 +319,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -305,6 +351,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -332,6 +383,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -359,6 +415,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -386,6 +447,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -413,6 +479,11 @@ const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 2},
                 {id: 3, name: 'Speaking', assigneeId: 3}
             ],
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false 
         },
     ],
@@ -423,11 +494,6 @@ const DATA = {
     ],
     isWorkStream: false,
     archivedWorkList: []
-    // attachmentList: [
-    //     {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
-    //     {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
-    //     {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
-    // ]
 };
 
 function findStatusById(id) {
@@ -442,7 +508,7 @@ function findChannelById(id) {
 function findBucketById(id) {
     return DATA.bucketList.find(element => element.id === id);
 }
-function findOwnerById(id) {
+function findUserById(id) {
     return DATA.userList.find(element => element.id === id);
 }
 function findTagsById(id) {
@@ -557,7 +623,7 @@ function archiveCompletedWorkItem(bucketId) {
     console.log('archiveList', [...DATA.archivedWorkList]);
     return [...DATA.workItemList];
 }
-export { DATA, findStatusById, findChannelById, findOwnerById, findBucketById, findWorkItemById, findImportanceLevelById, findTagsById};
+export { DATA, findStatusById, findChannelById, findUserById, findBucketById, findWorkItemById, findImportanceLevelById, findTagsById};
 export { addTag, 
     addNewTodo, 
     deleteTodo, 

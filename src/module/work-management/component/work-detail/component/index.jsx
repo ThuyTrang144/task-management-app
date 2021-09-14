@@ -4,4 +4,5 @@ import TagList from './tag-list';
 import Description from './description';
 import ActivityList from './activity-list';
 import Assignment from './assignment';
-export { Header, TodoList, TagList, Description, ActivityList, Assignment};
+import Attachment from './attachment';
+export { Header, TodoList, TagList, Description, ActivityList, Assignment, Attachment};

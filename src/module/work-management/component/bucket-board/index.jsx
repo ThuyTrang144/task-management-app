@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { addFavouriteItem, addNewBucket, archiveCompletedWorkItem, completeWorkItem, editBucketName } from '../../../../data';
-import { BucketList, BucketAction } from './component';
+import {BucketList, BucketAction}  from './component'; 
 import './style.scss';
 
 export default function BucketBoard(data) {
