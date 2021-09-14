@@ -446,4 +446,5 @@ export const WorkItemContext = React.createContext({
             isFavourite: false 
         },
     ],
+    archivedWorkList: []
 });

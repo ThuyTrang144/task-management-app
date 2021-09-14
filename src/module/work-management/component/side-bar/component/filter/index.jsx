@@ -6,6 +6,7 @@ import { DataContext } from '../../../../../../context';
 import { FilterPannel } from '../filter-panel';
 import { status, importanceLevel } from '../../../../../../constant';
 import './style.scss';
+import { useTag } from '../../../../../../general-data-hook/useTag';
 const { Option } = Select;
 
 export function SubFilter ({ title, children }) {
@@ -18,9 +19,11 @@ export function SubFilter ({ title, children }) {
 }
 
 const Filter = React.memo(function () {
+    const { tagList } = useTag();
+    console.log('tagList', tagList);
     const context = useContext(DataContext);
     function renderAssignee() {
-        return context.state.userList.map(item => 
+        return context.userList.map(item => 
             (
                 <Option 
                     className='selector-input' 
@@ -32,7 +35,8 @@ const Filter = React.memo(function () {
         );
     }
     function renderTags() {
-        return context.state.tagList.map(item => 
+        console.log('tagList', tagList);
+        return tagList.map(item => 
             (
                 <Option 
                     className='selector-input' 

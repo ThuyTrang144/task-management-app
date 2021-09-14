@@ -8,7 +8,6 @@ const BucketList = React.memo(function (props) {
         <div className='bucket-listing'>
             <BucketContext.Consumer>
                 {value => {
-                    console.log('props', props);
                     return value.bucketList.map(item =>
                         <Bucket
                             key={item.id}

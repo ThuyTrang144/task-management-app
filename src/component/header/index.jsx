@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './style.scss';
 import { MenuOutlined } from '@ant-design/icons';
 import { ChannelSelector, Notification} from './component';
-import { DataContext } from '../../context';
+import { useUserList } from '../../general-data-hook/useUserList';
 
 export default function Header() {
-    const context = useContext(DataContext);
+    const { userList } = useUserList();
     return ( 
         <div className='header'>
             <div className='left'>
@@ -20,9 +20,9 @@ export default function Header() {
                 <div className='avatar'>
                     <img 
                         alt='userAvatar' 
-                        src={context.state.userList[0].avatar}>
+                        src={userList[0].avatar}>
                     </img>
-                    <span>{context.state.userList[0].name}</span>
+                    <span>{userList[0].name}</span>
                 </div>
             </div>
         </div>

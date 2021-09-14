@@ -5,19 +5,19 @@ import './style.scss';
 import { DataContext } from '../../../../../../context';
 import { WorkDetailContext } from '../../context';
 import { useContext } from 'react/cjs/react.development';
-import { WorkItemContext } from '../../../../context/workItem';
+import { useTag } from '../../../../../../general-data-hook/useTag';
 
 const TagList = React.memo(function () {
     const [ isAdding, setIsAddingState ] = useState(false);
     const [ inputTag, setInputtag ] = useState('');
+    const { addTag, findTagsById } = useTag();
     const dataContext = useContext(DataContext);
     const workContext = useContext(WorkDetailContext);
-    const workItemContext = useContext(WorkItemContext);
     function renderTags() {
         const tagId = workContext.workDetailData.tagId;
         const tagList = [];
         for (let i = 0; i < tagId.length; i++) {
-            tagList.push(dataContext.findTagsById(tagId[i]));
+            tagList.push(findTagsById(tagId[i]));
         }
         return tagList.map(item => (
             <Tag className='tag-item' key={item.id} closable>{item.name}</Tag>
@@ -32,7 +32,7 @@ const TagList = React.memo(function () {
     }
     function onKeyPress (e) {
         if (e.charCode === 13) {
-            workItemContext.addTag(dataContext.state.activeId, inputTag);
+            addTag(dataContext.activeId, inputTag);
             setInputtag('');
             setIsAddingState(false);
         }
