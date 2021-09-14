@@ -1,4 +1,3 @@
-
 .header {
     background-color: var(--header-background-color);
     position: relative;
@@ -32,8 +31,10 @@
             font-size: var(--lg);
             font-weight: bold;
             img {
-                height: 30px;
-                width: 30px;
+                height: 40px;
+                width: 40px;
+                border-radius: 100px;
+                margin-right: 5px;
             }
         }
     }

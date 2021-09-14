@@ -6,12 +6,12 @@ class SideBar extends React.PureComponent {
     render() {
         return (
             <div className="sidebar">
-                <Menu folderMenu={this.props.folderMenu} />
+                <Menu/>
                 <Filter 
-                    assignee={this.props.assignee} 
-                    tagList={this.props.tagList} 
-                    status={this.props.status}
-                    importanceLevel={this.props.importanceLevel}
+                    // assignee={this.props.assignee} 
+                    // tagList={this.props.tagList} 
+                    // status={this.props.status}
+                    // importanceLevel={this.props.importanceLevel}
                 />
             </div>
         );

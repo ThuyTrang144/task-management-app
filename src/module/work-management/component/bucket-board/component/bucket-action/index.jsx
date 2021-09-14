@@ -3,8 +3,13 @@ import { faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Popover, Button, Input } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './style.scss';
+import { useContext } from 'react/cjs/react.development';
+import { DataContext } from '../../../../../../context';
+import { BucketContext } from '../..';
 
-export default function BucketAction(props) {
+export default function BucketAction() {
+    const context = useContext(DataContext);
+    const bucketContext = useContext(BucketContext);
     const [newBucket, setNewBucketState] = useState('');
     function handleOnChange(e) {
         const newBucket = e.target.value;
@@ -13,10 +18,10 @@ export default function BucketAction(props) {
     }
     function searchWorkItem(e) {
         const searchValue = e.target.value;
-        props.searchWorkItem(searchValue);
+        bucketContext.searchWorkItem(searchValue);
     }
     function addNewBucket() {
-        props.addNewBucket(newBucket);
+        context.addNewBucket(newBucket);
         setNewBucketState('');
     }
     function renderAddBucketForm() {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { DeleteOutlined, CommentOutlined } from '@ant-design/icons';
 class Activity extends React.Component {
-    state = {  }
     render() {
         return (
             <div className="activities-item">

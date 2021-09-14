@@ -1,35 +1,28 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import './style.scss';
 import { Select } from 'antd';
+import { DataContext } from '../../../../context';
 const { Option } = Select;
 
-class ChannelSelector extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: this.props.channelList[0].name
-        };
+export function ChannelSelector() {
+    const context = useContext(DataContext);
+    const [channelName, setChannelNameState] = useState(context.state.channelList[0].name);
+    function onChange (option) {
+        setChannelNameState( option );
     }
-    onChange = (option) => {
-        const value = option;
-        this.setState({ value });
-    }
-    rederChannelName() {
-        return this.props.channelList.map(item => {
+    function rederChannelName() {
+        return context.state.channelList.map(item => {
             return <Option key={item.id} value={item.name}>{item.name}</Option>;
         });
     }
-    render() {
-        return (
-            <Select
-                className='channel-selector'
-                defaultValue={'Channel: ' + this.props.channelList[0].name.toLocaleUpperCase()}
-                onChange={this.onChange}
-                value={'Channel: ' + this.state.value.toLocaleUpperCase()}
-            >
-                {this.rederChannelName()}
-            </Select>
-        );
-    }
+    return (
+        <Select
+            className='channel-selector'
+            defaultValue={'Channel: ' + context.state.channelList[0].name.toLocaleUpperCase()}
+            onChange={onChange}
+            value={'Channel: ' + channelName.toLocaleUpperCase()}
+        >
+            {rederChannelName()}
+        </Select>
+    );
 }
-export default ChannelSelector;

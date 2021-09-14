@@ -4,17 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 import React from 'react';
 import ItemCard from '../../../item-card';
-import { findWorkItemById } from '../../../../../../data';
+import { useContext } from 'react/cjs/react.development';
+import { DataContext } from '../../../../../../context';
 
 export default function BucketItem(props) {
+    const context = useContext(DataContext);
     function addFavouriteItem() {
-        props.addFavouriteItem(props.id);
+        context.addFavouriteItem(props.id);
     }
     function completeWorkItem() {
-        console.log(props.id);
-        props.completeWorkItem(props.id);
+        context.completeWorkItem(props.id);
     }
-    const workItem = findWorkItemById(props.id);
+    const workItem = context.findWorkItemById(props.id);
     let textDecoration;
     if (props.status === 'Done') {
         textDecoration = 'line-through';
@@ -48,7 +49,6 @@ export default function BucketItem(props) {
                     owner={props.owner}
                     createdDate={props.createdDate}
                     dueDate={props.dueDate}
-                    viewWorkDetail={props.viewWorkDetail}
                 />
             </div>
         </div>

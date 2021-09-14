@@ -1,28 +1,23 @@
 import React from 'react';
+import { DataContext } from '../../../../../../context';
 import Bucket from './Bucket';
 import './style.scss';
 
-export default function BucketList(props) {
-    function renderBucketList() {
-        return props.bucketList.map(item =>
-            <Bucket
-                key={item.id}
-                name={item.name}
-                workItemList={props.workItemList}
-                id={item.id}
-                searchValue={props.searchValue}
-                deleteBucket={props.deleteBucket}
-                editBucketName={props.editBucketName}
-                addFavouriteItem={props.addFavouriteItem}
-                completeWorkItem={props.completeWorkItem}
-                archiveCompletedWorkItem={props.archiveCompletedWorkItem}
-                viewWorkDetail={props.viewWorkDetail}
-            />
-        );
-    }
+const BucketList = React.memo(function () {
     return (
         <div className='bucket-listing'>
-            {renderBucketList()}
+            <DataContext.Consumer>
+                {value => {
+                    return value.state.bucketList.map(item =>
+                        <Bucket
+                            key={item.id}
+                            name={item.name}
+                            id={item.id}
+                        />
+                    );
+                }}
+            </DataContext.Consumer>
         </div>
     );
-}
+});
+export default BucketList;
