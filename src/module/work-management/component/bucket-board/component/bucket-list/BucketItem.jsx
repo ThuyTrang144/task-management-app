@@ -5,17 +5,17 @@ import Checkbox from 'antd/lib/checkbox/Checkbox';
 import React from 'react';
 import ItemCard from '../../../item-card';
 import { useContext } from 'react/cjs/react.development';
-import { DataContext } from '../../../../../../context';
+import { WorkItemContext } from '../../../../context/workItem';
 
 export default function BucketItem(props) {
-    const context = useContext(DataContext);
+    const workItemContext = useContext(WorkItemContext);
     function addFavouriteItem() {
-        context.addFavouriteItem(props.id);
+        workItemContext.addFavouriteItem(props.id);
     }
     function completeWorkItem() {
-        context.completeWorkItem(props.id);
+        workItemContext.completeWorkItem(props.id);
     }
-    const workItem = context.findWorkItemById(props.id);
+    const workItem = workItemContext.findWorkItemById(props.id);
     let textDecoration;
     if (props.status === 'Done') {
         textDecoration = 'line-through';

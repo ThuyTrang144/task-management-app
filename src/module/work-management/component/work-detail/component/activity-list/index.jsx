@@ -5,15 +5,16 @@ import { SmileOutlined } from '@ant-design/icons';
 import { useContext } from 'react/cjs/react.development';
 import { DataContext } from '../../../../../../context';
 import { WorkDetailContext } from '../../context';
-import { findUserById } from '../../../../../../data';
+import { WorkItemContext } from '../../../../context/workItem';
 
 const ActivitiesList = React.memo(function () {
     const dataContext = useContext(DataContext);
     const workContext = useContext(WorkDetailContext);
+    const workItemContext = useContext(WorkItemContext);
     const [ activity, setActivityState ] = useState(''); 
     function renderActivities() {
         return workContext.workDetailData.activitiesList.map(item => {
-            const assignee = findUserById(item.assigneeId);
+            const assignee = dataContext.findUserById(item.assigneeId);
             return <Activity 
                 key={item.id} 
                 id={item.id}
@@ -31,7 +32,7 @@ const ActivitiesList = React.memo(function () {
     }
     function onKeyPress(e) {
         if (e.charCode === 13) {
-            dataContext.addNewActivity(dataContext.state.activeId, activity);
+            workItemContext.addNewActivity(dataContext.state.activeId, activity);
             setActivityState('');
         }
     }

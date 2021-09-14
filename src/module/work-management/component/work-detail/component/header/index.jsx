@@ -25,7 +25,7 @@ class Header extends React.PureComponent {
                                 <div className="work-item-header">
                                     <div className="work-item-title">
                                         <LeftOutlined 
-                                            onClick={this.props.backToBucketBoard} 
+                                            onClick={value1.backToBucketBoard} 
                                             className='back-icon'/>
                                         <span className='item-name'>{value2.workDetailData.name}</span>
                                         <Select className="status-selection" value={statusItem.name}>

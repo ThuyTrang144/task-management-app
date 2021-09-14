@@ -6,10 +6,12 @@ import Todo from './Todo';
 import { WorkDetailContext } from '../../context';
 import { useContext, useState } from 'react/cjs/react.development';
 import { DataContext } from '../../../../../../context';
+import { WorkItemContext } from '../../../../context/workItem';
 
 const TodoList = React.memo(function () {
     const dataContext = useContext(DataContext);
     const workContext = useContext(WorkDetailContext);
+    const workItemContext = useContext(WorkItemContext);
     const [ isOpen, setIsOpenState ] = useState(false);
     const [ newTodo, setNewTodoState ] = useState('');
     function openTodo() {
@@ -28,13 +30,14 @@ const TodoList = React.memo(function () {
                 id={item.id}
                 name={item.name}
                 assignee={assignee.name}
+                workId={workDetailData.id}
             />;
         }
         );
     }
     function onKeyPress(e) {
         if (e.charCode === 13) {
-            dataContext.addNewTodo(dataContext.state.activeId, newTodo);
+            workItemContext.addNewTodo(workContext.workDetailData.id, newTodo);
             setNewTodoState('');
         }
     }

@@ -4,11 +4,9 @@ import { Popover, Button, Input } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './style.scss';
 import { useContext } from 'react/cjs/react.development';
-import { DataContext } from '../../../../../../context';
-import { BucketContext } from '../..';
+import { BucketContext } from '../../../../context/bucket';
 
-export default function BucketAction() {
-    const context = useContext(DataContext);
+export default function BucketAction(props) {
     const bucketContext = useContext(BucketContext);
     const [newBucket, setNewBucketState] = useState('');
     function handleOnChange(e) {
@@ -18,10 +16,10 @@ export default function BucketAction() {
     }
     function searchWorkItem(e) {
         const searchValue = e.target.value;
-        bucketContext.searchWorkItem(searchValue);
+        props.searchWorkItem(searchValue);
     }
     function addNewBucket() {
-        context.addNewBucket(newBucket);
+        bucketContext.addNewBucket(newBucket);
         setNewBucketState('');
     }
     function renderAddBucketForm() {

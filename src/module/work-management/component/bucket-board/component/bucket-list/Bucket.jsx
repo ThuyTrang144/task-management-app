@@ -4,26 +4,29 @@ import { faArchive, faBars, faPen, faTrash } from '@fortawesome/free-solid-svg-i
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown, Input, Menu, Tooltip} from 'antd';
 import { useContext } from 'react/cjs/react.development';
-import { BucketContext } from '../..';
 import { DataContext } from '../../../../../../context';
+import { BucketContext } from '../../../../context/bucket';
+import { WorkItemContext } from '../../../../context/workItem';
 
 export default function Bucket(props) {
     const bucketContext = useContext(BucketContext);
-    const context = useContext(DataContext);
+    const workItemContext = useContext(WorkItemContext);
+    const { workItemList } = workItemContext;
+    const dataContext = useContext(DataContext);
     const [isEdit, setIsEditState] = useState(false);
     function renderBucket() {
-        const itemList = context.state.workItemList.filter(item => item.bucketId === props.id);
+        const itemList = workItemList.filter(item => item.bucketId === props.id);
         itemList.sort((a, b) => b.isFavourite - a.isFavourite );
         const searchList = itemList.filter(item => 
-            (item.name.toLocaleLowerCase().startsWith(bucketContext.searchValue) || item.name.toLocaleLowerCase().includes(bucketContext.searchValue))
+            (item.name.toLocaleLowerCase().startsWith(props.searchValue) || item.name.toLocaleLowerCase().includes(props.searchValue))
         );
-        const result = (bucketContext.searchValue.length !== 0) ? searchList : itemList;
+        const result = (props.searchValue.length !== 0) ? searchList : itemList;
         if (result.length === 0) {
             return <div className='empty-bucket'><p>There is no work item here</p></div>;
         }
         else return result.map(item => {
-            const owner = context.findUserById(item.ownerId); 
-            const statusItem = context.findStatusById(item.statusId);
+            const owner = dataContext.findUserById(item.ownerId); 
+            const statusItem = dataContext.findStatusById(item.statusId);
             return ( 
                 <BucketItem
                     key={item.id}
@@ -32,7 +35,8 @@ export default function Bucket(props) {
                     owner={owner.name}
                     status={statusItem.name}
                     dueDate={item.dueDate}
-                    createdDate={item.createdDate}>
+                    createdDate={item.createdDate}
+                >
                 </BucketItem>
             );});
     }
@@ -51,18 +55,18 @@ export default function Bucket(props) {
         );
     };
     function deleteBucket() {
-        context.deleteBucket(props.id);
+        bucketContext.deleteBucket(props.id);
     }
     function openEditBucketView() {
         setIsEditState(true);
     }
     function editBucketName(e) {
         const value = e.target.value;
-        context.editBucketName(props.id, value);
+        bucketContext.editBucketName(props.id, value);
         setIsEditState(false);
     }
     function archiveCompletedWorkItem() {
-        context.archiveCompletedWorkItem(props.id);
+        workItemContext.archiveCompletedWorkItem(props.id);
     }
     return (
         <div 
@@ -70,18 +74,14 @@ export default function Bucket(props) {
             className='bucket-box'>
             <div className='bucket-header'>
                 <div className="bucket-title">
-                    <DataContext.Consumer>
-                        { value => { 
-                            return isEdit ? 
-                                <Input 
-                                    defaultValue={props.name} 
-                                    className='input-text'
-                                    onPressEnter={editBucketName}>
-                                </Input> : 
-                                <span>{props.name.toLocaleUpperCase()}</span>;
-                        }
-                        }
-                    </DataContext.Consumer> 
+                    { isEdit ? 
+                        <Input 
+                            defaultValue={props.name} 
+                            className='input-text'
+                            onPressEnter={editBucketName}>
+                        </Input> : 
+                        <span>{props.name.toLocaleUpperCase()}</span>
+                    }
                 </div>
                 <div className="actions">
                     <Tooltip placement="top" title='Archive completed work item'>

@@ -2,7 +2,7 @@ import React from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useContext } from 'react/cjs/react.development';
 import { WorkDetailContext } from '../../context';
-import { DataContext } from '../../../../../../context';
+import { WorkItemContext } from '../../../../context/workItem';
 
 const Attachment = React.memo(function () {
     const workContext = useContext(WorkDetailContext);
@@ -14,14 +14,18 @@ const Attachment = React.memo(function () {
                     <span>{item.size}</span>
                     <span>{item.name}</span>
                 </div>
-                <DataContext.Consumer>
-                    {value => {
-                        function deleteAttachment() {
-                            value.deleteAttachment(value.state.activeId, item.id);
-                        }
-                        return <DeleteOutlined id="delete-icon" onClick={deleteAttachment}/>;
+                <WorkItemContext.Consumer>
+                    {value1 => {
+                        return <WorkDetailContext.Consumer>
+                            {value2 => {
+                                function deleteAttachment() {
+                                    value1.deleteAttachment(value2.workDetailData.id, item.id);
+                                }
+                                return <DeleteOutlined id="delete-icon" onClick={deleteAttachment}/>;
+                            }}
+                        </WorkDetailContext.Consumer>;
                     }}
-                </DataContext.Consumer>
+                </WorkItemContext.Consumer>
             </div> )
         );
     }
