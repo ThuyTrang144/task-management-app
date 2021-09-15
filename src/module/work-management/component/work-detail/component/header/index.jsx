@@ -1,71 +1,44 @@
-import { LeftOutlined, CalendarOutlined, ExclamationCircleOutlined, CheckOutlined, GlobalOutlined, EditOutlined, MenuOutlined} from '@ant-design/icons';
-import { Select } from 'antd';
+/* eslint-disable jsx-a11y/heading-has-content */
+import { LeftOutlined, CalendarOutlined } from '@ant-design/icons'; 
 import React from 'react';
-import { DataContext } from '../../../../../../context';
-import { status } from '../../../../../../constant';
 import './style.scss';
 import { WorkDetailContext } from '../../context';
-const { Option } = Select;
+import { Status } from './Status';
+import { ImportanceLevel } from './ImportanceLevel';
+import { ActionGroup } from './ActionGroup';
+import { DataContext } from '../../../../../../context';
 
 class Header extends React.PureComponent {
-    renderStatus() {
-        return status.map(item => (
-            <Option key={item.id} value={item.name}>{item.name}</Option>
-        ));
-    }
     render() {
         return (
-            <DataContext.Consumer>
+            <WorkDetailContext.Consumer>
                 {value1 => { 
-                    return <WorkDetailContext.Consumer>
-                        {value2 => { 
-                            const statusItem = value1.findStatusById(value2.workDetailData.statusId);
-                            const importanceLevel = value1.findImportanceLevelById (value2.workDetailData.importanceLevelId);
-                            return ( 
-                                <div className="work-item-header">
-                                    <div className="work-item-title">
-                                        <LeftOutlined 
-                                            onClick={value1.backToBucketBoard} 
-                                            className='back-icon'/>
-                                        <span className='item-name'>{value2.workDetailData.name}</span>
-                                        <Select className="status-selection" value={statusItem.name}>
-                                            {this.renderStatus()}
-                                        </Select>
-                                    </div>
-                                    <div className="work-item-actions">
-                                        <div className="due-date">
-                                            <CalendarOutlined />
-                                            <span>Due date <span className="days-left">({value2.workDetailData.dueDate})</span></span><br></br>
-                                            <span className="date">{value2.workDetailData.createdDate}</span>
-                                        </div>
-                                        <h2 className="vertical-line"></h2>
-                                        <div className="importance-level">
-                                            <ExclamationCircleOutlined />
-                                            <span>Importance</span><br></br>
-                                            <span className="level">{importanceLevel.name}</span>
-                                        </div>
-                                        <h2 className="vertical-line"></h2>
-                                        <div className="group-btn">
-                                            <button className="btn-action mark-done">
-                                                <CheckOutlined />
-                                            </button>
-                                            <button className="btn-action change-privacy">
-                                                <GlobalOutlined />
-                                            </button>
-                                            <button className="btn-action edit-work-item">
-                                                <EditOutlined />
-                                            </button>
-                                            <button className="btn-action menu-action">
-                                                <MenuOutlined />
-                                            </button>
-                                        </div>
-                                    </div>
+                    return ( 
+                        <div className="work-item-header">
+                            <div className="work-item-title">
+                                <DataContext.Consumer>
+                                    {value2 => <LeftOutlined 
+                                        onClick={value2.backToBucketBoard} 
+                                        className='back-icon'/>}
+                                </DataContext.Consumer>
+                                <span className='item-name'>{value1.workDetailData.name}</span>
+                                <Status workId={value1.workDetailData.id}/>
+                            </div>
+                            <div className="work-item-actions">
+                                <div className="due-date">
+                                    <CalendarOutlined />
+                                    <span>Due date <span className="days-left">({value1.workDetailData.dueDate})</span></span><br></br>
+                                    <span className="date">{value1.workDetailData.createdDate}</span>
                                 </div>
-                            );}
-                        }
-                    </WorkDetailContext.Consumer>;}}
-            </DataContext.Consumer>
-        );
+                                <h2 className="vertical-line"></h2>
+                                <ImportanceLevel />
+                                <h2 className="vertical-line"></h2>
+                                <ActionGroup />
+                            </div>
+                        </div>
+                    );}
+                }
+            </WorkDetailContext.Consumer>);
     }
 }
 
