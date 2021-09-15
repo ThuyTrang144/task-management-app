@@ -3,18 +3,18 @@ import React, { useState } from 'react';
 import Activity from './Activity';
 import { SmileOutlined } from '@ant-design/icons';
 import { useContext } from 'react/cjs/react.development';
-import { DataContext } from '../../../../../../context';
 import { WorkDetailContext } from '../../context';
-import { WorkItemContext } from '../../../../context/workItem';
+import { useActivity } from '../../../../work-item-hook/useActivity';
+import { useUserList } from '../../../../../../general-data-hook/useUserList';
 
 const ActivitiesList = React.memo(function () {
-    const dataContext = useContext(DataContext);
     const workContext = useContext(WorkDetailContext);
-    const workItemContext = useContext(WorkItemContext);
+    const { findUserById } = useUserList();
+    const { addNewActivity } = useActivity();
     const [ activity, setActivityState ] = useState(''); 
     function renderActivities() {
         return workContext.workDetailData.activitiesList.map(item => {
-            const assignee = dataContext.findUserById(item.assigneeId);
+            const assignee = findUserById(item.assigneeId);
             return <Activity 
                 key={item.id} 
                 id={item.id}
@@ -32,7 +32,7 @@ const ActivitiesList = React.memo(function () {
     }
     function onKeyPress(e) {
         if (e.charCode === 13) {
-            workItemContext.addNewActivity(dataContext.state.activeId, activity);
+            addNewActivity(workContext.workDetailData.id, activity);
             setActivityState('');
         }
     }

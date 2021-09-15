@@ -1,31 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useContext } from 'react/cjs/react.development';
 import { WorkDetailContext } from '../../context';
-import { WorkItemContext } from '../../../../context/workItem';
+import { useAttachment } from '../../../../work-item-hook/useAttachment';
 
 const Attachment = React.memo(function () {
     const workContext = useContext(WorkDetailContext);
+    const { deleteAttachment } = useAttachment();
+    const [attachmentList, setAttachmentList] = useState(workContext.workDetailData.attachmentList);
     function renderAttachmentList() {
-        return workContext.workDetailData.attachmentList.map(item =>
+        return attachmentList.map(item =>
             ( <div key={item.id} className="attachment-item">
                 <div>
                     {item.type}
                     <span>{item.size}</span>
                     <span>{item.name}</span>
                 </div>
-                <WorkItemContext.Consumer>
-                    {value1 => {
-                        return <WorkDetailContext.Consumer>
-                            {value2 => {
-                                function deleteAttachment() {
-                                    value1.deleteAttachment(value2.workDetailData.id, item.id);
-                                }
-                                return <DeleteOutlined id="delete-icon" onClick={deleteAttachment}/>;
-                            }}
-                        </WorkDetailContext.Consumer>;
+                <WorkDetailContext.Consumer>
+                    {value => {
+                        function deleteAttachmentItem () {
+                            const newAttachmentList = deleteAttachment(value.workDetailData.id, item.id);
+                            setAttachmentList(newAttachmentList);
+                        }
+                        return (
+                            <DeleteOutlined 
+                                id="delete-icon" 
+                                onClick={deleteAttachmentItem}/>);
                     }}
-                </WorkItemContext.Consumer>
+                </WorkDetailContext.Consumer>
             </div> )
         );
     }

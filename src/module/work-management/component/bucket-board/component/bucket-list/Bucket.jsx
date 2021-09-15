@@ -1,49 +1,24 @@
 import React, { useState } from 'react';
-import BucketItem from './BucketItem';
 import { faArchive, faBars, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown, Input, Menu, Tooltip} from 'antd';
-import { useContext } from 'react/cjs/react.development';
-import { DataContext } from '../../../../../../context';
-import { BucketContext } from '../../../../context/bucket';
-import { WorkItemContext } from '../../../../context/workItem';
+import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
+import { useBucket } from '../../../../bucket-hook/useBucket';
 
 export default function Bucket(props) {
-    const bucketContext = useContext(BucketContext);
-    const workItemContext = useContext(WorkItemContext);
-    const { workItemList } = workItemContext;
-    const dataContext = useContext(DataContext);
+    const { workItemList, archiveCompletedWorkItem } = useWorkItem();
+    const { renderWorkItemList } = useWorkItem();
+    const { editBucketName, deleteBucket } = useBucket();
     const [isEdit, setIsEditState] = useState(false);
     function renderBucket() {
         const itemList = workItemList.filter(item => item.bucketId === props.id);
         itemList.sort((a, b) => b.isFavourite - a.isFavourite );
-        const searchList = itemList.filter(item => 
-            (item.name.toLocaleLowerCase().startsWith(props.searchValue) || item.name.toLocaleLowerCase().includes(props.searchValue))
-        );
-        const result = (props.searchValue.length !== 0) ? searchList : itemList;
-        if (result.length === 0) {
-            return <div className='empty-bucket'><p>There is no work item here</p></div>;
-        }
-        else return result.map(item => {
-            const owner = dataContext.findUserById(item.ownerId); 
-            const statusItem = dataContext.findStatusById(item.statusId);
-            return ( 
-                <BucketItem
-                    key={item.id}
-                    id={item.id}
-                    name={item.name}
-                    owner={owner.name}
-                    status={statusItem.name}
-                    dueDate={item.dueDate}
-                    createdDate={item.createdDate}
-                >
-                </BucketItem>
-            );});
+        return renderWorkItemList(itemList, props.searchValue);
     }
     function renderMenuAction() {
         return (
             <Menu>
-                <Menu.Item key="0" onClick={deleteBucket}>
+                <Menu.Item key="0" onClick={() => deleteBucket(props.id)}>
                     <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                     <span>Delete Buket</span>
                 </Menu.Item>
@@ -54,19 +29,13 @@ export default function Bucket(props) {
             </Menu> 
         );
     };
-    function deleteBucket() {
-        bucketContext.deleteBucket(props.id);
-    }
     function openEditBucketView() {
         setIsEditState(true);
     }
-    function editBucketName(e) {
+    function editBucket(e) {
         const value = e.target.value;
-        bucketContext.editBucketName(props.id, value);
+        editBucketName(props.id, value);
         setIsEditState(false);
-    }
-    function archiveCompletedWorkItem() {
-        workItemContext.archiveCompletedWorkItem(props.id);
     }
     return (
         <div 
@@ -78,7 +47,7 @@ export default function Bucket(props) {
                         <Input 
                             defaultValue={props.name} 
                             className='input-text'
-                            onPressEnter={editBucketName}>
+                            onPressEnter={editBucket}>
                         </Input> : 
                         <span>{props.name.toLocaleUpperCase()}</span>
                     }
@@ -88,7 +57,7 @@ export default function Bucket(props) {
                         <FontAwesomeIcon 
                             className='bucket-icon' 
                             icon={faArchive} 
-                            onClick={archiveCompletedWorkItem} />
+                            onClick={() => archiveCompletedWorkItem(props.id)} />
                     </Tooltip> 
                     <Dropdown overlay={renderMenuAction} 
                         trigger={['click']} 
