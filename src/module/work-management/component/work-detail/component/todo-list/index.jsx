@@ -5,15 +5,16 @@ import { Input } from 'antd';
 import Todo from './Todo';
 import { WorkDetailContext } from '../../context';
 import { useContext, useState } from 'react/cjs/react.development';
-import { DataContext } from '../../../../../../context';
-import { WorkItemContext } from '../../../../context/workItem';
+import { useTodo } from '../../../../work-item-hook/useTodo';
+import { useUserList } from '../../../../../../general-data-hook/useUserList';
 
 const TodoList = React.memo(function () {
-    const dataContext = useContext(DataContext);
+    const { findUserById } = useUserList();
     const workContext = useContext(WorkDetailContext);
-    const workItemContext = useContext(WorkItemContext);
+    const { addNewTodo, deleteTodo } = useTodo();
     const [ isOpen, setIsOpenState ] = useState(false);
     const [ newTodo, setNewTodoState ] = useState('');
+    const [ todoList, setTodoList] = useState(workContext.workDetailData.todoList);
     function openTodo() {
         if (isOpen) {
             setIsOpenState(false);
@@ -22,22 +23,27 @@ const TodoList = React.memo(function () {
         }
     }
     function renderTodoList() {
-        const { workDetailData } = workContext;
-        return workDetailData.todoList.map(item => {
-            const assignee = dataContext.findUserById(item.assigneeId);
+        console.log('todolist', todoList);
+        return todoList.map(item => {
+            const assignee = findUserById(item.assigneeId);
             return <Todo
                 key={item.id}
                 id={item.id}
                 name={item.name}
                 assignee={assignee.name}
-                workId={workDetailData.id}
+                deleteTodoItem={deleteTodoItem}
             />;
         }
         );
     }
+    const deleteTodoItem = (todoId) => {
+        const newTodoList = deleteTodo(workContext.workDetailData.id, todoId);
+        setTodoList(newTodoList);
+    };
     function onKeyPress(e) {
         if (e.charCode === 13) {
-            workItemContext.addNewTodo(workContext.workDetailData.id, newTodo);
+            const newTodoList = addNewTodo(workContext.workDetailData.id, newTodo);
+            setTodoList(newTodoList);
             setNewTodoState('');
         }
     }
