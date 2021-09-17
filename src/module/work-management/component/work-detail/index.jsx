@@ -4,14 +4,13 @@ import { Header, TodoList, TagList, Description, ActivityList, Assignment, Attac
 import { DataContext } from '../../../../context';
 import { WorkDetailContext } from './context';
 import { useWorkItem } from '../../work-item-hook/useWorkItem';
-
 const WorkDetail = React.memo(function () {
     const { findWorkItemById } = useWorkItem();
     return (
         <div id="work-detail-board" className="work-detail">
             <DataContext.Consumer>
                 {value => { 
-                    const workDetailData = findWorkItemById(value.activeId);
+                    const workDetailData = findWorkItemById(value.state.activeId);
                     return (
                         <WorkDetailContext.Provider value={{workDetailData}} >
                             <Header/>

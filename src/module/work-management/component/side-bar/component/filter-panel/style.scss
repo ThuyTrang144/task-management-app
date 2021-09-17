@@ -22,11 +22,12 @@
         padding-inline-start: unset;
         margin-top: 10px;
         .item {
-            list-style-type: none;
+            color: var(--text-color-dark);
             height: 46px;
             display: flex;
             align-items: center;
             cursor: pointer;
+            border-radius: 4px;
             &:hover {
                 color: var(--text-hover-color);
                 background-color: var(--background-hover-color);
@@ -40,6 +41,7 @@
                 width: 20px;
                 height: 20px;
                 color: var(--icon-color-dark);
+                margin-left: 15px;
             }
             .item-name {
                 font-size: var(--xl);

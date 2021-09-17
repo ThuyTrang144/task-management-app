@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import Moment from 'react-moment';
 import { useState } from 'react/cjs/react.development';
+import { DATA } from '../../../data';
 import { useStatus } from '../../../general-data-hook/useStatus';
 import { useUserList } from '../../../general-data-hook/useUserList';
 import BucketItem from '../component/bucket-board/component/bucket-list/BucketItem';
@@ -8,8 +9,8 @@ import ItemCard from '../component/item-card';
 import { WorkItemContext } from '../context/workItem';
 
 const WorkItemProvider = ({children}) => {
-    const workItemContext = useContext(WorkItemContext);
-    const [workItemList, setWorkItemList] = useState(workItemContext.workItemList);
+    const [ workItemList, setWorkItemList ] = useState(DATA.workItemList);
+    const [ archivedWorkList, setArchivedWorkList ] = useState(DATA.archivedWorkList);
     const { findStatusByName, findStatusById } = useStatus();
     const { findUserById } = useUserList();
 
@@ -48,11 +49,12 @@ const WorkItemProvider = ({children}) => {
     const archiveCompletedWorkItem = (bucketId) => {
         for (let i = 0; i < workItemList.length; i++) {
             if (workItemList[i].bucketId === bucketId && workItemList[i].statusId === 3) {
-                workItemContext.archivedWorkList.push(workItemList[i]);
+                archivedWorkList.push(workItemList[i]);
                 workItemList.splice(i, 1);
             }
         }
         setWorkItemList([...workItemList]);
+        setArchivedWorkList([...archivedWorkList]);
     };
     const completeWorkItem = (workId) => {
         const workItemIndex = workItemList.findIndex(item => item.id === workId); 
@@ -87,8 +89,8 @@ const WorkItemProvider = ({children}) => {
     const changeWorkItemStatus = (workId, text) => {
         const workItem = findWorkItemById(workId);
         const statusItem = findStatusByName(text);
-        console.log('status item', statusItem);
         workItem.statusId = statusItem.id;
+        setWorkItemList([...workItemList]);
     };
     const renderWorkItemList = (workList, searchValue) => {
         const searchResult = workList.filter(item => 
@@ -126,11 +128,11 @@ const WorkItemProvider = ({children}) => {
                 />; }
         });
     };
-    // const filterWorkItem = ()
     return (
         <WorkItemContext.Provider
             value={{
                 workItemList,
+                setWorkItemList,
                 findWorkItemById, 
                 addWorkItem, 
                 archiveCompletedWorkItem, 
@@ -139,7 +141,7 @@ const WorkItemProvider = ({children}) => {
                 editWorkItemDescription, 
                 revertWorkItemToWorkStream,
                 changeWorkItemStatus,
-                renderWorkItemList
+                renderWorkItemList,
             }}
         >
             {children})

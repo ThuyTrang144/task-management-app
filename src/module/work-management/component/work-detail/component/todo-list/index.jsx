@@ -3,18 +3,15 @@ import React from 'react';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import Todo from './Todo';
-import { WorkDetailContext } from '../../context';
-import { useContext, useState } from 'react/cjs/react.development';
+import { useState } from 'react/cjs/react.development';
 import { useTodo } from '../../../../work-item-hook/useTodo';
 import { useUserList } from '../../../../../../general-data-hook/useUserList';
 
 const TodoList = React.memo(function () {
     const { findUserById } = useUserList();
-    const workContext = useContext(WorkDetailContext);
-    const { addNewTodo, deleteTodo } = useTodo();
+    const { todoList, addNewTodo, deleteTodo } = useTodo();
     const [ isOpen, setIsOpenState ] = useState(false);
     const [ newTodo, setNewTodoState ] = useState('');
-    const [ todoList, setTodoList] = useState(workContext.workDetailData.todoList);
     function openTodo() {
         if (isOpen) {
             setIsOpenState(false);
@@ -37,13 +34,11 @@ const TodoList = React.memo(function () {
         );
     }
     const deleteTodoItem = (todoId) => {
-        const newTodoList = deleteTodo(workContext.workDetailData.id, todoId);
-        setTodoList(newTodoList);
+        deleteTodo(todoId);
     };
     function onKeyPress(e) {
         if (e.charCode === 13) {
-            const newTodoList = addNewTodo(workContext.workDetailData.id, newTodo);
-            setTodoList(newTodoList);
+            addNewTodo(newTodo);
             setNewTodoState('');
         }
     }

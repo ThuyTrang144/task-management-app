@@ -1,12 +1,11 @@
 import { Select } from 'antd';
 import { Checkbox } from 'antd';
 import React from 'react';
-import { useContext } from 'react/cjs/react.development';
-import { DataContext } from '../../../../../../context';
 import { FilterPannel } from '../filter-panel';
 import { status, importanceLevel } from '../../../../../../constant';
 import './style.scss';
-import { useTag } from '../../../../../../general-data-hook/useTag';
+import { useUserList } from '../../../../../../general-data-hook/useUserList';
+import { useGeneralTag } from '../../../../../../general-data-hook/useGeneralTag';
 const { Option } = Select;
 
 export function SubFilter ({ title, children }) {
@@ -19,11 +18,10 @@ export function SubFilter ({ title, children }) {
 }
 
 const Filter = React.memo(function () {
-    const { tagList } = useTag();
-    console.log('tagList', tagList);
-    const context = useContext(DataContext);
+    const { tagList } = useGeneralTag();
+    const { userList } = useUserList();
     function renderAssignee() {
-        return context.userList.map(item => 
+        return userList.map(item => 
             (
                 <Option 
                     className='selector-input' 
@@ -35,7 +33,6 @@ const Filter = React.memo(function () {
         );
     }
     function renderTags() {
-        console.log('tagList', tagList);
         return tagList.map(item => 
             (
                 <Option 

@@ -1,0 +1,9 @@
+.setting-page {
+    width: 1920px;
+    display: flex;
+    height: 1026px;
+    .content {
+        width: 60%;
+        background-color: var(--header-background-color);
+    }
+}

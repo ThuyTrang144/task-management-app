@@ -2,18 +2,15 @@ import Checkbox from 'antd/lib/checkbox/Checkbox';
 import React, { useState } from 'react';
 import Activity from './Activity';
 import { SmileOutlined } from '@ant-design/icons';
-import { useContext } from 'react/cjs/react.development';
-import { WorkDetailContext } from '../../context';
 import { useActivity } from '../../../../work-item-hook/useActivity';
 import { useUserList } from '../../../../../../general-data-hook/useUserList';
 
 const ActivitiesList = React.memo(function () {
-    const workContext = useContext(WorkDetailContext);
     const { findUserById } = useUserList();
-    const { addNewActivity } = useActivity();
+    const { activitiesList, addNewActivity } = useActivity();
     const [ activity, setActivityState ] = useState(''); 
     function renderActivities() {
-        return workContext.workDetailData.activitiesList.map(item => {
+        return activitiesList.map(item => {
             const assignee = findUserById(item.assigneeId);
             return <Activity 
                 key={item.id} 
@@ -32,7 +29,7 @@ const ActivitiesList = React.memo(function () {
     }
     function onKeyPress(e) {
         if (e.charCode === 13) {
-            addNewActivity(workContext.workDetailData.id, activity);
+            addNewActivity(activity);
             setActivityState('');
         }
     }

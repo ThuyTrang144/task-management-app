@@ -1,0 +1,37 @@
+@import "../../style/color.scss";
+
+.login-space {
+    display: flex;
+    padding-top: 10%;
+    align-items: center;
+    height: 1080px;   
+    background-repeat: no-repeat;
+    background-size: 1920px 1080px;
+    background-image: url(https://images.unsplash.com/photo-1503480207415-fdddcc21d5fc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80);
+    flex-direction: column;
+    p {
+        font-size: 40px;
+        color: white;
+    }
+    .login-form {
+        width: 20%;
+        display: inherit;
+        flex-direction: column;
+        border-radius: 4px;
+        background-color: var(--header-background-color);
+        .input-item {
+            width: 360px;
+            align-self: center;
+            .login-form-button {
+                width: 360px;
+            }
+        }
+        p {
+            font-size: var(--three-xl);
+            color: var(--text-color-dark);
+            font-weight: bold;
+            align-self: center;
+            margin-top: 20px;
+        }
+    }
+}

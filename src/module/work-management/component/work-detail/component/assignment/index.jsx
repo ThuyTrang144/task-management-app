@@ -6,7 +6,6 @@ import { WorkDetailContext } from '../../context';
 const Assignment =  React.memo(function () {
     const { findUserById } = useUserList();
     const workContext = useContext(WorkDetailContext);
-    console.log('work context', workContext);;
     const owner = findUserById(workContext.workDetailData.ownerId);
     function renderParticipant() {
         return workContext.workDetailData.participantId.map(item => {

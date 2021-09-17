@@ -6,26 +6,26 @@ import './style.scss';
 import { DataContext } from '../../../../../../context';
 
 const activityMenu = [
-    { icon: faArrowRight, name:'Incoming' },
-    { icon: faArrowLeft, name: 'Outgoing' } 
+    { icon: faArrowRight, name:'Incoming', link: './' },
+    { icon: faArrowLeft, name: 'Outgoing', link: './' } 
 ];
 const workItemMenu = [
-    { icon: faTasks, name:'Work Stream' }, 
-    { icon: faUser, name: 'Owned Works' }, 
-    { icon: faUsers, name: 'Participated Works' },
-    { icon: faArchive, name: 'Archived Works' }
+    { icon: faTasks, name:'Work Stream', link: './'  }, 
+    { icon: faUser, name: 'Owned Works', link: './'  }, 
+    { icon: faUsers, name: 'Participated Works', link: './' },
+    { icon: faArchive, name: 'Archived Works', link: './'  }
 ];
 const Menu = React.memo(function() {
     const context = useContext(DataContext);
     const [isOpen, setIsOpenState] = useState(false);
     function renderActivityItem() {
         return activityMenu.map(item =>
-            <Item key={item.name} icon={item.icon} name={item.name}></Item>
+            <Item key={item.name} icon={item.icon} name={item.name} link={item.link}></Item>
         );
     }
     function renderWorkItem() {
         return workItemMenu.map(item =>
-            <Item key={item.name} icon={item.icon} name={item.name}></Item>
+            <Item key={item.name} icon={item.icon} name={item.name} link={item.link}></Item>
         );
     }
     function renderFolderTitle() {
@@ -42,7 +42,7 @@ const Menu = React.memo(function() {
     }
     function renderFolderMenu() {
         return context.state.bucketList.map(item => 
-            <Item key={item.id} name={item.name} icon={null}></Item>
+            <Item key={item.id} name={item.name} icon={null} link={item.link}></Item>
         );
     }
     function viewFolder() {;
