@@ -7,6 +7,9 @@ const useStatus = () => {
     function findStatusByName(name) {
         return status.find(element => element.name === name);
     }
-    return { findStatusById, findStatusByName };
+    return { 
+        findStatusById, 
+        findStatusByName 
+    };
 };
 export { useStatus };

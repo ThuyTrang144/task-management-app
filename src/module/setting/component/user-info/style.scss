@@ -1,0 +1,37 @@
+.setting-info {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 20px;
+    .info-item {
+        width: calc(50% - 10px);
+        margin-bottom: 20px;
+        p {
+            font-weight: bold;
+        }
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 100px;
+        }
+        button {
+            margin-left: 20px;
+            border-radius: 4px;
+            height: 30px;
+            border-style: none;
+            box-shadow: 0 0 2px 0;
+        }
+    }
+}
+.footer {
+    border-top: 1px solid #d9d9d9;
+    margin: 20px;
+    .footer-btn {
+        float: right;
+        margin-top: 20px;
+    }
+    .footer-btn.cancel-btn {
+        margin-right: 20px;
+    }
+}

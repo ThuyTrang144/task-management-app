@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
-import { useContext } from 'react/cjs/react.development';
-import { WorkDetailContext } from '../../context';
 import { useAttachment } from '../../../../work-item-hook/useAttachment';
 
 const Attachment = React.memo(function () {
-    const workContext = useContext(WorkDetailContext);
-    const { deleteAttachment } = useAttachment();
-    const [attachmentList, setAttachmentList] = useState(workContext.workDetailData.attachmentList);
+    const { attachmentList, deleteAttachment } = useAttachment();
     function renderAttachmentList() {
         return attachmentList.map(item =>
             ( <div key={item.id} className="attachment-item">
@@ -16,19 +12,10 @@ const Attachment = React.memo(function () {
                     <span>{item.size}</span>
                     <span>{item.name}</span>
                 </div>
-                <WorkDetailContext.Consumer>
-                    {value => {
-                        function deleteAttachmentItem () {
-                            const newAttachmentList = deleteAttachment(value.workDetailData.id, item.id);
-                            setAttachmentList(newAttachmentList);
-                        }
-                        return (
-                            <DeleteOutlined 
-                                id="delete-icon" 
-                                onClick={deleteAttachmentItem}/>);
-                    }}
-                </WorkDetailContext.Consumer>
-            </div> )
+                <DeleteOutlined 
+                    id="delete-icon" 
+                    onClick={() => deleteAttachment(item.id)}/>
+            </div>)
         );
     }
     return (
