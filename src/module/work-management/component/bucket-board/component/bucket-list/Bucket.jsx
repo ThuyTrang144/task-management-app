@@ -6,8 +6,7 @@ import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
 import { useBucket } from '../../../../bucket-hook/useBucket';
 
 export default function Bucket(props) {
-    const { workItemList, archiveCompletedWorkItem } = useWorkItem();
-    const { renderWorkItemList } = useWorkItem();
+    const { workItemList, archiveCompletedWorkItem, renderWorkItemList, findWorkItemById, setWorkItemList } = useWorkItem();
     const { editBucketName, deleteBucket } = useBucket();
     const [isEdit, setIsEditState] = useState(false);
     function renderBucket() {
@@ -36,6 +35,15 @@ export default function Bucket(props) {
         const value = e.target.value;
         editBucketName(props.id, value);
         setIsEditState(false);
+    }
+    function onDragOver(event) {
+        event.preventDefault();
+    }
+    function onDrop(event, bucketId) {
+        let id = event.dataTransfer.getData('text');  
+        const workItem = findWorkItemById(id);
+        workItem.bucketId = bucketId;
+        setWorkItemList([...workItemList]);
     }
     return (
         <div 
@@ -68,7 +76,10 @@ export default function Bucket(props) {
                     </Dropdown>         
                 </div>
             </div>
-            <div  className="bucket-card">
+            <div  className='bucket-card' 
+                onDragOver={(e) => onDragOver(e)}
+                onDrop={(e) => onDrop(e, props.id)}
+            >
                 {renderBucket()}
             </div>
         </div>

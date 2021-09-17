@@ -11,9 +11,14 @@ const WorkList = React.memo(function (props) {
         const workStreamItemList = workItemList.filter(item => !item.bucketId);
         return renderWorkItemList(workStreamItemList, searchValue);
     }
+    function onDrop() {
+        
+    }
 
     return ( 
-        <div className='work-listing'>
+        <div className='work-listing'
+            onDrop={() => onDrop()}
+        >
             {renderItemList()}
         </div>
     );

@@ -2,19 +2,15 @@ import { Tag, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import './style.scss';
-import { DataContext } from '../../../../../../context';
-import { WorkDetailContext } from '../../context';
-import { useContext } from 'react/cjs/react.development';
-import { useTag } from '../../../../../../general-data-hook/useTag';
+import { useGeneralTag } from '../../../../../../general-data-hook/useGeneralTag';
+import { useTag } from '../../../../work-item-hook/useTag';
 
 const TagList = React.memo(function () {
     const [ isAdding, setIsAddingState ] = useState(false);
     const [ inputTag, setInputtag ] = useState('');
-    const { addTag, findTagsById } = useTag();
-    const dataContext = useContext(DataContext);
-    const workContext = useContext(WorkDetailContext);
+    const { findTagsById } = useGeneralTag();
+    const { addTag, tagId } = useTag();
     function renderTags() {
-        const tagId = workContext.workDetailData.tagId;
         const tagList = [];
         for (let i = 0; i < tagId.length; i++) {
             tagList.push(findTagsById(tagId[i]));
@@ -32,7 +28,7 @@ const TagList = React.memo(function () {
     }
     function onKeyPress (e) {
         if (e.charCode === 13) {
-            addTag(dataContext.activeId, inputTag);
+            addTag(inputTag);
             setInputtag('');
             setIsAddingState(false);
         }

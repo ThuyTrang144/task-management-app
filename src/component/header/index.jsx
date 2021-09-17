@@ -1,9 +1,36 @@
 import React from 'react';
 import './style.scss';
-import { MenuOutlined } from '@ant-design/icons';
+import { MenuOutlined, SettingOutlined, LogoutOutlined, HomeOutlined} from '@ant-design/icons';
 import { ChannelSelector, Notification} from './component';
+import { Dropdown, Menu } from 'antd';
+import { Link } from 'react-router-dom';
+import { DataContext } from '../../context';
 import { useUserList } from '../../general-data-hook/useUserList';
 
+export const menu = () => {
+    return (
+        <Menu>
+            <Menu.Item key={0}>
+                <Link to='/work-management'>
+                    <HomeOutlined />
+                    <span>Work Management</span>
+                </Link>
+            </Menu.Item>
+            <Menu.Item key={1} >
+                <Link to='/setting-page/user-info'>
+                    <SettingOutlined />
+                    <span>Setting</span>
+                </Link>
+            </Menu.Item>
+            <Menu.Item key={2}>
+                <Link to='/login-page'>
+                    <LogoutOutlined />
+                    <span>Logout</span>
+                </Link>
+            </Menu.Item>
+        </Menu>
+    );
+};
 export default function Header() {
     const { userList } = useUserList();
     return ( 
@@ -17,13 +44,20 @@ export default function Header() {
             </div> 
             <div className='right'>  
                 <Notification />
-                <div className='avatar'>
-                    <img 
-                        alt='userAvatar' 
-                        src={userList[0].avatar}>
-                    </img>
-                    <span>{userList[0].name}</span>
-                </div>
+                <DataContext.Consumer>
+                    {value => {
+                        // console.log('user', value.state.user.name);
+                        return (
+                            <Dropdown overlay={menu} placement='bottomRight' trigger={['click']}>
+                                <div className='avatar'>
+                                    <img 
+                                        alt='userAvatar' 
+                                        src={value.state.user !== undefined ? value.state.user.avatar: userList[0].avatar}>
+                                    </img>
+                                    <span>{value.state.user !== undefined ? value.state.user.name: userList[0].name}</span>
+                                </div>
+                            </Dropdown>);}}                
+                </DataContext.Consumer>
             </div>
         </div>
     );

@@ -11,8 +11,13 @@ class ItemCard extends React.PureComponent {
             this.context.viewWorkDetail(this.props.id);
         }
     }
+    onDragStart = (event, id) => {
+        event.dataTransfer.setData('text/plain', id);
+        console.log('id', id);
+    };
+    
     render() { 
-        let color;
+        let color, backgroundColor;
         if (this.props.status === 'New') {
             color = '#13C2C2';
         } else if (this.props.status === 'In Progress') {
@@ -20,9 +25,20 @@ class ItemCard extends React.PureComponent {
         } else if (this.props.status === 'Done') {
             color = '#43A047';
         } 
+        const isViewDetail = this.context.state.isViewDetail;
+        const activeId = this.context.state.activeId;
+        if (this.props.id === activeId && isViewDetail) {
+            backgroundColor = '#CEE5FF';
+        } else {
+            backgroundColor = null;
+        }
         return ( 
             <div className='item-card'  
-                onClick={this.viewWorkDetail}>
+                style={{backgroundColor: backgroundColor}}
+                onClick={this.viewWorkDetail}
+                draggable
+                onDragStart={(e) => this.onDragStart(e, this.props.id)}
+            >
                 <div className="item-title">
                     <span 
                         style={this.props.status === 'Done' ? this.props.style : null}

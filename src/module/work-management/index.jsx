@@ -13,7 +13,7 @@ const WorkManagement = React.memo(function () {
                 <WorkStream/>       
                 <DataContext.Consumer> 
                     { value => {
-                        return value.isViewDetail ? 
+                        return value.state.isViewDetail ? 
                             <WorkDetail/> :
                             <BucketProvider>
                                 <BucketBoard/>
