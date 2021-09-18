@@ -13,7 +13,6 @@ class ItemCard extends React.PureComponent {
     }
     onDragStart = (event, id) => {
         event.dataTransfer.setData('text/plain', id);
-        console.log('id', id);
     };
     
     render() { 

@@ -96,7 +96,6 @@ const WorkItemProvider = ({children}) => {
         const searchResult = workList.filter(item => 
         {
             return item.name.toLocaleLowerCase().startsWith(searchValue) || item.name.toLocaleLowerCase().includes(searchValue);
-
         });
         const newList = (searchValue.length !== 0) ? searchResult : workList;
 

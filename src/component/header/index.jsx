@@ -46,7 +46,6 @@ export default function Header() {
                 <Notification />
                 <DataContext.Consumer>
                     {value => {
-                        // console.log('user', value.state.user.name);
                         return (
                             <Dropdown overlay={menu} placement='bottomRight' trigger={['click']}>
                                 <div className='avatar'>

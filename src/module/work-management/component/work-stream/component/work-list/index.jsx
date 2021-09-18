@@ -9,15 +9,15 @@ const WorkList = React.memo(function (props) {
     function renderItemList() {
         const { searchValue } = props;
         const workStreamItemList = workItemList.filter(item => !item.bucketId);
-        return renderWorkItemList(workStreamItemList, searchValue);
+        if (workStreamItemList.length === 0) {
+            return <p style={{fontSize: '24px', textAlign: 'center', marginTop: '50%', color: '#787885'}}>Please add new work item here!</p>;
+        } 
+        else {
+            return renderWorkItemList(workStreamItemList, searchValue);
+        }
     }
-    function onDrop() {
-        
-    }
-
     return ( 
         <div className='work-listing'
-            onDrop={() => onDrop()}
         >
             {renderItemList()}
         </div>
