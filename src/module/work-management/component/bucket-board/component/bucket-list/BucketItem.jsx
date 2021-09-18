@@ -6,7 +6,7 @@ import React from 'react';
 import ItemCard from '../../../item-card';
 import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
 
-export default function BucketItem(props) {
+export function BucketItem(props) {
     const { addFavouriteItem, completeWorkItem, findWorkItemById } = useWorkItem();
     const workItem = findWorkItemById(props.id);
     let textDecoration;

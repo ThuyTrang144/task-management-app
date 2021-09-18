@@ -1,31 +1,34 @@
 import React, { useState } from 'react';
-import { faArchive, faBars, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dropdown, Input, Menu, Tooltip} from 'antd';
+import { useStatus } from '../../../../../../general-data-hook/useStatus';
+import { useUserList } from '../../../../../../general-data-hook/useUserList';
 import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
-import { useBucket } from '../../../../bucket-hook/useBucket';
+import { BucketHeader } from './BucketHeader';
+import { BucketItem } from './BucketItem';
 
 export default function Bucket(props) {
 
-    const { workItemList, archiveCompletedWorkItem, renderWorkItemList, findWorkItemById, setWorkItemList } = useWorkItem();
-    const { editBucketName, deleteBucket } = useBucket();
+    const { workItemList, findWorkItemById, setWorkItemList, filterWorkItem } = useWorkItem();
+    const { findStatusById } = useStatus();
+    const { findUserById } = useUserList();
     const [ isViewMore, setIsViewMore ] = useState(false);
-    const [isEdit, setIsEditState] = useState(false);
     var itemList = workItemList.filter(item => item.bucketId === props.id);
+    var filterList = filterWorkItem(itemList, props.searchValue); 
 
     function renderBucket() {
-        itemList.sort((a, b) => b.isFavourite - a.isFavourite );
-        if (itemList.length > 5) {
-            const newItemList = itemList.slice(0, 5);
-            const remainItemList = itemList.slice(5, itemList.length);
+        filterList.sort((a, b) => b.isFavourite - a.isFavourite );
+        
+        if (filterList.length > 5) {
+            const newItemList = filterList.slice(0, 5);
+            const remainItemList = filterList.slice(5, filterList.length);
             const renderRemainList = () => {
                 return (
                     <>
-                        {renderWorkItemList(remainItemList, props.searchValue)}
+                        {renderWorkItemList(remainItemList)}
                         <p style={{color: '#2979FF', cursor: 'pointer'}} onClick={onClick}>View less</p>
                     </>
                 );
             };
+
             const onClick = () => {
                 if (isViewMore) {
                     setIsViewMore(false);
@@ -34,45 +37,38 @@ export default function Bucket(props) {
                     setIsViewMore(true);
                 }
             };
+
             return (
                 <>
-                    {renderWorkItemList(newItemList, props.searchValue)}
-                    {isViewMore ? renderRemainList() : <p style={{color: '#2979FF', cursor: 'pointer'}} onClick={onClick}>View more({itemList.length-5} items)</p>}
+                    {renderWorkItemList(newItemList)}
+                    {isViewMore ? renderRemainList() : 
+                        <p style={{color: '#2979FF', cursor: 'pointer'}} onClick={onClick}>View more({filterList.length-5} items)</p>}
                 </>
             );
-        } 
-        if (itemList.length === 0) {
+        } else if (filterList.length === 0) {
             return <p style={{fontSize: '24px', marginTop: '25%', color: '#787885'}}>Drag and drop work item here!</p>;
                 
         } else {
-            return renderWorkItemList(itemList, props.searchValue);
+            return renderWorkItemList(filterList);
 
         }
     }
-
-    function renderMenuAction() {
-        return (
-            <Menu>
-                <Menu.Item key="0" onClick={() => deleteBucket(props.id)}>
-                    <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                    <span>Delete Buket</span>
-                </Menu.Item>
-                <Menu.Item key="1" onClick={openEditBucketView}>
-                    <FontAwesomeIcon icon={faPen}></FontAwesomeIcon>
-                    <span>Edit Buket Name</span>
-                </Menu.Item>
-            </Menu> 
-        );
-    };
-
-    function openEditBucketView() {
-        setIsEditState(true);
-    }
-
-    function editBucket(e) {
-        const value = e.target.value;
-        editBucketName(props.id, value);
-        setIsEditState(false);
+    
+    function renderWorkItemList(workItemList) {
+        return workItemList.map(item => {
+            const statusItem = findStatusById(item.statusId);
+            const owner = findUserById(item.ownerId);
+            return (       
+                <BucketItem
+                    key={item.id} 
+                    id={item.id}
+                    name={item.name} 
+                    status={statusItem.name} 
+                    owner={owner.name} 
+                    createdDate={item.createdDate} 
+                    dueDate={item.dueDate}/>
+            );
+        });
     }
 
     function onDragOver(event) {
@@ -90,34 +86,9 @@ export default function Bucket(props) {
         <div 
             key={props.id} 
             className='bucket-box'>
-            <div className='bucket-header'>
-                <div className="bucket-title">
-                    { isEdit ? 
-                        <Input 
-                            defaultValue={props.name} 
-                            className='input-text'
-                            onPressEnter={editBucket}>
-                        </Input> : 
-                        <span>{props.name.toLocaleUpperCase()}</span>
-                    }
-                </div>
-                <div className="actions">
-                    <Tooltip placement="top" title='Archive completed work item'>
-                        <FontAwesomeIcon 
-                            className='bucket-icon' 
-                            icon={faArchive} 
-                            onClick={() => archiveCompletedWorkItem(props.id)} />
-                    </Tooltip> 
-                    <Dropdown overlay={renderMenuAction} 
-                        trigger={['click']} 
-                        placement="bottomRight">
-                        <FontAwesomeIcon 
-                            className='bucket-icon' 
-                            icon={faBars}/>
-                    </Dropdown>         
-                </div>
-            </div>
+            <BucketHeader id={props.id} name={props.name} />
             <div  className='bucket-card' 
+                style={{height : itemList.length > 5 ? '100%' : '340px'}}
                 onDragOver={(e) => onDragOver(e)}
                 onDrop={(e) => onDrop(e, props.id)}
             >
