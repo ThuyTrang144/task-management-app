@@ -3,8 +3,8 @@ import { DATA } from '../../../data';
 import { BucketContext } from '../context/bucket';
 import { useWorkItem } from '../work-item-hook/useWorkItem';
 
-const BucketProvider = ({children}) => {
-    const [bucketList, setBucketList] = useState(DATA.bucketList);
+const BucketProvider = ( {children} ) => {
+    const [ bucketList, setBucketList ] = useState(DATA.bucketList);
     const { revertWorkItemToWorkStream } = useWorkItem();
     const findBucketById = (id) => {
         return bucketList.find(element => element.id === id);

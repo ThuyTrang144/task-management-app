@@ -47,11 +47,9 @@ const WorkItemProvider = ({children}) => {
             if (workItemList[i].bucketId === bucketId && workItemList[i].statusId === 3) {
                 archivedWorkList.push(workItemList[i]);
                 workItemList.splice(i, 1);
-                console.log('workItemList', workItemList);
             }
         }
         const newWorkItemList = [...workItemList];
-        console.log('workItemList after archive', newWorkItemList);
         setWorkItemList(newWorkItemList);
         setArchivedWorkList([...archivedWorkList]);
     };

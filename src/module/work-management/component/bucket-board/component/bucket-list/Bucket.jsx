@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useStatus } from '../../../../../../general-data-hook/useStatus';
-import { useUserList } from '../../../../../../general-data-hook/useUserList';
+import { ListView } from '../../../../../../component/list-view';
 import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
 import { BucketHeader } from './BucketHeader';
 import { BucketItem } from './BucketItem';
@@ -8,69 +7,34 @@ import { BucketItem } from './BucketItem';
 export default function Bucket(props) {
 
     const { workItemList, findWorkItemById, setWorkItemList, filterWorkItem } = useWorkItem();
-    const { findStatusById } = useStatus();
-    const { findUserById } = useUserList();
     const [ isViewMore, setIsViewMore ] = useState(false);
     var itemList = workItemList.filter(item => item.bucketId === props.id);
     var filterList = filterWorkItem(itemList, props.searchValue); 
 
     function renderBucket() {
         filterList.sort((a, b) => b.isFavourite - a.isFavourite );
-        
         if (filterList.length > 5) {
-            const newItemList = filterList.slice(0, 5);
-            const remainItemList = filterList.slice(5, filterList.length);
+            const newFilterList = filterList.splice(0, 5);
             const renderRemainList = () => {
                 return (
                     <>
-                        {renderWorkItemList(remainItemList)}
-                        <p style={{color: '#2979FF', cursor: 'pointer'}} onClick={onClick}>View less</p>
+                        <ListView data={filterList} ItemComponent={BucketItem} />
+                        <p style={{color: '#2979FF', cursor: 'pointer'}} onClick={() => setIsViewMore(false)}>View less</p>
                     </>
                 );
             };
-
-            const onClick = () => {
-                if (isViewMore) {
-                    setIsViewMore(false);
-
-                } else {
-                    setIsViewMore(true);
-                }
-            };
-
             return (
                 <>
-                    {renderWorkItemList(newItemList)}
+                    <ListView data={newFilterList} ItemComponent={BucketItem} />
                     {isViewMore ? renderRemainList() : 
-                        <p style={{color: '#2979FF', cursor: 'pointer'}} onClick={onClick}>View more({filterList.length-5} items)</p>}
+                        <p style={{color: '#2979FF', cursor: 'pointer'}} onClick={() => setIsViewMore(true)}>View more({filterList.length} items)</p>}
                 </>
             );
         } else if (filterList.length === 0) {
             return <p style={{fontSize: '24px', marginTop: '25%', color: '#787885'}}>Drag and drop work item here!</p>;
-                
-        } else {
-            return renderWorkItemList(filterList);
-
         }
+        else { return <ListView data={filterList} ItemComponent={BucketItem} />;}   
     }
-    
-    function renderWorkItemList(workItemList) {
-        return workItemList.map(item => {
-            const statusItem = findStatusById(item.statusId);
-            const owner = findUserById(item.ownerId);
-            return (       
-                <BucketItem
-                    key={item.id} 
-                    id={item.id}
-                    name={item.name} 
-                    status={statusItem.name} 
-                    owner={owner.name} 
-                    createdDate={item.createdDate} 
-                    dueDate={item.dueDate}/>
-            );
-        });
-    }
-
     function onDragOver(event) {
         event.preventDefault();
     }
