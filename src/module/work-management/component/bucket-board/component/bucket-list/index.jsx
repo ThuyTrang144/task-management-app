@@ -2,23 +2,30 @@ import React from 'react';
 import { BucketContext } from '../../../../context/bucket';
 import Bucket from './Bucket';
 import './style.scss';
+import Masonry from 'react-masonry-css';
 
 const BucketList = React.memo(function (props) {
     return (
-        <div className='bucket-listing'>
-            <BucketContext.Consumer>
-                {value => {
-                    return value.bucketList.map(item =>
-                        <Bucket
-                            key={item.id}
-                            name={item.name}
-                            id={item.id}
-                            searchValue={props.searchValue}
-                        />
-                    );
-                }}
-            </BucketContext.Consumer>
-        </div>
+        <BucketContext.Consumer>    
+            {value => {
+                return (
+                    <Masonry   
+                        breakpointCols={2}
+                        className="my-masonry-grid"
+                        columnClassName="my-masonry-grid_column"
+                    >
+                        {value.bucketList.map(item =>
+                            <Bucket
+                                key={item.id}
+                                name={item.name}
+                                id={item.id}
+                                searchValue={props.searchValue}
+                            />
+                        )}
+                    </Masonry>
+                );
+            }}    
+        </BucketContext.Consumer>
     );
 });
 export default BucketList;

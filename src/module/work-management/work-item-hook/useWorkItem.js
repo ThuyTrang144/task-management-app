@@ -117,7 +117,7 @@ const WorkItemProvider = ({children}) => {
                 filterWorkItem,
             }}
         >
-            {children})
+            {children}
         </WorkItemContext.Provider>
     ); 
 };

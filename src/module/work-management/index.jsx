@@ -14,14 +14,14 @@ const WorkManagement = React.memo(function () {
                     <WorkStream/>       
                     <DataContext.Consumer> 
                         { value => {
-                            return value.state.isViewDetail ? 
-                                <WorkDetail/> : <BucketBoard/>;
+                            return ( 
+                                value.state.isViewDetail ? <WorkDetail/> : <BucketBoard/>
+                            );
                         }}
                     </DataContext.Consumer> 
-                </BucketProvider>;
+                </BucketProvider>
             </WorkItemProvider>
-           
-        </div>
+        </div> 
     );
 });
 export default WorkManagement;
