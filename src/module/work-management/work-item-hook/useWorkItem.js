@@ -3,16 +3,12 @@ import Moment from 'react-moment';
 import { useState } from 'react/cjs/react.development';
 import { DATA } from '../../../data';
 import { useStatus } from '../../../general-data-hook/useStatus';
-import { useUserList } from '../../../general-data-hook/useUserList';
-import BucketItem from '../component/bucket-board/component/bucket-list/BucketItem';
-import ItemCard from '../component/item-card';
 import { WorkItemContext } from '../context/workItem';
 
 const WorkItemProvider = ({children}) => {
     const [ workItemList, setWorkItemList ] = useState(DATA.workItemList);
     const [ archivedWorkList, setArchivedWorkList ] = useState(DATA.archivedWorkList);
-    const { findStatusByName, findStatusById } = useStatus();
-    const { findUserById } = useUserList();
+    const { findStatusByName } = useStatus();
 
     const findWorkItemById = (id) => {
         return workItemList.find(element => element.id === id);
@@ -51,9 +47,12 @@ const WorkItemProvider = ({children}) => {
             if (workItemList[i].bucketId === bucketId && workItemList[i].statusId === 3) {
                 archivedWorkList.push(workItemList[i]);
                 workItemList.splice(i, 1);
+                console.log('workItemList', workItemList);
             }
         }
-        setWorkItemList([...workItemList]);
+        const newWorkItemList = [...workItemList];
+        console.log('workItemList after archive', newWorkItemList);
+        setWorkItemList(newWorkItemList);
         setArchivedWorkList([...archivedWorkList]);
     };
     const completeWorkItem = (workId) => {
@@ -92,7 +91,7 @@ const WorkItemProvider = ({children}) => {
         workItem.statusId = statusItem.id;
         setWorkItemList([...workItemList]);
     };
-    const renderWorkItemList = (workList, searchValue) => {
+    const filterWorkItem = (workList, searchValue) => {
         const searchResult = workList.filter(item => 
         {
             return item.name.toLocaleLowerCase().startsWith(searchValue) || item.name.toLocaleLowerCase().includes(searchValue);
@@ -102,30 +101,7 @@ const WorkItemProvider = ({children}) => {
         if (searchResult.length === 0 && searchValue.length !== 0) {
             return <p className="search-result">There is no work item match with your search. Please add a new one.</p>;
         }
-
-        return newList.map(item => {
-            const statusItem = findStatusById(item.statusId);
-            const owner = findUserById(item.ownerId);
-            if (item.bucketId !== null) {
-                return <BucketItem 
-                    key={item.id} 
-                    id={item.id}
-                    name={item.name} 
-                    status={statusItem.name} 
-                    owner={owner.name} 
-                    createdDate={item.createdDate} 
-                    dueDate={item.dueDate}/>;
-            } else { 
-                return <ItemCard 
-                    key={item.id} 
-                    id={item.id}
-                    name={item.name} 
-                    status={statusItem.name} 
-                    owner={owner.name} 
-                    createdDate={item.createdDate} 
-                    dueDate={item.dueDate} 
-                />; }
-        });
+        return newList;
     };
     return (
         <WorkItemContext.Provider
@@ -140,7 +116,7 @@ const WorkItemProvider = ({children}) => {
                 editWorkItemDescription, 
                 revertWorkItemToWorkStream,
                 changeWorkItemStatus,
-                renderWorkItemList,
+                filterWorkItem,
             }}
         >
             {children})
