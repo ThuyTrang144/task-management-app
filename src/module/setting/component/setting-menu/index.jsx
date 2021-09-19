@@ -9,8 +9,9 @@ const settingMenu = [
     { id: 3, icon: faUsers, name: 'User List', link: '/setting-page/user-list-setting', isActive: false}
 ];
 export const SettingMenu = () => {
+    const activeId = settingMenu[0].id;
     function renderSettingMenu() {
-        return <ListView data={settingMenu} ItemComponent={Item} />;
+        return <ListView data={settingMenu} ItemComponent={Item} activeId={activeId}/>;
     }
     return (
         <FilterPannel title="SETTING">

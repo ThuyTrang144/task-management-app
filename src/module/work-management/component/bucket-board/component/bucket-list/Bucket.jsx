@@ -10,7 +10,6 @@ export default function Bucket(props) {
     const [ isViewMore, setIsViewMore ] = useState(false);
     var itemList = workItemList.filter(item => item.bucketId === props.id);
     var filterList = filterWorkItem(itemList, props.searchValue); 
-
     function renderBucket() {
         filterList.sort((a, b) => b.isFavourite - a.isFavourite );
         if (filterList.length > 5) {

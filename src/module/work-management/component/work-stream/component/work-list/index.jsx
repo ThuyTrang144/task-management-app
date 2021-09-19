@@ -12,25 +12,10 @@ const WorkList = React.memo(function (props) {
         const { searchValue } = props;
         const workStreamItemList = workItemList.filter(item => !item.bucketId);
         const filterList = filterWorkItem(workStreamItemList, searchValue);
+        if (workStreamItemList.length === 0) {
+            return <p style={{fontSize: '24px', textAlign: 'center', marginTop: '50%', color: '#787885'}}>Please add new work item here!</p>;
+        } 
         return <ListView data={filterList} ItemComponent={ItemCard} />;
-        //     const statusItem = findStatusById(item.statusId);
-        //     const owner = findUserById(item.ownerId);
-        //     return <ItemCard 
-        //         key={item.id} 
-        //         id={item.id}
-        //         name={item.name} 
-        //         status={statusItem.name} 
-        //         owner={owner.name} 
-        //         createdDate={item.createdDate} 
-        //         dueDate={item.dueDate} 
-        //     />; 
-        // });
-        // if (workStreamItemList.length === 0) {
-        //     return <p style={{fontSize: '24px', textAlign: 'center', marginTop: '50%', color: '#787885'}}>Please add new work item here!</p>;
-        // } 
-        // else {
-        //     return renderWorkItemList(workStreamItemList, searchValue);
-        // }
     }
     return ( 
         <div className='work-listing'

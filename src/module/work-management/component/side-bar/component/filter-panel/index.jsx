@@ -19,35 +19,23 @@ export function MenuItem ({ children }) {
     );
 }
 
-export function Item ({ data, handleSelectedItem }) {
+export function Item (props) {
     const onClick = () => {
-        handleSelectedItem(data.id);
+        props.handleSelectedItem(props.data.id);
 
     };
     return (
-        <Link to={data.link} 
-            key={data.id} 
+        <Link to={props.data.link} 
+            key={props.data.id} 
             onClick={onClick} 
         >
             <li 
                 className='item' 
-                style={data.isActive ?  {backgroundColor: '#13C2C2', color: 'white'} : null}
+                style={props.activeId === props.data.id ?  {backgroundColor: '#13C2C2', color: 'white'} : null}
             >
-                { data.icon ? <FontAwesomeIcon className='item-icon' icon={data.icon}/> : null}
-                <span className='item-name'>{data.name}</span>
+                { props.data.icon ? <FontAwesomeIcon className='item-icon' icon={props.data.icon}/> : null}
+                <span className='item-name'>{props.data.name}</span>
             </li>
         </Link>
     );
 }
-// <Item 
-//     data={settingMenu}
-//     style={{backgroundColor: '#13C2C2', color: 'white'}}
-//     activeId={activeId}
-//     onClick={handleSelectedItem}
-//     key={item.id} 
-//     id={item.id} 
-//     icon={item.icon}
-//     name={item.name}
-//     link={item.link}
-// >
-// </Item>;

@@ -19,7 +19,7 @@ const WorkStream = React.memo(function () {
         event.preventDefault();
     }
     return (
-        <div className="work-stream"
+        <div className='work-stream'
             onDrop={(e) => onDrop(e)}
             onDragOver={(e) => onDragOver(e)}
         >
