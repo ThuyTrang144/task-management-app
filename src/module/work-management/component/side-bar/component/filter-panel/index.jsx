@@ -20,15 +20,21 @@ export function MenuItem ({ children }) {
 }
 
 export function Item (props) {
+    const onClick = () => {
+        props.handleSelectedItem(props.data.id);
+
+    };
     return (
-        <Link to={props.link} 
-            onClick={() => props.onClick(props.id)} >
+        <Link to={props.data.link} 
+            key={props.data.id} 
+            onClick={onClick} 
+        >
             <li 
-                className='item' key={props.id} 
-                style={props.activeId === props.id ? props.style : null}
+                className='item' 
+                style={props.activeId === props.data.id ?  {backgroundColor: '#13C2C2', color: 'white'} : null}
             >
-                { props.icon ? <FontAwesomeIcon className='item-icon' icon={props.icon}/> : null}
-                <span className='item-name'>{props.name}</span>
+                { props.data.icon ? <FontAwesomeIcon className='item-icon' icon={props.data.icon}/> : null}
+                <span className='item-name'>{props.data.name}</span>
             </li>
         </Link>
     );

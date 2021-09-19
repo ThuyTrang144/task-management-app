@@ -1,38 +1,17 @@
 import { faBoxes, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { ListView } from '../../../../component/list-view';
 import { FilterPannel, Item, MenuItem } from '../../../work-management/component/side-bar/component/filter-panel';
 import './style.scss';
 
 const settingMenu = [
-    { id: 1, icon: faUser, name: 'User Info', link: '/setting-page/user-info'},
-    { id: 2, icon: faBoxes, name: 'Channel List', link: '/setting-page/channel-setting'},
-    { id: 3, icon: faUsers, name: 'User List', link: '/setting-page/user-list-setting'}
+    { id: 1, icon: faUser, name: 'User Info', link: '/setting-page/user-info', isActive: true},
+    { id: 2, icon: faBoxes, name: 'Channel List', link: '/setting-page/channel-setting', isActive: false},
+    { id: 3, icon: faUsers, name: 'User List', link: '/setting-page/user-list-setting', isActive: false}
 ];
 export const SettingMenu = () => {
-    const [ activeId, setActiveId ] = useState(settingMenu[0].id);
-    const handleSelectedItem = (id) => {
-        for(let i = 0; i < settingMenu.length; i++) {
-            if (settingMenu[i].id === id) {
-                setActiveId(id);
-            }
-        }
-    };
+    const activeId = settingMenu[0].id;
     function renderSettingMenu() {
-        return settingMenu.map(item => {
-            
-            return <Item 
-                style={{backgroundColor: '#13C2C2', color: 'white'}}
-                activeId={activeId}
-                onClick={handleSelectedItem}
-                key={item.id} 
-                id={item.id} 
-                icon={item.icon}
-                name={item.name}
-                link={item.link}
-            >
-            </Item>;
-        }
-        );
+        return <ListView data={settingMenu} ItemComponent={Item} activeId={activeId}/>;
     }
     return (
         <FilterPannel title="SETTING">

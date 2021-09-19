@@ -1,33 +1,33 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { faArrowRight, faArrowLeft, faTasks, faUser, faUsers, faArchive } from '@fortawesome/free-solid-svg-icons';
 import { FilterPannel, Item, MenuItem } from '../filter-panel';
 import { ExclamationCircleOutlined, UpOutlined, DownOutlined } from '@ant-design/icons';
 import './style.scss';
-import { DataContext } from '../../../../../../context';
+import { ListView } from '../../../../../../component/list-view';
+import { useBucket } from '../../../../bucket-hook/useBucket';
 
 const activityMenu = [
-    { icon: faArrowRight, name:'Incoming', link: './' },
-    { icon: faArrowLeft, name: 'Outgoing', link: './' } 
+    { id: '1', icon: faArrowRight, name:'Incoming', link: './', isActive: false },
+    { id: '2', icon: faArrowLeft, name: 'Outgoing', link: './', isActive: false } 
 ];
 const workItemMenu = [
-    { icon: faTasks, name:'Work Stream', link: './'  }, 
-    { icon: faUser, name: 'Owned Works', link: './'  }, 
-    { icon: faUsers, name: 'Participated Works', link: './' },
-    { icon: faArchive, name: 'Archived Works', link: './'  }
+    { id: '1', icon: faTasks, name:'Work Stream', link: './', isActive: true  }, 
+    { id: '2', icon: faUser, name: 'Owned Works', link: './', isActive: false }, 
+    { id: '3', icon: faUsers, name: 'Participated Works', link: './', isActive: false },
+    { id: '4', icon: faArchive, name: 'Archived Works', link: './', isActive: false  }
 ];
 const Menu = React.memo(function() {
-    const context = useContext(DataContext);
+    const { bucketList } = useBucket();
     const [isOpen, setIsOpenState] = useState(false);
+
     function renderActivityItem() {
-        return activityMenu.map(item =>
-            <Item key={item.name} icon={item.icon} name={item.name} link={item.link}></Item>
-        );
+        return <ListView data={activityMenu} ItemComponent={Item} />;
     }
+
     function renderWorkItem() {
-        return workItemMenu.map(item =>
-            <Item key={item.name} icon={item.icon} name={item.name} link={item.link}></Item>
-        );
+        return <ListView data={workItemMenu} ItemComponent={Item} />;
     }
+
     function renderFolderTitle() {
         return(
             <div>
@@ -40,12 +40,12 @@ const Menu = React.memo(function() {
             </div>
         );
     }
+
     function renderFolderMenu() {
-        return context.state.bucketList.map(item => 
-            <Item key={item.id} name={item.name} icon={null} link={item.link}></Item>
-        );
+        return <ListView data={bucketList} ItemComponent={Item} />;
     }
-    function viewFolder() {;
+    
+    function viewFolder() {
         if (isOpen) {
             setIsOpenState(false);
         } 

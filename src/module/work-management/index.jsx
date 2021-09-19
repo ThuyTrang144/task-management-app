@@ -9,17 +9,16 @@ const WorkManagement = React.memo(function () {
     return ( 
         <div className='work-management'>
             <WorkItemProvider>
-                <SideBar />
-                <WorkStream/>       
-                <DataContext.Consumer> 
-                    { value => {
-                        return value.state.isViewDetail ? 
-                            <WorkDetail/> :
-                            <BucketProvider>
-                                <BucketBoard/>
-                            </BucketProvider>;
-                    }}
-                </DataContext.Consumer> 
+                <BucketProvider>
+                    <SideBar />
+                    <WorkStream/>       
+                    <DataContext.Consumer> 
+                        { value => {
+                            return value.state.isViewDetail ? 
+                                <WorkDetail/> : <BucketBoard/>;
+                        }}
+                    </DataContext.Consumer> 
+                </BucketProvider>;
             </WorkItemProvider>
            
         </div>
