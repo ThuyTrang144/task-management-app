@@ -17,7 +17,8 @@ function App() {
     const [isViewDetail, setIsViewDetailState] = useState(false);
     const [ user, setUser ] = useState(userList[0]); 
     const [activeSideBarId, setActiveSideBarId] = useState(settingMenu[0].id);
-
+    const [ assigneeList, setAssigneeList ] = useState([]);    
+    const [ tagIdList, setTagIdList ] = useState([]);
     const onSubmitLogin = (text) => {
 
         const user = userList.find(element => element.username === text);
@@ -41,7 +42,15 @@ function App() {
     const handleSelectedItem = (id) => {
         setActiveSideBarId(id);
     };
+    
+    const filterWorkItemByAssignee = (assigneeList) => {
+        setAssigneeList(assigneeList);
+    };
 
+    const filterWorkItemByTag = (list) => {
+        setTagIdList(list);
+    };
+    
     return (
         <Router>
             <DataContext.Provider
@@ -54,13 +63,17 @@ function App() {
                         isViewDetail,
                         viewWorkDetail,
                         user,
-                        activeSideBarId
+                        activeSideBarId,
+                        assigneeList,
+                        tagIdList
                     },
                     viewWorkDetail,
                     backToBucketBoard,
                     addTag,
                     onSubmitLogin,
-                    handleSelectedItem
+                    handleSelectedItem,
+                    filterWorkItemByAssignee, 
+                    filterWorkItemByTag
                 }}
             >
                 <Switch>

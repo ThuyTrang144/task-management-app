@@ -6,6 +6,9 @@ import { status, importanceLevel } from '../../../../../../constant';
 import './style.scss';
 import { useUserList } from '../../../../../../general-data-hook/useUserList';
 import { useGeneralTag } from '../../../../../../general-data-hook/useGeneralTag';
+import { useContext } from 'react/cjs/react.development';
+import { DataContext } from '../../../../../../context';
+import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
 const { Option } = Select;
 
 export function SubFilter ({ title, children }) {
@@ -18,14 +21,35 @@ export function SubFilter ({ title, children }) {
 }
 
 const Filter = React.memo(function () {
-    const { tagList } = useGeneralTag();
-    const { userList } = useUserList();
+    const { tagList, findTagsByName } = useGeneralTag();
+    const { userList, findUserByName } = useUserList();
+    const context = useContext(DataContext);
+
+    const onChangeAssignee = (value) => {
+        const assigneeList = [];
+        for (let i = 0; i < value.length; i++) {
+            const assignee = findUserByName(value[i]);
+            assigneeList.push(assignee.id);
+        }
+        context.filterWorkItemByAssignee(assigneeList);
+    };
+
+    const onChangeTag = (value) => {
+        const tagIdList = [];
+        for (let i = 0; i < value.length; i++) {
+            const tag = findTagsByName(value[i]);
+            tagIdList.push(tag.id);
+        }
+        context.filterWorkItemByTag(tagIdList);
+    };
+
     function renderAssignee() {
         return userList.map(item => 
             (
                 <Option 
                     className='selector-input' 
-                    key={item.id} 
+                    key={item.id}
+                    id={item.id} 
                     value={item.name}>
                     {item.name}
                 </Option>
@@ -68,15 +92,23 @@ const Filter = React.memo(function () {
         <FilterPannel title='FIlTERS'>
             <SubFilter title='Assignee'>
                 <Select 
+                    mode="multiple"
+                    allowClear
                     className='selector' 
-                    placeholder='Select Asignee'>
+                    placeholder='Select Asignee'
+                    onChange={onChangeAssignee}
+                >
                     {renderAssignee()}
                 </Select>   
             </SubFilter>
             <SubFilter title='Tags'>
                 <Select 
+                    mode="multiple"
+                    allowClear
                     className='selector' 
-                    placeholder='Select Tags'>
+                    placeholder='Select Tags'
+                    onChange={onChangeTag}
+                >
                     {renderTags()}
                 </Select>   
             </SubFilter>

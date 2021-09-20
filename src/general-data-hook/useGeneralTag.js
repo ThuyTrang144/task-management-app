@@ -7,9 +7,13 @@ export const useGeneralTag = () => {
     const findTagsById = (id) => {
         return tagList.find(element => element.id === id);
     };
+    const findTagsByName = (name) => {
+        return tagList.find(element => element.name === name);
+    };
     return {
         tagList,
         findTagsById,
-        addTag: context.addTag
+        addTag: context.addTag,
+        findTagsByName
     };
 };
