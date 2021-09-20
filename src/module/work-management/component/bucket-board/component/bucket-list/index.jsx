@@ -11,8 +11,8 @@ const BucketList = React.memo(function (props) {
                 return (
                     <Masonry   
                         breakpointCols={2}
-                        className="my-masonry-grid"
-                        columnClassName="my-masonry-grid_column"
+                        className='my-masonry-grid'
+                        columnClassName='my-masonry-grid_column'
                     >
                         {value.bucketList.map(item =>
                             <Bucket

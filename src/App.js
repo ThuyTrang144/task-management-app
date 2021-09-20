@@ -6,6 +6,7 @@ import { DATA } from './data';
 import { Route, BrowserRouter as Router, Switch } from  'react-router-dom';
 import { LoginPage } from './module/login';
 import { SettingPage } from './module/setting';
+import { settingMenu } from './constant';
 
 function App() {
 
@@ -14,13 +15,15 @@ function App() {
     const [userList] = useState(DATA.userList);
     const [activeId, setActiveIdState] = useState();
     const [isViewDetail, setIsViewDetailState] = useState(false);
-    const [ user, setUser ] = useState(); 
+    const [ user, setUser ] = useState(userList[0]); 
+    const [activeSideBarId, setActiveSideBarId] = useState(settingMenu[0].id);
 
     const onSubmitLogin = (text) => {
+
         const user = userList.find(element => element.username === text);
         setUser(user);
     } ;
-
+    
     const addTag = (text) => {
         tagList.push({ id: Math.random().toString().substring(2), name: text});
         setTagList([...tagList]);
@@ -35,6 +38,10 @@ function App() {
         setIsViewDetailState(false);
     }
 
+    const handleSelectedItem = (id) => {
+        setActiveSideBarId(id);
+    };
+
     return (
         <Router>
             <DataContext.Provider
@@ -46,12 +53,14 @@ function App() {
                         activeId,
                         isViewDetail,
                         viewWorkDetail,
-                        user
+                        user,
+                        activeSideBarId
                     },
                     viewWorkDetail,
                     backToBucketBoard,
                     addTag,
-                    onSubmitLogin
+                    onSubmitLogin,
+                    handleSelectedItem
                 }}
             >
                 <Switch>

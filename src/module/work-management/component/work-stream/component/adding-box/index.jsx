@@ -29,6 +29,7 @@ const AddingBox = React.memo( function (props) {
     };
     const searchWorkItem = (e) => {
         const searchValue = e.target.value;
+        console.log('search value', searchValue);
         props.searchWorkItem(searchValue);
     };
     return (
@@ -61,7 +62,6 @@ const AddingBox = React.memo( function (props) {
             </div>
             <div className="instruction">
                 <span>Enter to create a work item</span>
-                <span className="add-detail">Add detail</span>
             </div>
         </div>
     );

@@ -19,17 +19,6 @@ export const DATA = {
         { id: 3, name: '#reading' },
         { id: 4, name: '#cooking' }
     ],
-    status: [
-        { id: 1, name: 'New' },
-        { id: 2, name: 'In Progress' },
-        { id: 3, name: 'Done' }
-    ],
-    importanceLevel: [
-        { id: 1, name: 'Urgent' },
-        { id: 2, name: 'High' },
-        { id: 3, name: 'High' },
-        { id: 4, name: 'Low' },
-    ],
     userList: [
         { id: 1, username: 'thien', name: 'Thien Huynh', avatar: 'https://vcdn-vnexpress.vnecdn.net/2020/09/23/01-4451-1600828895.jpg', email: 'thien@gmail.com' },
         { id: 2, username: 'thao', name: 'Mai Thao', avatar: 'https://dogily.vn/wp-content/uploads/2019/09/Chu-cho-Anuko-noi-tieng-tren-mang-xa-hoi.jpg', email: 'thao@gmail.com' },
@@ -486,5 +475,4 @@ export const DATA = {
         {id: 2, name: 'Communication'},
         {id: 3, name: 'User'},
     ],
-    archivedWorkList: [],
 };

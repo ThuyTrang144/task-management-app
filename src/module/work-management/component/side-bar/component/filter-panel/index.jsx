@@ -22,7 +22,6 @@ export function MenuItem ({ children }) {
 export function Item (props) {
     const onClick = () => {
         props.handleSelectedItem(props.data.id);
-
     };
     return (
         <Link to={props.data.link} 

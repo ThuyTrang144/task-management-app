@@ -30,7 +30,9 @@ function ItemCard ( { data, style } ) {
         color = '#FFB41F';
     } else if (status.name === 'Done') {
         color = '#43A047';
-    } 
+    } else {
+        color = '#4A4B57';
+    }
 
     const isViewDetail = context.state.isViewDetail;
     const activeId = context.state.activeId;

@@ -3,7 +3,7 @@ import {BucketList, BucketAction}  from './component';
 import './style.scss';
 
 const BucketBoard = React.memo( function() {
-    const [searchValue, setSearchValueState] = useState('');
+    const [ searchValue, setSearchValueState ] = useState('');
     function searchWorkItem (text) {
         setSearchValueState(text);
     }
