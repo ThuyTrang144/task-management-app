@@ -8,9 +8,9 @@ export default function Bucket(props) {
 
     const { workItemList, findWorkItemById, setWorkItemList, filterWorkItem } = useWorkItem();
     const [ isViewMore, setIsViewMore ] = useState(false);
-    var itemList = workItemList.filter(item => item.bucketId === props.id);
-    var filterList = filterWorkItem(itemList, props.searchValue); 
+    var itemList = workItemList.filter(item => item.bucketId === props.id && item.statusId !== 4);
     function renderBucket() {
+        const filterList = filterWorkItem(itemList, props.searchValue); 
         filterList.sort((a, b) => b.isFavourite - a.isFavourite );
         if (filterList.length > 5) {
             const newFilterList = filterList.splice(0, 5);
@@ -44,7 +44,6 @@ export default function Bucket(props) {
         workItem.bucketId = bucketId;
         setWorkItemList([...workItemList]);
     }
-    
     return (
         <div 
             key={props.id} 

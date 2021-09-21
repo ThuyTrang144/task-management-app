@@ -38,7 +38,6 @@ export const BucketHeader = (props) => {
         archiveCompletedWorkItem(props.id);
         console.log('list', workItemList);
     }
-
     return (
         <div className='bucket-header'>
             <div className="bucket-title">

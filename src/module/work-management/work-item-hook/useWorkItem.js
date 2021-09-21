@@ -7,7 +7,6 @@ import { WorkItemContext } from '../context/workItem';
 
 const WorkItemProvider = ({children}) => {
     const [ workItemList, setWorkItemList ] = useState(DATA.workItemList);
-    const [ archivedWorkList, setArchivedWorkList ] = useState(DATA.archivedWorkList);
     const { findStatusByName } = useStatus();
 
     const findWorkItemById = (id) => {
@@ -45,13 +44,12 @@ const WorkItemProvider = ({children}) => {
     const archiveCompletedWorkItem = (bucketId) => {
         for (let i = 0; i < workItemList.length; i++) {
             if (workItemList[i].bucketId === bucketId && workItemList[i].statusId === 3) {
-                archivedWorkList.push(workItemList[i]);
-                workItemList.splice(i, 1);
+                workItemList[i].statusId = 4;
+                workItemList[i].bucketId = null;
             }
         }
         const newWorkItemList = [...workItemList];
         setWorkItemList(newWorkItemList);
-        setArchivedWorkList([...archivedWorkList]);
     };
     const completeWorkItem = (workId) => {
         const workItemIndex = workItemList.findIndex(item => item.id === workId); 
@@ -95,10 +93,6 @@ const WorkItemProvider = ({children}) => {
             return item.name.toLocaleLowerCase().startsWith(searchValue) || item.name.toLocaleLowerCase().includes(searchValue);
         });
         const newList = (searchValue.length !== 0) ? searchResult : workList;
-
-        if (searchResult.length === 0 && searchValue.length !== 0) {
-            return <p className="search-result">There is no work item match with your search. Please add a new one.</p>;
-        }
         return newList;
     };
     return (
@@ -117,7 +111,7 @@ const WorkItemProvider = ({children}) => {
                 filterWorkItem,
             }}
         >
-            {children})
+            {children}
         </WorkItemContext.Provider>
     ); 
 };
