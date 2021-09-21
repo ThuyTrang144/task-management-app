@@ -9,8 +9,11 @@ export const ChannelItem = (props) => {
     } else if (props.name === 'Learning') {
         backgroundColor = '#F8877F';
     }
+    const handleChannel = () => {
+        props.handleChangeChannel(props.id);
+    };
     return (
-        <div className='channel-item' style={{backgroundColor: backgroundColor}}>
+        <div className='channel-item' style={{backgroundColor: backgroundColor}} onClick={handleChannel}>
             <p>{props.name}</p>
             <div>
                 <p>100 Work Items</p>

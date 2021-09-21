@@ -8,8 +8,10 @@ import { useUserList } from '../../../../../../general-data-hook/useUserList';
 import { useGeneralTag } from '../../../../../../general-data-hook/useGeneralTag';
 import { useContext } from 'react/cjs/react.development';
 import { DataContext } from '../../../../../../context';
-import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
+import { useStatus } from '../../../../../../general-data-hook/useStatus';
+import { useImportanceLevel } from '../../../../../../general-data-hook/useImportanceLevel';
 const { Option } = Select;
+const CheckboxGroup = Checkbox.Group;
 
 export function SubFilter ({ title, children }) {
     return (
@@ -23,6 +25,8 @@ export function SubFilter ({ title, children }) {
 const Filter = React.memo(function () {
     const { tagList, findTagsByName } = useGeneralTag();
     const { userList, findUserByName } = useUserList();
+    const { findStatusByName } = useStatus();
+    const { findImportanceLevelByName } = useImportanceLevel();
     const context = useContext(DataContext);
 
     const onChangeAssignee = (value) => {
@@ -31,7 +35,7 @@ const Filter = React.memo(function () {
             const assignee = findUserByName(value[i]);
             assigneeList.push(assignee.id);
         }
-        context.filterWorkItemByAssignee(assigneeList);
+        context.findAssigneeFilterList(assigneeList);
     };
 
     const onChangeTag = (value) => {
@@ -40,9 +44,26 @@ const Filter = React.memo(function () {
             const tag = findTagsByName(value[i]);
             tagIdList.push(tag.id);
         }
-        context.filterWorkItemByTag(tagIdList);
+        context.findTagIdFilterList(tagIdList);
     };
-
+    
+    const onChangeStatus = (checkedValue) => {
+        const statusList = [];
+        for (let i = 0; i < checkedValue.length; i++) {
+            const status = findStatusByName(checkedValue[i]);
+            statusList.push(status.id);
+        }
+        context.findStatusFilterList(statusList);
+    };
+    const onChangeImportanceLevel = (checkedValue) => {
+        const importanceLevelList = [];
+        for (let i = 0; i < checkedValue.length; i++) {
+            const importanceLevel = findImportanceLevelByName(checkedValue[i]);
+            console.log('importance', importanceLevel);
+            importanceLevelList.push(importanceLevel.id);
+        }
+        context.findImportanceLevelFilterList(importanceLevelList);
+    };
     function renderAssignee() {
         return userList.map(item => 
             (
@@ -70,19 +91,19 @@ const Filter = React.memo(function () {
     }
     function renderStatus() {
         return status.map(item => 
-            (
-                <Checkbox 
-                    key={item.id}>
-                    {item.name}
-                </Checkbox>
-            )
-        );
+            <Checkbox 
+                value={item.name}
+                key={item.id}>
+                {item.name}
+            </Checkbox>);
     }
     function renderImportanceLevel() {
         return importanceLevel.map(item => 
             (
                 <Checkbox 
-                    key={item.id}>
+                    key={item.id}
+                    value={item.name}
+                >
                     {item.name}
                 </Checkbox>
             )
@@ -113,16 +134,20 @@ const Filter = React.memo(function () {
                 </Select>   
             </SubFilter>
             <SubFilter title='Status'>
-                <div 
-                    className='checkbox-filter'>
+                <CheckboxGroup 
+                    className='checkbox-filter'
+                    onChange={onChangeStatus}
+                >
                     {renderStatus()}
-                </div>   
+                </CheckboxGroup>  
             </SubFilter>
             <SubFilter title='Importance Level'>
-                <div 
-                    className='checkbox-filter'>
+                <CheckboxGroup 
+                    className='checkbox-filter'
+                    onChange={onChangeImportanceLevel}
+                >
                     {renderImportanceLevel()}
-                </div>   
+                </CheckboxGroup>   
             </SubFilter>
         </FilterPannel>
     );

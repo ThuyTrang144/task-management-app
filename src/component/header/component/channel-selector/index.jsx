@@ -6,11 +6,18 @@ import { ChannelItem } from './ChannelItem';
 import { Modal } from 'antd';
 
 export function ChannelSelector() {
-    const { channelList } = useChannelList();
+    const { channelList, currentChannelId, findChannelById, setCurrentActiveChannel } = useChannelList();   
+    const [ currentChannel, setCurrentChannel ] = useState(currentChannelId);
     const [ isViewChannelList, setIsViewChannleList ] = useState(false);
+    const channel = findChannelById(currentChannel);
+    const handleChangeChannel = (id) => {
+        setCurrentActiveChannel(id);
+        setCurrentChannel(id);
+        setIsViewChannleList(false);
+    };
     function rederChannelName() {
         return channelList.map(item => 
-            <ChannelItem key={item.id} id={item.id} name={item.name}></ChannelItem>
+            <ChannelItem key={item.id} id={item.id} name={item.name} handleChangeChannel={handleChangeChannel}></ChannelItem>
         );
     }
     function viewChannelList() {
@@ -23,7 +30,7 @@ export function ChannelSelector() {
     return (
         <>
             <button className='channel-selector' onClick={viewChannelList}>
-                <span>{'Channel: ' + channelList[0].name.toLocaleUpperCase()}</span>
+                <span>{'Channel: ' + channel.name.toLocaleUpperCase()}</span>
                 <DownOutlined />
             </button>
             <Modal title='Select Channel'

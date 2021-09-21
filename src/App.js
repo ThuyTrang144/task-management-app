@@ -10,21 +10,28 @@ import { settingMenu } from './constant';
 
 function App() {
 
-    const [channelList] = useState(DATA.channelList);
+    const [channelList] = useState(DATA.channelList);  
+    const [ currentChannelId, setCurrentChannelId ] = useState(channelList[0].id);
     const [tagList, setTagList] = useState(DATA.tagList);
     const [userList] = useState(DATA.userList);
     const [activeId, setActiveIdState] = useState();
     const [isViewDetail, setIsViewDetailState] = useState(false);
     const [ user, setUser ] = useState(userList[0]); 
-    const [activeSideBarId, setActiveSideBarId] = useState(settingMenu[0].id);
+    const [activeMenuItem, setActiveMenuItem] = useState(settingMenu[0].id);
     const [ assigneeList, setAssigneeList ] = useState([]);    
     const [ tagIdList, setTagIdList ] = useState([]);
+    const [ statusList, setStatusList ] = useState([]);
+    const [ importanceLevelList, setImportanceLevelList ] = useState([]);
+
     const onSubmitLogin = (text) => {
 
         const user = userList.find(element => element.username === text);
         setUser(user);
     } ;
-    
+    const setCurrentActiveChannel = (id) => {
+        setCurrentChannelId(id);
+    };
+
     const addTag = (text) => {
         tagList.push({ id: Math.random().toString().substring(2), name: text});
         setTagList([...tagList]);
@@ -39,16 +46,22 @@ function App() {
         setIsViewDetailState(false);
     }
 
-    const handleSelectedItem = (id) => {
-        setActiveSideBarId(id);
+    const handleSelectedItem = (name) => {
+        setActiveMenuItem(name);
     };
     
-    const filterWorkItemByAssignee = (assigneeList) => {
+    const findAssigneeFilterList = (assigneeList) => {
         setAssigneeList(assigneeList);
     };
 
-    const filterWorkItemByTag = (list) => {
-        setTagIdList(list);
+    const findTagIdFilterList = (tagIdList) => {
+        setTagIdList(tagIdList);
+    };
+    const findStatusFilterList = (statusList) => {
+        setStatusList(statusList);
+    };
+    const findImportanceLevelFilterList = (importanceLevelList) => {
+        setImportanceLevelList(importanceLevelList);
     };
     
     return (
@@ -57,23 +70,30 @@ function App() {
                 value={{
                     state: {
                         channelList, 
+                        currentChannelId,
                         userList,
                         tagList,
                         activeId,
                         isViewDetail,
                         viewWorkDetail,
                         user,
-                        activeSideBarId,
+                        activeMenuItem,
                         assigneeList,
-                        tagIdList
+                        tagIdList,
+                        statusList,
+                        importanceLevelList
+
                     },
+                    setCurrentActiveChannel,
                     viewWorkDetail,
                     backToBucketBoard,
                     addTag,
                     onSubmitLogin,
                     handleSelectedItem,
-                    filterWorkItemByAssignee, 
-                    filterWorkItemByTag
+                    findAssigneeFilterList, 
+                    findTagIdFilterList,
+                    findStatusFilterList,
+                    findImportanceLevelFilterList
                 }}
             >
                 <Switch>
