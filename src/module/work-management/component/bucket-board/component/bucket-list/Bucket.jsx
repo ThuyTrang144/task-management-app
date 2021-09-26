@@ -18,7 +18,11 @@ export default function Bucket(props) {
                 return (
                     <>
                         <ListView data={filterList} ItemComponent={BucketItem} />
-                        <p style={{color: '#2979FF', cursor: 'pointer'}} onClick={() => setIsViewMore(false)}>View less</p>
+                        <p 
+                            style={{color: '#2979FF', cursor: 'pointer', marginTop: '15px'}} 
+                            onClick={() => setIsViewMore(false)}>
+                            View less
+                        </p>
                     </>
                 );
             };
@@ -26,7 +30,12 @@ export default function Bucket(props) {
                 <>
                     <ListView data={newFilterList} ItemComponent={BucketItem} />
                     {isViewMore ? renderRemainList() : 
-                        <p style={{color: '#2979FF', cursor: 'pointer'}} onClick={() => setIsViewMore(true)}>View more({filterList.length} items)</p>}
+                        <p 
+                            style={{color: '#2979FF', cursor: 'pointer', marginTop: '15px'}} 
+                            onClick={() => setIsViewMore(true)}>
+                            View more({filterList.length} items)
+                        </p>
+                    }
                 </>
             );
         } else if (filterList.length === 0) {

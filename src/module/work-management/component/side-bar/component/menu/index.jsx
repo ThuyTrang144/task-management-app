@@ -1,15 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { FilterPannel, Item, MenuItem } from '../filter-panel';
 import './style.scss';
 import { ListView } from '../../../../../../component/list-view';
 import { workItemMenu } from '../../../../../../constant';
-import { DataContext } from '../../../../../../context';
 
 const Menu = React.memo(function() {
-    const context = useContext(DataContext);
-    const activeId = context.state.activeSideBarId;
+    const activeMenuItem = workItemMenu[0].name;
     function renderWorkItem() {
-        return <ListView data={workItemMenu} ItemComponent={Item} activeId={activeId}/>;
+        return <ListView data={workItemMenu} ItemComponent={Item} activeMenuItem={activeMenuItem}/>;
     }
 
     return (

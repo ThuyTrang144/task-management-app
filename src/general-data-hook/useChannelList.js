@@ -8,7 +8,9 @@ export const useChannelList = () => {
         return channelList.find(element => element.id === id);
     };
     return { 
-        channelList, 
-        findChannelById
+        channelList,
+        currentChannelId: context.state.currentChannelId, 
+        findChannelById,
+        setCurrentActiveChannel: context.setCurrentActiveChannel
     };
 };

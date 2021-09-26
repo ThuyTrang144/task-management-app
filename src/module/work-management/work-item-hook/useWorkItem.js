@@ -1,17 +1,28 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Moment from 'react-moment';
 import { useState } from 'react/cjs/react.development';
 import { DATA } from '../../../data';
+import { useChannelList } from '../../../general-data-hook/useChannelList';
+import { usePrevious } from '../../../general-data-hook/usePrevious';
 import { useStatus } from '../../../general-data-hook/useStatus';
 import { WorkItemContext } from '../context/workItem';
 
 const WorkItemProvider = ({children}) => {
-    const [ workItemList, setWorkItemList ] = useState(DATA.workItemList);
+    const { currentChannelId } = useChannelList();
     const { findStatusByName } = useStatus();
+    const [ workItemList, setWorkItemList ] = useState([]);
+    const prev = usePrevious(currentChannelId);
+    useEffect(() => {
+        if (prev !== currentChannelId) {
+            const workList  = DATA.workItemList.filter(item => item.channelId === currentChannelId);
+            setWorkItemList(workList);
+        }
+    }, [currentChannelId, prev]); // only re-ren wwhen currentChannelId changes
 
     const findWorkItemById = (id) => {
         return workItemList.find(element => element.id === id);
     };
+
     const addWorkItem = (text) => {
         const newItem = {
             id: Math.random().toString().substring(2), 

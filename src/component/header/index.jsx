@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import { MenuOutlined, SettingOutlined, LogoutOutlined, HomeOutlined} from '@ant-design/icons';
+import { HomeOutlined, SettingOutlined, LogoutOutlined} from '@ant-design/icons';
 import { ChannelSelector, Notification} from './component';
 import { Dropdown, Menu } from 'antd';
 import { Link } from 'react-router-dom';
@@ -37,7 +37,7 @@ export default function Header() {
         <div className='header'>
             <div className='left'>
                 <div className="logo">
-                    <span className='menu-icon'><MenuOutlined /></span>
+                    <span className='menu-icon'><HomeOutlined /></span>
                     <span className='app-name'>Work management</span>
                 </div>
                 <ChannelSelector/>
