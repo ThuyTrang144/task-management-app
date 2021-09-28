@@ -11,6 +11,7 @@ const WorkDetail = React.memo(function () {
             <DataContext.Consumer>
                 {value => { 
                     const workDetailData = findWorkItemById(value.state.activeId);
+                    console.log('activeId', value.state.activeId);
                     return (
                         <WorkDetailContext.Provider value={{workDetailData}} >
                             <Header/>

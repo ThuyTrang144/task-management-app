@@ -1,16 +1,24 @@
-import { useContext } from 'react/cjs/react.development';
+import { useContext, useState } from 'react/cjs/react.development';
 import { DataContext } from '../context';
+import { DATA } from '../data';
 
 export const useChannelList = () => {
     const context = useContext(DataContext);
     const channelList = context.state.channelList;
+    console.log('channel', channelList);
+
+ 
+    
     const findChannelById = (id) => {
-        return channelList.find(element => element.id === id);
+        return channelList.find(element => element._id === id);
     };
     return { 
         channelList,
-        currentChannelId: context.state.currentChannelId, 
+        currentChannel: context.state.currentChannel,
         findChannelById,
-        setCurrentActiveChannel: context.setCurrentActiveChannel
+        // setCurrentActiveChannel,
+        countTotalWorkItem: context.countTotalWorkItem(DATA.workItemList),
+        addNewChannel: context.addNewChannel
+
     };
 };

@@ -3,21 +3,31 @@ import './style.scss';
 import { useChannelList } from '../../../../general-data-hook/useChannelList';
 import { DownOutlined } from '@ant-design/icons';
 import { ChannelItem } from './ChannelItem';
-import { Modal } from 'antd';
+import { Button, Input, Modal } from 'antd';
 
 export function ChannelSelector() {
-    const { channelList, currentChannelId, findChannelById, setCurrentActiveChannel } = useChannelList();   
-    const [ currentChannel, setCurrentChannel ] = useState(currentChannelId);
+    const { channelList, currentChannel, findChannelById, setCurrentActiveChannel, addNewChannel } = useChannelList();   
+    // const [ currentChannel, setCurrentChannel ] = useState(currentChannelId);
+    console.log('currentchannel', currentChannel);
     const [ isViewChannelList, setIsViewChannleList ] = useState(false);
-    const channel = findChannelById(currentChannel);
+    const [ isAddingChannel, setIsAddingChannel ] = useState(false);
+    // const channel = findChannelById(currentChannelId);
     const handleChangeChannel = (id) => {
         setCurrentActiveChannel(id);
-        setCurrentChannel(id);
+        // setCurrentChannel(id);
         setIsViewChannleList(false);
     };
     function rederChannelName() {
         return channelList.map(item => 
-            <ChannelItem key={item.id} id={item.id} name={item.name} handleChangeChannel={handleChangeChannel}></ChannelItem>
+            <ChannelItem
+                key={item.id} 
+                id={item.id} 
+                name={item.name}
+                totalWorkItem={item.totalWorkItem} 
+                handleChangeChannel={handleChangeChannel} 
+                // currentChannelId={currentChannelId}
+            >
+            </ChannelItem>
         );
     }
     function viewChannelList() {
@@ -26,19 +36,41 @@ export function ChannelSelector() {
     }
     function handleCancle() {
         setIsViewChannleList(false);
+        setIsAddingChannel(false);
+    }
+    function openAddingForm() {
+        setIsAddingChannel(true);
+    }
+    function handleAddChannel(e) {
+        var text = e.target.value;
+        addNewChannel(text);
     }
     return (
         <>
             <button className='channel-selector' onClick={viewChannelList}>
-                <span>{'Channel: ' + channel.name.toLocaleUpperCase()}</span>
+                {currentChannel === undefined ? 
+                    <span>{'Channel: ' + 'Default Channel'.toLocaleUpperCase()}</span> : 
+                    <span>{'Channel: ' + currentChannel.name.toLocaleUpperCase()}</span>}
                 <DownOutlined />
             </button>
-            <Modal title='Select Channel'
+            <Modal 
+                title='Select Channel'
                 className='channel-list'
                 onCancel={handleCancle}
                 visible={isViewChannelList}
                 width={1200}
-                footer={null}>
+                footer={
+                    <div>
+                        <Button type='primary' onClick={openAddingForm}>Create New Channel</Button>
+                        {isAddingChannel ? 
+                            <Input 
+                                style={{marginTop: '20px'}} 
+                                placeholder='Enter channel name' 
+                                onPressEnter={handleAddChannel}
+                            >
+                            </Input>: null}
+                    </div>
+                }>
                 {rederChannelName()}
             </Modal> 
         </>

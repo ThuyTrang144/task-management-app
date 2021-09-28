@@ -13,5 +13,8 @@ export const WorkItemContext = React.createContext({
     completeWorkItem: () => {},
     archiveCompletedWorkItem: () => {},
     deleteAttachment: () => {},
-    addTag: () => {}
+    addTag: () => {},
+    editWorkItemTitle: () => {},
+    changeWorkItemStatus: () => {},
+    filterWorkItem: () => {}
 });

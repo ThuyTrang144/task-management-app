@@ -7,9 +7,20 @@
     border-radius: 4px 4px 0px 0px;
     position: relative;
     z-index: 1;
+    .ant-modal-body {
+        flex-direction: column;
+    }
+    .anticon.anticon-close {
+        margin: 0 15px;
+        font-size: 20px;
+    }
     .work-item-title {
         margin-left: 15px;
         font-size: var(--two-xl);
+        &:focus {
+            outline: none;
+            overflow: hidden;
+        }
         .back-icon {
             &:hover {
                 color: var(--text-hover-color);
@@ -87,19 +98,35 @@
                 margin-inline-end: 10px;
             }
             .btn-action.mark-done {
-                background-color: #F0F0F1;
+                cursor: pointer;
+                &:hover {
+                    background-color: #64BF68;
+                    color: var(--text-color-light);
+                }
             }
             .btn-action.change-privacy {
                 background-color: #FFF1D6;
                 color: #FFB41F;
+                &:hover {
+                    background-color: #FFB41F;
+                    color: var(--text-color-light);
+                }
             }
             .btn-action.edit-work-item {
                 background-color: #CEE5FF;
-                color: #2979FF;
+                color: var(--text-hover-color);
+                &:hover {
+                    background-color: var(--text-hover-color);
+                    color: var(--text-color-light);
+                }
             }
             .btn-action.menu-action {
                 background-color: #FCCBC8;
                 color: #EF6C1F;
+                &:hover {
+                    background-color: #FFB41F;
+                    color: var(--text-color-light);
+                }
             }
         }
         .vertical-line {
@@ -109,4 +136,13 @@
             margin-inline-end: 15px;
         }
     }
+}
+.ant-modal-header {
+    background-color: #4F91FF;
+    .ant-modal-title {
+        color: var(--text-color-light);
+    }
+}
+.ant-modal-close {
+    color: var(--text-color-light);
 }

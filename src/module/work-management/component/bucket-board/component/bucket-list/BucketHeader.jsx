@@ -43,11 +43,11 @@ export const BucketHeader = (props) => {
             <div className="bucket-title">
                 { isEdit ? 
                     <Input 
-                        defaultValue={props.name} 
+                        defaultValue={props.title} 
                         className='input-text'
                         onPressEnter={editBucket}>
                     </Input> : 
-                    <span>{props.name.toLocaleUpperCase()}</span>
+                    <span>{props.title.toLocaleUpperCase()}</span>
                 }
             </div>
             <div className="actions">

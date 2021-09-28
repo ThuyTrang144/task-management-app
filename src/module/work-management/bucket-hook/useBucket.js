@@ -1,14 +1,33 @@
+import { useEffect } from 'react';
 import { useContext, useState } from 'react/cjs/react.development';
-import { DATA } from '../../../data';
+import { bucketListUrl } from '../../../constant';
 import { BucketContext } from '../context/bucket';
 import { useWorkItem } from '../work-item-hook/useWorkItem';
 
 const BucketProvider = ( {children} ) => {
-    const [ bucketList, setBucketList ] = useState(DATA.bucketList);
+    const [ bucketList, setBucketList ] = useState([]);
     const { revertWorkItemToWorkStream } = useWorkItem();
+
+    const getBucketList = async () => {
+        try {
+            const res = await fetch(bucketListUrl);
+            return res.json();
+        } catch(err) {
+            console.log('bucket', err);
+        }
+    };
+
+    useEffect(() => {
+        (async () => {
+            const data = await getBucketList();
+            setBucketList(data.results);
+        })(); 
+    }, []);
+
     const findBucketById = (id) => {
         return bucketList.find(element => element.id === id);
     };
+
     const addNewBucket = (text) => {
         const newBucket = { id: Math.random().toString().substring(2), name: text };
         setBucketList([
@@ -16,11 +35,13 @@ const BucketProvider = ( {children} ) => {
             ...bucketList
         ]);
     };
+
     function editBucketName(bucketId, text) {
         const bucket = findBucketById(bucketId);
         bucket.name = text;
         setBucketList([...bucketList]);
     }
+    
     const deleteBucket = (bucketId) => {
         const bucketIndex = bucketList.findIndex(item => item.id === bucketId);
         bucketList.splice(bucketIndex, 1);

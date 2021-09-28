@@ -4,14 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext } from 'react';
 import { DataContext } from '../../../../context';
 import { useStatus } from '../../../../general-data-hook/./useStatus';
-import { useUserList } from '../../../../general-data-hook/useUserList';
+import Moment from 'react-moment';
 
 function ItemCard ( { data, style } ) {
     const context = useContext(DataContext);
     const { findStatusById } = useStatus();
-    const { findUserById } = useUserList();
-    const status = findStatusById(data.statusId);
-    const owner = findUserById(data.ownerId);
+    const status = findStatusById(data.status_id);
+    const owner_name = data.owner.first_name + ' ' + data.owner.last_name;
 
     const  viewWorkDetail = () => {
         if (context.viewWorkDetail) {
@@ -24,11 +23,11 @@ function ItemCard ( { data, style } ) {
     };
     
     let color, backgroundColor;
-    if (status.name === 'New') {
+    if (status.label === 'New') {
         color = '#13C2C2';
-    } else if (status.name === 'In Progress') {
+    } else if (status.label === 'In Progress') {
         color = '#FFB41F';
-    } else if (status.name === 'Done') {
+    } else if (status.label === 'Done') {
         color = '#43A047';
     } else {
         color = '#4A4B57';
@@ -55,17 +54,17 @@ function ItemCard ( { data, style } ) {
                     onClick={viewWorkDetail}>
                     {data.name}
                 </span> 
-                <span className="work-item-status" style={{color: color}}>{status.name}</span>
+                <span className="work-item-status" style={{color: color}}>{status.label}</span>
             </div>
             <div className="work-information">
                 <div>
                     <FontAwesomeIcon className='item-icon' icon={faUser} />
-                    <span>{owner.name}</span>
-                    <span className='created-date'>{data.createdDate}</span>
+                    <span style={{fontWeight: 'bold', paddingRight: '10px'}}>{owner_name}</span>
+                    <Moment fromNow>{data._created_at}</Moment>
                 </div>
                 <div>
                     <FontAwesomeIcon className='item-icon' icon={faClock} />
-                    <span>{data.dueDate}</span>
+                    <Moment fromNow ago>{data.due_date}</Moment><span> left</span>
                 </div>
             </div>
         </div>

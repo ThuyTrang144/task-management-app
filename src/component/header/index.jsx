@@ -3,7 +3,7 @@ import './style.scss';
 import { HomeOutlined, SettingOutlined, LogoutOutlined} from '@ant-design/icons';
 import { ChannelSelector, Notification} from './component';
 import { Dropdown, Menu } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { DataContext } from '../../context';
 import { useUserList } from '../../general-data-hook/useUserList';
 
@@ -11,7 +11,7 @@ export const menu = () => {
     return (
         <Menu>
             <Menu.Item key={0}>
-                <Link to='/work-management'>
+                <Link to='/work-management/work-stream'>
                     <HomeOutlined />
                     <span>Work Management</span>
                 </Link>
@@ -33,15 +33,24 @@ export const menu = () => {
 };
 export default function Header() {
     const { userList } = useUserList();
+    const location = useLocation();
     return ( 
         <div className='header'>
-            <div className='left'>
-                <div className="logo">
-                    <span className='menu-icon'><HomeOutlined /></span>
-                    <span className='app-name'>Work management</span>
-                </div>
-                <ChannelSelector/>
-            </div> 
+            {location.pathname.includes('/work-management') ? 
+                <div className='left'>
+                    <div className="logo">
+                        <span className='menu-icon'><HomeOutlined /></span>
+                        <span className='app-name'>Work management</span>
+                    </div>
+                    <ChannelSelector/>
+                </div> :
+                <div className='left'>
+                    <div className="logo">
+                        <span className='menu-icon'><SettingOutlined /></span>
+                        <span className='app-name'>Setting</span>
+                    </div>
+                </div> 
+            }
             <div className='right'>  
                 <Notification />
                 <DataContext.Consumer>
@@ -51,9 +60,9 @@ export default function Header() {
                                 <div className='avatar'>
                                     <img 
                                         alt='userAvatar' 
-                                        src={value.state.user !== undefined ? value.state.user.avatar: userList[0].avatar}>
+                                        src={value.state.user !== undefined ? value.state.user.avatar: 'https://vcdn-vnexpress.vnecdn.net/2020/09/23/01-4451-1600828895.jpg'}>
                                     </img>
-                                    <span>{value.state.user !== undefined ? value.state.user.name: userList[0].name}</span>
+                                    <span>{value.state.user !== undefined ? value.state.user.user_name: 'Thien Huynh'}</span>
                                 </div>
                             </Dropdown>);}}                
                 </DataContext.Consumer>

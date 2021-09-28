@@ -1,23 +1,23 @@
 import Header from './component/header/index';
 import WorkManagement from './module/work-management';
 import { DataContext } from './context';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DATA } from './data';
 import { Route, BrowserRouter as Router, Switch } from  'react-router-dom';
 import { LoginPage } from './module/login';
 import { SettingPage } from './module/setting';
-import { settingMenu } from './constant';
+import { channelListUrl, settingMenu, userListUrl } from './constant';
 
 function App() {
 
-    const [channelList] = useState(DATA.channelList);  
-    const [ currentChannelId, setCurrentChannelId ] = useState(channelList[0].id);
-    const [tagList, setTagList] = useState(DATA.tagList);
-    const [userList] = useState(DATA.userList);
-    const [activeId, setActiveIdState] = useState();
-    const [isViewDetail, setIsViewDetailState] = useState(false);
+    const [ channelList, setChannelList ] = useState([]);  
+    const [ tagList, setTagList ] = useState(DATA.tagList);
+    const [ currentChannel, setCurrentChannel ] = useState();
+    const [ userList, setUserList ] = useState([]);
+    const [ activeId, setActiveIdState ] = useState();
+    const [ isViewDetail, setIsViewDetailState ] = useState(false);
     const [ user, setUser ] = useState(userList[0]); 
-    const [activeMenuItem, setActiveMenuItem] = useState(settingMenu[0].id);
+    const [ activeMenuItem, setActiveMenuItem ] = useState(settingMenu[0].id);
     const [ assigneeList, setAssigneeList ] = useState([]);    
     const [ tagIdList, setTagIdList ] = useState([]);
     const [ statusList, setStatusList ] = useState([]);
@@ -28,9 +28,34 @@ function App() {
         const user = userList.find(element => element.username === text);
         setUser(user);
     } ;
-    const setCurrentActiveChannel = (id) => {
-        setCurrentChannelId(id);
+
+    const getUserList = async () => {
+        try {
+            const res = await fetch(userListUrl);
+            return res.json();
+        } catch(err) {
+            console.log('user list', err);
+        }
     };
+
+    const getChannelList = async () => {
+        try {
+            const res = await fetch(channelListUrl);
+            return res.json();
+        } catch(err) {
+            console.log('channel', err);
+        }
+    };
+
+    useEffect(() => {
+        (async () => {
+            const userList = await getUserList();
+            setUserList(userList.results);
+            const channelList = await getChannelList();
+            setChannelList(channelList.results);
+            setCurrentChannel(channelList.results[0]);
+        })();
+    }, []);
 
     const addTag = (text) => {
         tagList.push({ id: Math.random().toString().substring(2), name: text});
@@ -64,13 +89,25 @@ function App() {
         setImportanceLevelList(importanceLevelList);
     };
     
+    const countTotalWorkItem = (workList) => {
+        for (let i = 0; i < channelList.length; i++) {
+            const list  = workList.filter(item => item.channelId === channelList[i].id);
+            channelList[i]['totalWorkItem'] = list.length;
+        }
+    };
+    const addNewChannel = (text) => {
+        const newChannel = {
+            id: Math.random().toString().substring(2), name: text
+        };
+        setChannelList([newChannel, ...channelList]);
+    };
     return (
         <Router>
             <DataContext.Provider
                 value={{
                     state: {
                         channelList, 
-                        currentChannelId,
+                        currentChannel,
                         userList,
                         tagList,
                         activeId,
@@ -84,7 +121,7 @@ function App() {
                         importanceLevelList
 
                     },
-                    setCurrentActiveChannel,
+                    // setCurrentActiveChannel,
                     viewWorkDetail,
                     backToBucketBoard,
                     addTag,
@@ -93,9 +130,11 @@ function App() {
                     findAssigneeFilterList, 
                     findTagIdFilterList,
                     findStatusFilterList,
-                    findImportanceLevelFilterList
+                    findImportanceLevelFilterList,
+                    countTotalWorkItem,
+                    addNewChannel
                 }}
-            >
+            >                
                 <Switch>
                     <Route path='/login-page'>
                         <LoginPage/>
