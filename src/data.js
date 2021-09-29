@@ -275,6 +275,11 @@ export const DATA = {
                 {id: 2, name: 'Reading', assigneeId: 1},
                 {id: 3, name: 'Speaking', assigneeId: 4}
             ], 
+            attachmentList: [
+                {id: 1, name: '[E Book ] BBC Top 100 E Books', size: '8.8MB', type: <FilePdfOutlined />},
+                {id: 2, name: 'Cambridge 7', size: '8.8MB', type: <FileImageOutlined />},
+                {id: 3, name: 'Collin English', size: '8.8MB', type: <FileWordOutlined />}
+            ],
             isFavourite: false
         },
         {
@@ -389,7 +394,7 @@ export const DATA = {
             activitiesList: [
                 {id: 1, name: 'Practice Listening', assigneeId: 1, createdTime:'15 mins ago', label:'User'},
                 {id: 2, name: 'Trang Nguyen has change status from New to In Progress', assigneeId: 2, createdTime:'2 days ago', label:'System'},
-                {id: 3, name: 'Write an English essay', assigneId: 3, createdTime:'8 mins ago', label:'Communication'},
+                {id: 3, name: 'Write an English essay', assigneeId: 3, createdTime:'8 mins ago', label:'Communication'},
                 {id: 4, name: 'Trang Nguyen has delete todo: Listening', assigneeId: 4, createdTime:'2 days ago', label:'System'},
                 {id: 5,name: 'Practice Speaking', assigneeId: 1, createdTime:'8 mins ago', label:'Communication'}
             ],

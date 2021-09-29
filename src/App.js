@@ -10,13 +10,13 @@ import { settingMenu } from './constant';
 
 function App() {
 
-    const [channelList] = useState(DATA.channelList);  
-    const [ currentChannelId, setCurrentChannelId ] = useState(channelList[0].id);
+    const [channelList, setChannelList] = useState(DATA.channelList);  
+    const [currentChannelId, setCurrentChannelId] = useState(channelList[0].id);
     const [tagList, setTagList] = useState(DATA.tagList);
     const [userList] = useState(DATA.userList);
     const [activeId, setActiveIdState] = useState();
     const [isViewDetail, setIsViewDetailState] = useState(false);
-    const [ user, setUser ] = useState(userList[0]); 
+    const [user, setUser] = useState(userList[0]); 
     const [activeMenuItem, setActiveMenuItem] = useState(settingMenu[0].id);
     const [ assigneeList, setAssigneeList ] = useState([]);    
     const [ tagIdList, setTagIdList ] = useState([]);
@@ -63,7 +63,18 @@ function App() {
     const findImportanceLevelFilterList = (importanceLevelList) => {
         setImportanceLevelList(importanceLevelList);
     };
-    
+    const countTotalWorkItem = (workList) => {
+        for (let i = 0; i < channelList.length; i++) {
+            const list  = workList.filter(item => item.channelId === channelList[i].id);
+            channelList[i]['totalWorkItem'] = list.length;
+        }
+    };
+    const addNewChannel = (text) => {
+        const newChannel = {
+            id: Math.random().toString().substring(2), name: text
+        };
+        setChannelList([newChannel, ...channelList]);
+    };
     return (
         <Router>
             <DataContext.Provider
@@ -93,7 +104,9 @@ function App() {
                     findAssigneeFilterList, 
                     findTagIdFilterList,
                     findStatusFilterList,
-                    findImportanceLevelFilterList
+                    findImportanceLevelFilterList,
+                    addNewChannel,
+                    countTotalWorkItem
                 }}
             >
                 <Switch>
