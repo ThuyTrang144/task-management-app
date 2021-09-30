@@ -1,39 +1,49 @@
+import axios from 'axios';
 import { useContext, useEffect } from 'react';
 import Moment from 'react-moment';
 import { useState } from 'react/cjs/react.development';
 import { workItemListUrl } from '../../../constant';
-import { DATA } from '../../../data';
 import { useChannelList } from '../../../general-data-hook/useChannelList';
 import { usePrevious } from '../../../general-data-hook/usePrevious';
 import { useStatus } from '../../../general-data-hook/useStatus';
 import { WorkItemContext } from '../context/workItem';
 
 const WorkItemProvider = ({children}) => {
-    const { currentChannelId } = useChannelList();
+    const { currentChannel } = useChannelList();
     const { findStatusByName } = useStatus();
     const [ workItemList, setWorkItemList ] = useState([]);
 
-    const prev = usePrevious(currentChannelId);
+    const prev = usePrevious(currentChannel);
     async function getWorkItemList () {
         try {
-            let res = await fetch(workItemListUrl);
-            return res.json();
+            let res = await axios.get(workItemListUrl);
+            return res.data;
         } catch (error) {
             console.log(error);
         } 
     }
-    
+    async function addNewWorkItem (text) {
+        const payload = {
+            'name': text,
+            'description': 'Work item of defualt channel',
+            'owner_id': '732e7d85-929b-4af0-843d-98a1044e8456',
+            'channel_id': 'f2aa3d51-08e2-45cb-b161-ff83f6423770'
+        };
+        let res = await axios.post(workItemListUrl, payload);
+        let data = res.data;
+        console.log('data', data);
+    }
     useEffect(() => {
         (async () => {
             const data = await getWorkItemList();
-            setWorkItemList(data.results);
-          
+            if (prev !== currentChannel) {
+                const workList = currentChannel ? data.results.filter(item => item.channel_id === currentChannel._id) : 
+                    data.results.filter(item => item.channel_id='5e296837-9cae-4268-87f6-8cb351745ea8');
+                setWorkItemList(workList);
+            }
         })();
-        if (prev !== currentChannelId) {
-            // const workList  = DATA.workItemList.filter(item => item.channelId === currentChannelId);
-            // setWorkItemList(workList);
-        }
-    }, [currentChannelId, prev]); // only re-ren wwhen currentChannelId changes
+  
+    }, [currentChannel, prev]); // only re-ren wwhen currentChannelId changes
 
     const findWorkItemById = (id) => {
         const workItem = workItemList.find(element => element._id === id);
@@ -151,6 +161,7 @@ const WorkItemProvider = ({children}) => {
                 revertWorkItemToWorkStream,
                 changeWorkItemStatus,
                 filterWorkItem,
+                addNewWorkItem
             }}
         >
             {children}

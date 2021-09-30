@@ -6,7 +6,7 @@ import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
 import './style.scss';
 
 const AddingBox = React.memo( function (props) {
-    const { addWorkItem } = useWorkItem();
+    const { addNewWorkItem } = useWorkItem();
     const [value, setValue] = useState('');
     const [isSearch, setIsSearch] = useState(false);
 
@@ -16,7 +16,7 @@ const AddingBox = React.memo( function (props) {
     }
     function onSubmit(e) {
         if (e.charCode === 13) {
-            addWorkItem(value);
+            addNewWorkItem(value);
             setValue('');
         }
     }

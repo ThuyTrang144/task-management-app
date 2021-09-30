@@ -4,7 +4,6 @@ import { DataContext } from '../context';
 export const useUserList = () => {
     const context = useContext(DataContext);
     const userList = context.state.userList;
-    console.log('userList', userList);
     const findUserById = (id) => {
         const user = userList.find(element => element.id === id);
         if (user === undefined) {

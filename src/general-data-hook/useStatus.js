@@ -17,7 +17,6 @@ const useStatus = () => {
     useEffect(() => {
         (async () => {
             const data = await getStatusList();
-            console.log('status list', data);
             setStatusList(data.results);
         })();
     }, []);

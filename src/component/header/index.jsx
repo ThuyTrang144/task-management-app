@@ -32,7 +32,6 @@ export const menu = () => {
     );
 };
 export default function Header() {
-    const { userList } = useUserList();
     const location = useLocation();
     return ( 
         <div className='header'>

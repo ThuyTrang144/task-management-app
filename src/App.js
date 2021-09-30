@@ -7,17 +7,18 @@ import { Route, BrowserRouter as Router, Switch } from  'react-router-dom';
 import { LoginPage } from './module/login';
 import { SettingPage } from './module/setting';
 import { channelListUrl, settingMenu, userListUrl } from './constant';
+import { WorkItemProvider } from './module/work-management/work-item-hook/useWorkItem';
 
 function App() {
 
-    const [ channelList, setChannelList ] = useState([]);  
-    const [ tagList, setTagList ] = useState(DATA.tagList);
-    const [ currentChannel, setCurrentChannel ] = useState();
-    const [ userList, setUserList ] = useState([]);
-    const [ activeId, setActiveIdState ] = useState();
-    const [ isViewDetail, setIsViewDetailState ] = useState(false);
-    const [ user, setUser ] = useState(userList[0]); 
-    const [ activeMenuItem, setActiveMenuItem ] = useState(settingMenu[0].id);
+    const [channelList, setChannelList] = useState([]);  
+    const [currentChannel, setCurrentChannel] = useState();
+    const [tagList, setTagList] = useState(DATA.tagList);
+    const [userList, setUserList] = useState(DATA.userList);
+    const [activeId, setActiveIdState] = useState();
+    const [isViewDetail, setIsViewDetailState] = useState(false);
+    const [user, setUser] = useState(userList[0]); 
+    const [activeMenuItem, setActiveMenuItem] = useState(settingMenu[0].id);
     const [ assigneeList, setAssigneeList ] = useState([]);    
     const [ tagIdList, setTagIdList ] = useState([]);
     const [ statusList, setStatusList ] = useState([]);
@@ -88,7 +89,6 @@ function App() {
     const findImportanceLevelFilterList = (importanceLevelList) => {
         setImportanceLevelList(importanceLevelList);
     };
-    
     const countTotalWorkItem = (workList) => {
         for (let i = 0; i < channelList.length; i++) {
             const list  = workList.filter(item => item.channelId === channelList[i].id);
@@ -100,6 +100,9 @@ function App() {
             id: Math.random().toString().substring(2), name: text
         };
         setChannelList([newChannel, ...channelList]);
+    };
+    const findActiveChannel = (channel) => {
+        setCurrentChannel(channel);
     };
     return (
         <Router>
@@ -121,7 +124,6 @@ function App() {
                         importanceLevelList
 
                     },
-                    // setCurrentActiveChannel,
                     viewWorkDetail,
                     backToBucketBoard,
                     addTag,
@@ -131,22 +133,25 @@ function App() {
                     findTagIdFilterList,
                     findStatusFilterList,
                     findImportanceLevelFilterList,
+                    addNewChannel,
                     countTotalWorkItem,
-                    addNewChannel
+                    findActiveChannel
                 }}
             >                
                 <Switch>
                     <Route path='/login-page'>
                         <LoginPage/>
                     </Route>
-                    <Route path='/work-management'>
-                        <Header />
-                        <WorkManagement/>
-                    </Route>
-                    <Route path='/setting-page'>
-                        <Header />
-                        <SettingPage />
-                    </Route>
+                    <WorkItemProvider>
+                        <Route path='/work-management'>
+                            <Header />
+                            <WorkManagement/>
+                        </Route>
+                        <Route path='/setting-page'>
+                            <Header />
+                            <SettingPage />
+                        </Route>
+                    </WorkItemProvider>
                 </Switch>
             </DataContext.Provider>
         </Router>

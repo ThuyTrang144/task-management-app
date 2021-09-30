@@ -14,7 +14,7 @@ export const ListView = ( {data, ItemComponent, activeMenuItem }) => {
     };
     function renderItem() {
         return data.map(item => {
-            return <ItemComponent data={item} key={item.id} handleSelectedItem={handleSelection} activeMenuItem={menuItem}/>;
+            return <ItemComponent data={item} key={item._id} handleSelectedItem={handleSelection} activeMenuItem={menuItem}/>;
         });
     };
     return renderItem();
