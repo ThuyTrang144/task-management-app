@@ -17,8 +17,8 @@ const BucketList = React.memo(function (props) {
                         {value.bucketList.map(item =>
                             <Bucket
                                 key={item.id}
-                                name={item.name}
-                                id={item.id}
+                                title={item.title}
+                                id={item._id}
                                 searchValue={props.searchValue}
                             />
                         )}

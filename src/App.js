@@ -1,19 +1,20 @@
 import Header from './component/header/index';
 import WorkManagement from './module/work-management';
 import { DataContext } from './context';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DATA } from './data';
 import { Route, BrowserRouter as Router, Switch } from  'react-router-dom';
 import { LoginPage } from './module/login';
 import { SettingPage } from './module/setting';
-import { settingMenu } from './constant';
+import { channelListUrl, settingMenu, userListUrl } from './constant';
+import { WorkItemProvider } from './module/work-management/work-item-hook/useWorkItem';
 
 function App() {
 
-    const [channelList, setChannelList] = useState(DATA.channelList);  
-    const [currentChannelId, setCurrentChannelId] = useState(channelList[0].id);
+    const [channelList, setChannelList] = useState([]);  
+    const [currentChannel, setCurrentChannel] = useState();
     const [tagList, setTagList] = useState(DATA.tagList);
-    const [userList] = useState(DATA.userList);
+    const [userList, setUserList] = useState(DATA.userList);
     const [activeId, setActiveIdState] = useState();
     const [isViewDetail, setIsViewDetailState] = useState(false);
     const [user, setUser] = useState(userList[0]); 
@@ -28,9 +29,34 @@ function App() {
         const user = userList.find(element => element.username === text);
         setUser(user);
     } ;
-    const setCurrentActiveChannel = (id) => {
-        setCurrentChannelId(id);
+
+    const getUserList = async () => {
+        try {
+            const res = await fetch(userListUrl);
+            return res.json();
+        } catch(err) {
+            console.log('user list', err);
+        }
     };
+
+    const getChannelList = async () => {
+        try {
+            const res = await fetch(channelListUrl);
+            return res.json();
+        } catch(err) {
+            console.log('channel', err);
+        }
+    };
+
+    useEffect(() => {
+        (async () => {
+            const userList = await getUserList();
+            setUserList(userList.results);
+            const channelList = await getChannelList();
+            setChannelList(channelList.results);
+            setCurrentChannel(channelList.results[0]);
+        })();
+    }, []);
 
     const addTag = (text) => {
         tagList.push({ id: Math.random().toString().substring(2), name: text});
@@ -75,13 +101,16 @@ function App() {
         };
         setChannelList([newChannel, ...channelList]);
     };
+    const findActiveChannel = (channel) => {
+        setCurrentChannel(channel);
+    };
     return (
         <Router>
             <DataContext.Provider
                 value={{
                     state: {
                         channelList, 
-                        currentChannelId,
+                        currentChannel,
                         userList,
                         tagList,
                         activeId,
@@ -95,7 +124,6 @@ function App() {
                         importanceLevelList
 
                     },
-                    setCurrentActiveChannel,
                     viewWorkDetail,
                     backToBucketBoard,
                     addTag,
@@ -106,21 +134,24 @@ function App() {
                     findStatusFilterList,
                     findImportanceLevelFilterList,
                     addNewChannel,
-                    countTotalWorkItem
+                    countTotalWorkItem,
+                    findActiveChannel
                 }}
-            >
+            >                
                 <Switch>
                     <Route path='/login-page'>
                         <LoginPage/>
                     </Route>
-                    <Route path='/work-management'>
-                        <Header />
-                        <WorkManagement/>
-                    </Route>
-                    <Route path='/setting-page'>
-                        <Header />
-                        <SettingPage />
-                    </Route>
+                    <WorkItemProvider>
+                        <Route path='/work-management'>
+                            <Header />
+                            <WorkManagement/>
+                        </Route>
+                        <Route path='/setting-page'>
+                            <Header />
+                            <SettingPage />
+                        </Route>
+                    </WorkItemProvider>
                 </Switch>
             </DataContext.Provider>
         </Router>

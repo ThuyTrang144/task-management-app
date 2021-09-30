@@ -6,49 +6,58 @@ import { ChannelItem } from './ChannelItem';
 import { Button, Input, Modal } from 'antd';
 
 export function ChannelSelector() {
-    const { channelList, currentChannelId, findChannelById, setCurrentActiveChannel, addNewChannel } = useChannelList();   
-    const [ currentChannel, setCurrentChannel ] = useState(currentChannelId);
+    const { channelList, currentChannel, findChannelById, addNewChannel, findActiveChannel } = useChannelList();   
+    const [ currentActiveChannel, setCurrentActiveChannel ] = useState(currentChannel);
     const [ isAddingChannel, setIsAddingChannel ] = useState(false);
     const [ isViewChannelList, setIsViewChannleList ] = useState(false);
-    const channel = findChannelById(currentChannel);
     const handleChangeChannel = (id) => {
-        setCurrentActiveChannel(id);
-        setCurrentChannel(id);
+        const channel = findChannelById(id);
+        setCurrentActiveChannel(channel);
+        findActiveChannel(channel);
         setIsViewChannleList(false);
     };
+
     function rederChannelName() {
         return channelList.map(item => 
             <ChannelItem 
-                key={item.id} 
-                id={item.id} 
+                key={item._id} 
+                id={item._id} 
                 name={item.name} 
                 totalWorkItem={item.totalWorkItem} 
                 handleChangeChannel={handleChangeChannel}
-                currentChannelId={currentChannelId}
+                currentChannelId={currentActiveChannel ? currentActiveChannel._id : '5e296837-9cae-4268-87f6-8cb351745ea8'}
             ></ChannelItem>
         );
     }
+
     function viewChannelList() {
         setIsViewChannleList(true);
 
     }
     function handleCancle() {
         setIsViewChannleList(false);
+        setIsAddingChannel(false);
     }
+
     function openAddingForm() {
         setIsAddingChannel(true);
-    }  
+    }
+
     function handleAddChannel(e) {
         var text = e.target.value;
         addNewChannel(text);
     }
+
     return (
         <>
             <button className='channel-selector' onClick={viewChannelList}>
-                <span>{'Channel: ' + channel.name.toLocaleUpperCase()}</span>
+                {currentActiveChannel === undefined ? 
+                    <span>{'Channel: ' + 'Default Channel'.toLocaleUpperCase()}</span> : 
+                    <span>{'Channel: ' + currentActiveChannel.name.toLocaleUpperCase()}</span>}
                 <DownOutlined />
             </button>
-            <Modal title='Select Channel'
+            <Modal 
+                title='Select Channel'
                 className='channel-list'
                 onCancel={handleCancle}
                 visible={isViewChannelList}

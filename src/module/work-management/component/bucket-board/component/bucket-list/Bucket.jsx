@@ -57,7 +57,7 @@ export default function Bucket(props) {
         <div 
             key={props.id} 
             className='bucket-box'>
-            <BucketHeader id={props.id} name={props.name} />
+            <BucketHeader id={props.id} title={props.title} />
             <div  className='bucket-card' 
                 style={{height : itemList.length > 5 ? '100%' : '340px'}}
                 onDragOver={(e) => onDragOver(e)}

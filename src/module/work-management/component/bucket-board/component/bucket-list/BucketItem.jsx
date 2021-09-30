@@ -13,14 +13,14 @@ export function BucketItem( { data }) {
     const { findStatusById } = useStatus();
     const status = findStatusById(data.statusId);
     let textDecoration;
-    if (status.name === 'Done') {
+    if (status.label === 'Done') {
         textDecoration = 'line-through';
     }
     return (
         <div 
             className="bucket-item">
             <div className="item-actions">
-                {status.name === 'Done' ? 
+                {/* {status.name === 'Done' ? 
                     <Checkbox 
                         onChange={() => completeWorkItem(data.id)} 
                         defaultChecked/> : 
@@ -33,7 +33,7 @@ export function BucketItem( { data }) {
                         onClick={() => addFavouriteItem(data.id)}/> : 
                     <StarOutlined 
                         className='favourite-icon' 
-                        onClick={() => addFavouriteItem(data.id)} />}
+                        onClick={() => addFavouriteItem(data.id)} />} */}
             </div>
             <div className='bucket-item-card'>
                 <ItemCard

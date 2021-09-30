@@ -2,9 +2,9 @@ import { FilePdfOutlined, FileImageOutlined, FileWordOutlined } from '@ant-desig
 
 export const DATA = {
     channelList: [
-        { id: 1, name: 'Personal', workItem: 10, users: 5 },
-        { id: 2, name: 'Public', workItem: 10, users: 5  },
-        { id: 3, name: 'Learning', workItem: 10, users: 5  }
+        { id: 1, name: 'Personal' },
+        { id: 2, name: 'Public'},
+        { id: 3, name: 'Learning'}
     ],
     bucketList: [
         { id: 1, name: 'Important Tasks 1' },

@@ -51,12 +51,13 @@ const WorkList = React.memo(function (props) {
         renderedList = statusList.length ? filterWorkListByStatus(renderedList, statusList) : renderedList;
         renderedList = importanceLevelList.length ? filterWorkListByImportanceLevel(renderedList, importanceLevelList) : renderedList;
         const filterList = filterWorkItem(renderedList, props.searchValue);
+        console.log('filter List', filterList.length); 
         if (filterList.length === 0) {
             return <p 
                 style={{fontSize: '24px', textAlign: 'center', marginTop: '50%', color: '#787885'}}>
                 Please add new work item here!</p>;
         } 
-        return <ListView data={filterList} ItemComponent={ItemCard}/>;
+        else return <ListView data={filterList} ItemComponent={ItemCard}/>;
     };
 
     return ( 

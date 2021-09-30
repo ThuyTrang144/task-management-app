@@ -4,12 +4,12 @@ import { FilterPannel, Item, MenuItem } from '../../../work-management/component
 import './style.scss';
 
 export const SettingMenu = () => {
-    const activeId = settingMenu[0].id;
+    const activeMenuItem = settingMenu[0].name;
     function renderSettingMenu() {
-        return <ListView data={settingMenu} ItemComponent={Item} activeId={activeId}/>;
+        return <ListView data={settingMenu} ItemComponent={Item} activeMenuItem={activeMenuItem}/>;
     }
     return (
-        <FilterPannel title="SETTING">
+        <FilterPannel title="SETTING MENU">
             <MenuItem>
                 {renderSettingMenu()}
             </MenuItem>

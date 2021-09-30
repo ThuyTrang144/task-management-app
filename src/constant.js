@@ -1,5 +1,12 @@
 import { faTasks, faUser, faUsers, faArchive, faBoxes } from '@fortawesome/free-solid-svg-icons';
 
+const statusUrl = 'http://192.168.1.222:5000/work-status';
+const importanceLevelUrl = 'http://192.168.1.222:5000/work-important-level';
+const workItemListUrl = 'http://192.168.1.222:5000/work-item';
+const userListUrl = 'http://192.168.1.222:5000/user';
+const bucketListUrl = 'http://192.168.1.222:5000/bucket';
+const channelListUrl = 'http://192.168.1.222:5000/channel';
+
 const status = [
     { id: 1, name: 'New' },
     { id: 2, name: 'In Progress' },
@@ -13,7 +20,7 @@ const activityLabel = [
 ];
 const importanceLevel = [
     { id: 1, name: 'Urgent' },
-    { id: 2, name: 'High' },
+    { id: 2, name: 'Critical' },
     { id: 3, name: 'High' },
     { id: 4, name: 'Low' },
 ];
@@ -28,4 +35,14 @@ const settingMenu = [
     { id: 2, icon: faBoxes, name: 'Channel List', link: '/setting-page/channel-setting'},
     { id: 3, icon: faUsers, name: 'User List', link: '/setting-page/user-list-setting'}
 ];
-export { status, activityLabel, importanceLevel, workItemMenu, settingMenu };
+export { status, 
+    statusUrl, 
+    importanceLevelUrl, 
+    userListUrl, 
+    workItemListUrl, 
+    bucketListUrl, 
+    channelListUrl, 
+    activityLabel, 
+    importanceLevel, 
+    workItemMenu, 
+    settingMenu };
