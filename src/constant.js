@@ -1,11 +1,11 @@
 import { faTasks, faUser, faUsers, faArchive, faBoxes } from '@fortawesome/free-solid-svg-icons';
 
-const statusUrl = 'http://192.168.1.222:5000/work-status';
-const importanceLevelUrl = 'http://192.168.1.222:5000/work-important-level';
-const workItemListUrl = 'http://192.168.1.222:5000/work-item';
-const userListUrl = 'http://192.168.1.222:5000/user';
-const bucketListUrl = 'http://192.168.1.222:5000/bucket';
-const channelListUrl = 'http://192.168.1.222:5000/channel';
+const statusUrl = 'http://192.168.1.222:5000/work-status/';
+const importanceLevelUrl = 'http://192.168.1.222:5000/work-important-level/';
+const workItemListUrl = 'http://192.168.1.222:5000/work-item/';
+const userListUrl = 'http://192.168.1.222:5000/user/';
+const bucketListUrl = 'http://192.168.1.222:5000/bucket/';
+const channelListUrl = 'http://192.168.1.222:5000/channel/';
 
 const status = [
     { id: 1, name: 'New' },

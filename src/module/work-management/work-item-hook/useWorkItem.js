@@ -23,15 +23,19 @@ const WorkItemProvider = ({children}) => {
         } 
     }
     async function addNewWorkItem (text) {
-        const payload = {
+        const newWorkItem = {
             'name': text,
             'description': 'Work item of defualt channel',
             'owner_id': '732e7d85-929b-4af0-843d-98a1044e8456',
-            'channel_id': 'f2aa3d51-08e2-45cb-b161-ff83f6423770'
+            'channel_id': currentChannel._id
         };
-        let res = await axios.post(workItemListUrl, payload);
-        let data = res.data;
-        console.log('data', data);
+        try {
+            let res = await axios.post(workItemListUrl, newWorkItem);
+            let data = res.data;
+            console.log('data', data);
+        } catch (error) {
+            console.log(error);
+        }
     }
     useEffect(() => {
         (async () => {
