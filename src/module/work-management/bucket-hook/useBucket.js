@@ -18,11 +18,12 @@ const BucketProvider = ( {children} ) => {
     };
     const deleteBucket = async (id) => {
             
-        const url = bucketListUrl+id;
+        const url = `${bucketListUrl}/${id}`;
+        console.log('url', url);
         try {
-            let res = await axios.get(url+'/items');
+            let res = await axios.get(`${url}/items`);
             if (res.data.results.length !== 0) {
-                return message.warning('Cannot delete the bucket which have work item inside');
+                return message.warning('Cannot delete the bucket which have work items inside');
             } else {
                 let response = await axios.delete(url);
                 console.log(response.status);
