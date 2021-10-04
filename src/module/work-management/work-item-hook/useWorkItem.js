@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useContext, useEffect } from 'react';
-import Moment from 'react-moment';
 import { useState } from 'react/cjs/react.development';
 import { workItemListUrl } from '../../../constant';
 import { useChannelList } from '../../../general-data-hook/useChannelList';
@@ -12,30 +11,36 @@ const WorkItemProvider = ({children}) => {
     const { currentChannel } = useChannelList();
     const { findStatusByName } = useStatus();
     const [ workItemList, setWorkItemList ] = useState([]);
-
     const prev = usePrevious(currentChannel);
-    async function getWorkItemList () {
+
+    async function getWorkItemList (url) {
         try {
-            let res = await axios.get(workItemListUrl);
+            let res = await axios.get(url);
             return res.data;
         } catch (error) {
             console.log(error);
         } 
     }
+
     async function addNewWorkItem (text) {
-        const payload = {
+        const newWorkItem = {
             'name': text,
             'description': 'Work item of defualt channel',
             'owner_id': '732e7d85-929b-4af0-843d-98a1044e8456',
-            'channel_id': 'f2aa3d51-08e2-45cb-b161-ff83f6423770'
+            'channel_id': currentChannel._id,
+            'status_id': 'cba0c270-6650-4a91-8b47-98653adb9e8a'
         };
-        let res = await axios.post(workItemListUrl, payload);
-        let data = res.data;
-        console.log('data', data);
+        try {
+            const { data } = await axios.post(workItemListUrl, newWorkItem);
+            return data;
+        } catch (error) {
+            return console.log(error);
+        }
     }
+
     useEffect(() => {
         (async () => {
-            const data = await getWorkItemList();
+            const data = await getWorkItemList(workItemListUrl);
             if (prev !== currentChannel) {
                 const workList = currentChannel ? data.results.filter(item => item.channel_id === currentChannel._id) : 
                     data.results.filter(item => item.channel_id='5e296837-9cae-4268-87f6-8cb351745ea8');
@@ -52,36 +57,6 @@ const WorkItemProvider = ({children}) => {
         } else return workItem;
     };
 
-    const addWorkItem = (text) => {
-        const newItem = {
-            id: Math.random().toString().substring(2), 
-            name: text, 
-            description: 'This is a new work item',
-            tagId: null,
-            ownerId: 3,
-            participantId: null,
-            createdDate: new Date().toLocaleString() + '', 
-            dueDate: null,
-            statusId: 1, 
-            importanceLevelId: null,
-            channelId: 1,
-            assignee: null, 
-            bucketId: null,
-            activitiesList: [
-                {name: 'Created a new work item', 
-                    assigneeId: 3, 
-                    createdTime:<Moment fromNow>{new Date().toLocaleString() + ''}</Moment>, 
-                    labelId: 1}],
-            todoList: null
-        };
-
-        setWorkItemList([
-            newItem,
-            ...workItemList
-        ]
-        );
-    };
-
     const archiveCompletedWorkItem = (bucketId) => {
         for (let i = 0; i < workItemList.length; i++) {
             if (workItemList[i].bucketId === bucketId && workItemList[i].statusId === 3) {
@@ -93,14 +68,19 @@ const WorkItemProvider = ({children}) => {
         setWorkItemList(newWorkItemList);
     };
 
-    const completeWorkItem = (workId) => {
-        const workItemIndex = workItemList.findIndex(item => item.id === workId); 
-        if (workItemList[workItemIndex].statusId === 1 || workItemList[workItemIndex].statusId === 2) {
-            workItemList[workItemIndex].statusId = 3;
-        } else if (workItemList[workItemIndex].statusId === 3) {
-            workItemList[workItemIndex].statusId = 1;
+    const completeWorkItem = async (workId) => {
+        const workItemIndex = workItemList.findIndex(item => item._id === workId); 
+        if (workItemList[workItemIndex].status_id === 'cba0c270-6650-4a91-8b47-98653adb9e8a' || workItemList[workItemIndex].status_id === '9542a65a-5199-4299-a0a8-0a82045e3c10') {
+            workItemList[workItemIndex].status_id = 'e56d0b49-fa56-4392-9385-100bf9bfdb15';
+        } else if (workItemList[workItemIndex].status_id === 'e56d0b49-fa56-4392-9385-100bf9bfdb15') {
+            workItemList[workItemIndex].status_id = 'cba0c270-6650-4a91-8b47-98653adb9e8a' ;
         }
-        setWorkItemList([...workItemList]);
+        try {
+            const { data } = await axios.patch(`${workItemListUrl}/${workId}`, {status_id: workItemList[workItemIndex].status_id});
+            return data;
+        } catch(err) {
+            return console.log(err);
+        }
     };
 
     const addFavouriteItem = (workId) => {
@@ -152,7 +132,6 @@ const WorkItemProvider = ({children}) => {
                 workItemList,
                 setWorkItemList,
                 findWorkItemById, 
-                addWorkItem, 
                 archiveCompletedWorkItem, 
                 completeWorkItem, 
                 addFavouriteItem, 
@@ -161,7 +140,8 @@ const WorkItemProvider = ({children}) => {
                 revertWorkItemToWorkStream,
                 changeWorkItemStatus,
                 filterWorkItem,
-                addNewWorkItem
+                addNewWorkItem,
+                getWorkItemList
             }}
         >
             {children}

@@ -6,6 +6,7 @@ const workItemListUrl = 'http://192.168.1.222:5000/work-item';
 const userListUrl = 'http://192.168.1.222:5000/user';
 const bucketListUrl = 'http://192.168.1.222:5000/bucket';
 const channelListUrl = 'http://192.168.1.222:5000/channel';
+const activityListUrl =  'http://192.168.1.222:5000/activity-item';
 
 const status = [
     { id: 1, name: 'New' },
@@ -42,6 +43,7 @@ export { status,
     workItemListUrl, 
     bucketListUrl, 
     channelListUrl, 
+    activityListUrl,
     activityLabel, 
     importanceLevel, 
     workItemMenu, 

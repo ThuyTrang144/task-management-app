@@ -12,12 +12,13 @@ import { useContext } from 'react/cjs/react.development';
 import { Input, Modal } from 'antd';
 import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
 import { EditForm } from './EditForm';
+import Moment from 'react-moment';
 
 const Header = () => {
     const { findStatusById } = useStatus();
     const { editWorkItemTitle } = useWorkItem();
     const context = useContext(WorkDetailContext);
-    const currentStatus = findStatusById(context.workDetailData.statusId);
+    const currentStatus = findStatusById(context.workDetailData.status_id);
     const [ isEditTitle, setIsEditTitle ] = useState(false);
 
     // const handleEditTitleView = () => {
@@ -31,7 +32,7 @@ const Header = () => {
     const handleEditWorkItemTitle = (e) => {
         const text = e.target.value;
         setIsEditTitle(false);
-        editWorkItemTitle(context.workDetailData.id, text);
+        editWorkItemTitle(context.workDetailData._id, text);
     };
     function handleEditTitleView() {
         setIsEditTitle(true);
@@ -52,19 +53,19 @@ const Header = () => {
                                     className='back-icon'/>}
                             </DataContext.Consumer>
                             <span className='item-name'>{value1.workDetailData.name}</span>
-                            <Status workId={value1.workDetailData.id} currentStatus={currentStatus}/>
+                            <Status workId={value1.workDetailData._id} currentStatus={currentStatus}/>
                         </div>
                         <div className="work-item-actions">
                             <div className="due-date">
                                 <CalendarOutlined />
-                                <span>Due date <span className="days-left">({value1.workDetailData.dueDate})</span></span><br></br>
-                                <span className="date">{value1.workDetailData.createdDate}</span>
+                                <span>Due date <Moment fromNow ago className='days-left'>{value1.workDetailData.due_date}</Moment></span><br></br>
+                                <Moment fromNow className='date'>{value1.workDetailData._created_at}</Moment>
                             </div>
                             <h2 className="vertical-line"></h2>
                             <ImportanceLevel />
                             <h2 className="vertical-line"></h2>
                             <ActionGroup 
-                                workId={value1.workDetailData.id} 
+                                workId={value1.workDetailData._id} 
                                 currentStatus={currentStatus} 
                                 handleEditTitleView={handleEditTitleView}/>
                         </div>

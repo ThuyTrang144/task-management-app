@@ -6,7 +6,7 @@ import { DATA } from './data';
 import { Route, BrowserRouter as Router, Switch } from  'react-router-dom';
 import { LoginPage } from './module/login';
 import { SettingPage } from './module/setting';
-import { channelListUrl, settingMenu, userListUrl } from './constant';
+import { channelListUrl, settingMenu, statusUrl, userListUrl } from './constant';
 import { WorkItemProvider } from './module/work-management/work-item-hook/useWorkItem';
 
 function App() {
@@ -48,6 +48,15 @@ function App() {
         }
     };
 
+    const getStatusList = async () => {
+        try {
+            let response = await fetch(statusUrl);
+            return response.json();
+        } catch (err) {
+            console.log('status', err);
+        }
+    };
+
     useEffect(() => {
         (async () => {
             const userList = await getUserList();
@@ -55,6 +64,8 @@ function App() {
             const channelList = await getChannelList();
             setChannelList(channelList.results);
             setCurrentChannel(channelList.results[0]);
+            const status = await getStatusList();
+            setStatusList(status.results);
         })();
     }, []);
 

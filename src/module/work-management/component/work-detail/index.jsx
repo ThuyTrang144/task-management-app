@@ -11,21 +11,20 @@ const WorkDetail = React.memo(function () {
             <DataContext.Consumer>
                 {value => { 
                     const workDetailData = findWorkItemById(value.state.activeId);
-                    console.log('activeId', value.state.activeId);
                     return (
                         <WorkDetailContext.Provider value={{workDetailData}} >
                             <Header/>
                             <div className='detail-view'>
                                 <div className='detail-view-left'>
-                                    <TagList/>
+                                    {/* <TagList/> */}
                                     <Description/>
-                                    <TodoList/>
+                                    {/* <TodoList/> */}
                                     <ActivityList/>
                                 </div>
-                                <div className='detail-view-right'>
+                                {/* <div className='detail-view-right'>
                                     <Assignment/>
                                     <Attachment/>
-                                </div>
+                                </div> */}
                             </div>
                         </WorkDetailContext.Provider>);}}
             </DataContext.Consumer>

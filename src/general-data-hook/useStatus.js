@@ -1,26 +1,9 @@
-import { useEffect } from 'react';
-import { useState } from 'react/cjs/react.development';
-import { statusUrl } from '.././constant';
+import { useContext } from 'react/cjs/react.development';
+import { DataContext } from '../context';
 
 const useStatus = () => {
-    const [ statusList, setStatusList ] = useState([]);
-
-    const getStatusList = async () => {
-        try {
-            let response = await fetch(statusUrl);
-            return response.json();
-        } catch (err) {
-            console.log('status', err);
-        }
-    };
-
-    useEffect(() => {
-        (async () => {
-            const data = await getStatusList();
-            setStatusList(data.results);
-        })();
-    }, []);
-
+    const context = useContext(DataContext);
+    const statusList = context.state.statusList;
     function findStatusById(id) {
         const status = statusList.find(element => element._id === id);
         if (status === undefined) {
@@ -40,6 +23,7 @@ const useStatus = () => {
     }
     
     return { 
+        statusList,
         findStatusById, 
         findStatusByName 
     };

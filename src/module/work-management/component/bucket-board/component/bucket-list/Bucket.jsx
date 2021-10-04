@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ListView } from '../../../../../../component/list-view';
+import { bucketListUrl } from '../../../../../../constant';
 import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
 import { BucketHeader } from './BucketHeader';
 import { BucketItem } from './BucketItem';
 
 export default function Bucket(props) {
-
-    const { workItemList, findWorkItemById, setWorkItemList, filterWorkItem } = useWorkItem();
+    const [ workList, setWorkList ] = useState([]);
+    const { workItemList, findWorkItemById, setWorkItemList, filterWorkItem, getWorkItemList } = useWorkItem();
     const [ isViewMore, setIsViewMore ] = useState(false);
-    var itemList = workItemList.filter(item => item.bucketId === props.id && item.statusId !== 4);
+    var itemList = workList.filter(item => item.status_id !== 'ecf5118c-ac14-4c93-9101-88245824e364');
+
+    useEffect(() => {
+        (async () => {
+            const data = await getWorkItemList(`${bucketListUrl}/${props.id}/items`);
+            setWorkList(data.results);
+        })();
+    }, [props.id, getWorkItemList]); 
     function renderBucket() {
         const filterList = filterWorkItem(itemList, props.searchValue); 
         filterList.sort((a, b) => b.isFavourite - a.isFavourite );
