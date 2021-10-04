@@ -11,33 +11,30 @@ export function BucketItem( { data }) {
     const { addFavouriteItem, completeWorkItem, findWorkItemById } = useWorkItem();
     const workItem = findWorkItemById(data.id);
     const { findStatusById } = useStatus();
-    const status = findStatusById(data.statusId);
-    let textDecoration;
-    if (status.label === 'Done') {
-        textDecoration = 'line-through';
-    }
+    const status = findStatusById(data.status_id);
+
     return (
         <div 
             className="bucket-item">
             <div className="item-actions">
-                {/* {status.name === 'Done' ? 
+                {status.label === 'Done' ? 
                     <Checkbox 
-                        onChange={() => completeWorkItem(data.id)} 
+                        onChange={() => completeWorkItem(data._id)} 
                         defaultChecked/> : 
                     <Checkbox 
-                        onChange={() => completeWorkItem(data.id)} />}
+                        onChange={() => completeWorkItem(data._id)} />}
                 {workItem.isFavourite ? 
                     <FontAwesomeIcon 
                         className='favourite-icon' 
                         icon={faStar} 
-                        onClick={() => addFavouriteItem(data.id)}/> : 
+                        onClick={() => addFavouriteItem(data._id)}/> : 
                     <StarOutlined 
                         className='favourite-icon' 
-                        onClick={() => addFavouriteItem(data.id)} />} */}
+                        onClick={() => addFavouriteItem(data._id)} />}
             </div>
             <div className='bucket-item-card'>
                 <ItemCard
-                    style={{textDecoration: textDecoration}}
+                    style={{textDecoration: status.label === 'Done' ? 'line-through' : 'none'}}
                     data={data}
                 />
             </div>

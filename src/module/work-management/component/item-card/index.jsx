@@ -5,16 +5,19 @@ import React, { useContext } from 'react';
 import { DataContext } from '../../../../context';
 import { useStatus } from '../../../../general-data-hook/./useStatus';
 import Moment from 'react-moment';
+import { useUserList } from '../../../../general-data-hook/useUserList';
 
 function ItemCard ( { data, style } ) {
     const context = useContext(DataContext);
     const { findStatusById } = useStatus();
+    const { findUserById } = useUserList();
     const status = findStatusById(data.status_id);
-    const owner_name = data.owner.first_name + ' ' + data.owner.last_name;
+    const owner = findUserById(data.owner_id);
+    const owner_name = `${owner.first_name} ${owner.last_name}`;
 
     const  viewWorkDetail = () => {
         if (context.viewWorkDetail) {
-            context.viewWorkDetail(data.id);
+            context.viewWorkDetail(data._id);
         }
     };
 
@@ -35,7 +38,7 @@ function ItemCard ( { data, style } ) {
 
     const isViewDetail = context.state.isViewDetail;
     const activeId = context.state.activeId;
-    if (data.id === activeId && isViewDetail) {
+    if (data._id === activeId && isViewDetail) {
         backgroundColor = '#CEE5FF';
     } else {
         backgroundColor = null;

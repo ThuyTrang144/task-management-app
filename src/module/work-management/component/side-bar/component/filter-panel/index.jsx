@@ -25,7 +25,7 @@ export function Item (props) {
     };
     return (
         <Link to={props.data.link} 
-            key={props.data.id} 
+            key={props.data._id} 
             onClick={onClick} 
         >
             <li 

@@ -5,7 +5,7 @@ export const useUserList = () => {
     const context = useContext(DataContext);
     const userList = context.state.userList;
     const findUserById = (id) => {
-        const user = userList.find(element => element.id === id);
+        const user = userList.find(element => element._id === id);
         if (user === undefined) {
             return { name: 'unknown'};
         } else {

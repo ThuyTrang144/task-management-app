@@ -7,7 +7,6 @@ import { BucketContext } from '../context/bucket';
 
 const BucketProvider = ( {children} ) => {
     const [ bucketList, setBucketList ] = useState([]);
-
     const getBucketList = async () => {
         try {
             const res = await fetch(bucketListUrl);
