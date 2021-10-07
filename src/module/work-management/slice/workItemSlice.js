@@ -8,7 +8,6 @@ const workItemSlice = createSlice({
     reducers: {
         getList: (state, action) => {
             state.workList = action.payload;
-            console.log('payload', action.payload,state.workList);
             return state;
         },
         addWorkItem: (state, action) => {

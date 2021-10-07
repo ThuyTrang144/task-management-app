@@ -10,10 +10,11 @@ import './style.scss';
 
 const WorkList = React.memo(function (props) {
     const { filterWorkItem } = useWorkItem();
-    const workList = useSelector(state => state.workList);
+    const workList = useSelector(state => state.workItems.workList);
     const { statusList } = useStatus();
     const context = useContext(DataContext);
-    const { assigneeList, tagIdList, importanceLevelList } = context.state;
+    const { tagIdList, importanceLevelList } = context.state;
+    const assigneeList = useSelector(state => state.users.userFilteredList);
     const activeMenuItem = context.state.activeMenuItem;
     const filterWorkListByMenu = (workList, activeMenuItem) => {
         var itemList = workList.filter(item => !item.bucketId && item.statusId !== 4);
@@ -31,7 +32,8 @@ const WorkList = React.memo(function (props) {
         }
     };
     const filterWorkListByAssignee = (workList, assigneeList) => {
-        return workList.filter(item => assigneeList.includes(item.ownerId));
+        console.log('assignee', assigneeList);
+        return workList.filter(item => assigneeList.includes(item.owner_id));
     };
     const filterWorkListByTag = (workList, tagList) => {
         return workList.filter(item => {
@@ -50,7 +52,7 @@ const WorkList = React.memo(function (props) {
     };
     const renderItemList = () => {
         var renderedList = filterWorkListByMenu(workList, activeMenuItem);
-        // renderedList = assigneeList.length !== 0 ? filterWorkListByAssignee(renderedList, assigneeList) : renderedList;
+        renderedList = assigneeList.length !== 0 ? filterWorkListByAssignee(renderedList, assigneeList) : renderedList;
         // renderedList = tagIdList.length !== 0 ? filterWorkListByTag(renderedList, tagIdList) : renderedList;
         // renderedList = statusList.length !== 0 ? filterWorkListByStatus(renderedList, statusList) : renderedList;
         // renderedList = importanceLevelList.length !== 0 ? filterWorkListByImportanceLevel(renderedList, importanceLevelList) : renderedList;

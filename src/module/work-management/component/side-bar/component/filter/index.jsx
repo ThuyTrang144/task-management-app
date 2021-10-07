@@ -10,6 +10,9 @@ import { useContext } from 'react/cjs/react.development';
 import { DataContext } from '../../../../../../context';
 import { useStatus } from '../../../../../../general-data-hook/useStatus';
 import { useImportanceLevel } from '../../../../../../general-data-hook/useImportanceLevel';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { filterUserList } from '../../../../../../slice/userSlice';
 const { Option } = Select;
 const CheckboxGroup = Checkbox.Group;
 
@@ -24,7 +27,9 @@ export function SubFilter ({ title, children }) {
 
 const Filter = React.memo(function () {
     const { tagList, findTagsByName } = useGeneralTag();
-    const { userList, findUserByName } = useUserList();
+    const { findUserByName } = useUserList();
+    const userList = useSelector(state => state.users.userList);
+    const dispatch = useDispatch();
     const { findStatusByName } = useStatus();
     const { findImportanceLevelByName } = useImportanceLevel();
     const context = useContext(DataContext);
@@ -33,9 +38,9 @@ const Filter = React.memo(function () {
         const assigneeList = [];
         for (let i = 0; i < value.length; i++) {
             const assignee = findUserByName(value[i]);
-            assigneeList.push(assignee.id);
+            assigneeList.push(assignee._id);
         }
-        context.findAssigneeFilterList(assigneeList);
+        dispatch(filterUserList(assigneeList));
     };
 
     const onChangeTag = (value) => {
@@ -69,10 +74,10 @@ const Filter = React.memo(function () {
             (
                 <Option 
                     className='selector-input' 
-                    key={item.id}
-                    id={item.id} 
-                    value={item.name}>
-                    {item.name}
+                    key={item._id}
+                    id={item._id} 
+                    value={`${item.first_name} ${item.last_name}`}>
+                    {`${item.first_name} ${item.last_name}`}
                 </Option>
             )
         );

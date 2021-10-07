@@ -6,7 +6,7 @@ import { DATA } from './data';
 import { Route, BrowserRouter as Router, Switch } from  'react-router-dom';
 import { LoginPage } from './module/login';
 import { SettingPage } from './module/setting';
-import { channelListUrl, settingMenu, statusUrl, userListUrl } from './constant';
+import { channelListUrl, settingMenu, statusUrl } from './constant';
 import { WorkItemProvider } from './module/work-management/work-item-hook/useWorkItem';
 import { Provider } from 'react-redux';
 import store from './app/store';
@@ -21,7 +21,6 @@ function App() {
     const [isViewDetail, setIsViewDetailState] = useState(false);
     const [user, setUser] = useState(userList[0]); 
     const [activeMenuItem, setActiveMenuItem] = useState(settingMenu[0].id);
-    const [ assigneeList, setAssigneeList ] = useState([]);    
     const [ tagIdList, setTagIdList ] = useState([]);
     const [ statusList, setStatusList ] = useState([]);
     const [ importanceLevelList, setImportanceLevelList ] = useState([]);
@@ -31,15 +30,6 @@ function App() {
         const user = userList.find(element => element.username === text);
         setUser(user);
     } ;
-
-    const getUserList = async () => {
-        try {
-            const res = await fetch(userListUrl);
-            return res.json();
-        } catch(err) {
-            console.log('user list', err);
-        }
-    };
 
     const getChannelList = async () => {
         try {
@@ -61,8 +51,6 @@ function App() {
 
     useEffect(() => {
         (async () => {
-            const userList = await getUserList();
-            setUserList(userList.results);
             const channelList = await getChannelList();
             setChannelList(channelList.results);
             setCurrentChannel(channelList.results[0]);
@@ -89,10 +77,6 @@ function App() {
         setActiveMenuItem(name);
     };
     
-    const findAssigneeFilterList = (assigneeList) => {
-        setAssigneeList(assigneeList);
-    };
-
     const findTagIdFilterList = (tagIdList) => {
         setTagIdList(tagIdList);
     };
@@ -132,7 +116,6 @@ function App() {
                             viewWorkDetail,
                             user,
                             activeMenuItem,
-                            assigneeList,
                             tagIdList,
                             statusList,
                             importanceLevelList
@@ -143,7 +126,6 @@ function App() {
                         addTag,
                         onSubmitLogin,
                         handleSelectedItem,
-                        findAssigneeFilterList, 
                         findTagIdFilterList,
                         findStatusFilterList,
                         findImportanceLevelFilterList,
