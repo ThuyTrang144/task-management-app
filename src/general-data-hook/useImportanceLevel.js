@@ -1,14 +1,17 @@
+import axios from 'axios';
 import { useEffect } from 'react';
-import { useState } from 'react/cjs/react.development';
+import { useDispatch, useSelector } from 'react-redux';
 import { importanceLevelUrl } from '../constant';
+import { getImportanceLevel } from '../slice/importanceLevelSlice';
 
 export const useImportanceLevel = () => {
-    const [ importanceLevelList, setImportanceLevelList ] = useState([]);
+    const dispatch = useDispatch();
+    const importanceLevelList = useSelector(state => state.importanceLevel.importanceLevelList);
 
     const getImportanceLevelList = async () => {
         try {
-            const res = await fetch(importanceLevelUrl);
-            return res.json();
+            const { data } = await axios.get(importanceLevelUrl);
+            return data.results;
         } catch (err) {
             console.log('importance level', err);
         }
@@ -17,9 +20,9 @@ export const useImportanceLevel = () => {
     useEffect(() => {
         (async () => {
             const data = await getImportanceLevelList();
-            setImportanceLevelList(data.results);
+            dispatch(getImportanceLevel(data));
         })();
-    }, []);
+    }, [dispatch]);
 
     const findImportanceLevelById = (id) => {
         const level =  importanceLevelList.find(element => element._id === id);
@@ -38,5 +41,5 @@ export const useImportanceLevel = () => {
             return level;
         }
     };
-    return { findImportanceLevelById, findImportanceLevelByName };
+    return { importanceLevelList, findImportanceLevelById, findImportanceLevelByName };
 };

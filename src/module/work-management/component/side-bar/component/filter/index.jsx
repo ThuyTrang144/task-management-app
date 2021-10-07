@@ -12,7 +12,9 @@ import { useStatus } from '../../../../../../general-data-hook/useStatus';
 import { useImportanceLevel } from '../../../../../../general-data-hook/useImportanceLevel';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { filterUserList } from '../../../../../../slice/userSlice';
+import { filterByUser } from '../../../../../../slice/userSlice';
+import { filterByStatus } from '../../../../../../slice/statusSlice';
+import { filterByImportanceLevel } from '../../../../../../slice/importanceLevelSlice';
 const { Option } = Select;
 const CheckboxGroup = Checkbox.Group;
 
@@ -27,11 +29,10 @@ export function SubFilter ({ title, children }) {
 
 const Filter = React.memo(function () {
     const { tagList, findTagsByName } = useGeneralTag();
-    const { findUserByName } = useUserList();
-    const userList = useSelector(state => state.users.userList);
+    const { statusList, findStatusByName } = useStatus();
+    const { importanceLevelList, findImportanceLevelByName } = useImportanceLevel();
+    const { userList, findUserByName } = useUserList();
     const dispatch = useDispatch();
-    const { findStatusByName } = useStatus();
-    const { findImportanceLevelByName } = useImportanceLevel();
     const context = useContext(DataContext);
 
     const onChangeAssignee = (value) => {
@@ -40,7 +41,7 @@ const Filter = React.memo(function () {
             const assignee = findUserByName(value[i]);
             assigneeList.push(assignee._id);
         }
-        dispatch(filterUserList(assigneeList));
+        dispatch(filterByUser(assigneeList));
     };
 
     const onChangeTag = (value) => {
@@ -56,18 +57,17 @@ const Filter = React.memo(function () {
         const statusList = [];
         for (let i = 0; i < checkedValue.length; i++) {
             const status = findStatusByName(checkedValue[i]);
-            statusList.push(status.id);
+            statusList.push(status._id);
         }
-        context.findStatusFilterList(statusList);
+        dispatch(filterByStatus(statusList));
     };
     const onChangeImportanceLevel = (checkedValue) => {
         const importanceLevelList = [];
         for (let i = 0; i < checkedValue.length; i++) {
             const importanceLevel = findImportanceLevelByName(checkedValue[i]);
-            console.log('importance', importanceLevel);
-            importanceLevelList.push(importanceLevel.id);
+            importanceLevelList.push(importanceLevel._id);
         }
-        context.findImportanceLevelFilterList(importanceLevelList);
+        dispatch(filterByImportanceLevel(importanceLevelList));
     };
     function renderAssignee() {
         return userList.map(item => 
@@ -95,21 +95,21 @@ const Filter = React.memo(function () {
         );
     }
     function renderStatus() {
-        return status.map(item => 
+        return statusList.map(item => 
             <Checkbox 
-                value={item.name}
-                key={item.id}>
-                {item.name}
+                value={item.label}
+                key={item._id}>
+                {item.label}
             </Checkbox>);
     }
     function renderImportanceLevel() {
-        return importanceLevel.map(item => 
+        return importanceLevelList.map(item => 
             (
                 <Checkbox 
-                    key={item.id}
-                    value={item.name}
+                    key={item._id}
+                    value={item.label}
                 >
-                    {item.name}
+                    {item.label}
                 </Checkbox>
             )
         );

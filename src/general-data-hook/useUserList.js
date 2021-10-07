@@ -1,12 +1,10 @@
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { useContext, useEffect} from 'react/cjs/react.development';
+import { useEffect } from 'react/cjs/react.development';
 import { userListUrl } from '../constant';
-import { DataContext } from '../context';
 import { getList } from '../slice/userSlice';
 
 export const useUserList = () => {
-    const context = useContext(DataContext);
     const dispatch = useDispatch();
     const userList = useSelector(state => state.users.userList);
 
@@ -43,7 +41,7 @@ export const useUserList = () => {
         }
     };
     return {
-        userList: context.state.userList,
+        userList,
         findUserById,
         findUserByName
     };

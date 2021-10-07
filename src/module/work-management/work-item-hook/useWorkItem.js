@@ -31,7 +31,8 @@ const WorkItemProvider = ({children}) => {
             'description': 'Work item of defualt channel',
             'owner_id': '732e7d85-929b-4af0-843d-98a1044e8456',
             'channel_id': currentChannel._id,
-            'status_id': 'cba0c270-6650-4a91-8b47-98653adb9e8a'
+            'status_id': 'cba0c270-6650-4a91-8b47-98653adb9e8a',
+            'important_level_id': '4ffdd4c4-c786-412c-aea6-7f19ca8d07b8'
         };
         dispatch(addWorkItem(newWorkItem));
         try {

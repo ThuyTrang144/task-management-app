@@ -11,12 +11,12 @@ const userSlice = createSlice( {
             state.userList = action.payload;
             return state;
         },
-        filterUserList: (state, action) => {
+        filterByUser: (state, action) => {
             state.userFilteredList = action.payload;
             return state;
         }
     }
 });
 
-export const { getList, filterUserList } = userSlice.actions;
+export const { getList, filterByUser } = userSlice.actions;
 export const userReducer = userSlice.reducer;

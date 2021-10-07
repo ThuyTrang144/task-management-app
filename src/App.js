@@ -40,22 +40,12 @@ function App() {
         }
     };
 
-    const getStatusList = async () => {
-        try {
-            let response = await fetch(statusUrl);
-            return response.json();
-        } catch (err) {
-            console.log('status', err);
-        }
-    };
 
     useEffect(() => {
         (async () => {
             const channelList = await getChannelList();
             setChannelList(channelList.results);
             setCurrentChannel(channelList.results[0]);
-            const status = await getStatusList();
-            setStatusList(status.results);
         })();
     }, []);
 
