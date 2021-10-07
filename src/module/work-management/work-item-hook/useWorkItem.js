@@ -1,17 +1,20 @@
 import axios from 'axios';
 import { useContext, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react/cjs/react.development';
 import { workItemListUrl } from '../../../constant';
 import { useChannelList } from '../../../general-data-hook/useChannelList';
 import { usePrevious } from '../../../general-data-hook/usePrevious';
 import { useStatus } from '../../../general-data-hook/useStatus';
-import { WorkItemContext } from '../context/workItem';
+import { WorkItemContext } from '../slice/workItem';
+import { addWorkItem, getList } from '../slice/workItemSlice';
 
 const WorkItemProvider = ({children}) => {
     const { currentChannel } = useChannelList();
     const { findStatusByName } = useStatus();
-    const [ workItemList, setWorkItemList ] = useState([]);
     const prev = usePrevious(currentChannel);
+    const [ workItemList, setWorkItemList] = useState([]);
+    const dispatch = useDispatch();
 
     async function getWorkItemList (url) {
         try {
@@ -30,6 +33,7 @@ const WorkItemProvider = ({children}) => {
             'channel_id': currentChannel._id,
             'status_id': 'cba0c270-6650-4a91-8b47-98653adb9e8a'
         };
+        dispatch(addWorkItem(newWorkItem));
         try {
             const { data } = await axios.post(workItemListUrl, newWorkItem);
             return data;
@@ -44,11 +48,11 @@ const WorkItemProvider = ({children}) => {
             if (prev !== currentChannel) {
                 const workList = currentChannel ? data.results.filter(item => item.channel_id === currentChannel._id) : 
                     data.results.filter(item => item.channel_id='5e296837-9cae-4268-87f6-8cb351745ea8');
-                setWorkItemList(workList);
+                dispatch(getList(workList));
             }
         })();
   
-    }, [currentChannel, prev]); // only re-ren wwhen currentChannelId changes
+    }, [dispatch, currentChannel, prev]); // only re-render wwhen currentChannelId changes
 
     const findWorkItemById = (id) => {
         const workItem = workItemList.find(element => element._id === id);

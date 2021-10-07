@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { ListView } from '../../../../../../component/list-view';
 import { DataContext } from '../../../../../../context';
 import { useStatus } from '../../../../../../general-data-hook/useStatus';
@@ -8,7 +9,8 @@ import ItemCard from '../../../item-card';
 import './style.scss';
 
 const WorkList = React.memo(function (props) {
-    const { workItemList, filterWorkItem } = useWorkItem();
+    const { filterWorkItem } = useWorkItem();
+    const workList = useSelector(state => state.workList);
     const { statusList } = useStatus();
     const context = useContext(DataContext);
     const { assigneeList, tagIdList, importanceLevelList } = context.state;
@@ -47,7 +49,7 @@ const WorkList = React.memo(function (props) {
         return workList.filter(item => importanceLevelList.includes(item.importanceLevelId));
     };
     const renderItemList = () => {
-        var renderedList = filterWorkListByMenu(workItemList, activeMenuItem);
+        var renderedList = filterWorkListByMenu(workList, activeMenuItem);
         // renderedList = assigneeList.length !== 0 ? filterWorkListByAssignee(renderedList, assigneeList) : renderedList;
         // renderedList = tagIdList.length !== 0 ? filterWorkListByTag(renderedList, tagIdList) : renderedList;
         // renderedList = statusList.length !== 0 ? filterWorkListByStatus(renderedList, statusList) : renderedList;

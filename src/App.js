@@ -8,6 +8,8 @@ import { LoginPage } from './module/login';
 import { SettingPage } from './module/setting';
 import { channelListUrl, settingMenu, statusUrl, userListUrl } from './constant';
 import { WorkItemProvider } from './module/work-management/work-item-hook/useWorkItem';
+import { Provider } from 'react-redux';
+import store from './app/store';
 
 function App() {
 
@@ -117,54 +119,56 @@ function App() {
     };
     return (
         <Router>
-            <DataContext.Provider
-                value={{
-                    state: {
-                        channelList, 
-                        currentChannel,
-                        userList,
-                        tagList,
-                        activeId,
-                        isViewDetail,
-                        viewWorkDetail,
-                        user,
-                        activeMenuItem,
-                        assigneeList,
-                        tagIdList,
-                        statusList,
-                        importanceLevelList
+            <Provider store={store}>
+                <DataContext.Provider
+                    value={{
+                        state: {
+                            channelList, 
+                            currentChannel,
+                            userList,
+                            tagList,
+                            activeId,
+                            isViewDetail,
+                            viewWorkDetail,
+                            user,
+                            activeMenuItem,
+                            assigneeList,
+                            tagIdList,
+                            statusList,
+                            importanceLevelList
 
-                    },
-                    viewWorkDetail,
-                    backToBucketBoard,
-                    addTag,
-                    onSubmitLogin,
-                    handleSelectedItem,
-                    findAssigneeFilterList, 
-                    findTagIdFilterList,
-                    findStatusFilterList,
-                    findImportanceLevelFilterList,
-                    addNewChannel,
-                    countTotalWorkItem,
-                    findActiveChannel
-                }}
-            >                
-                <Switch>
-                    <Route path='/login-page'>
-                        <LoginPage/>
-                    </Route>
-                    <WorkItemProvider>
-                        <Route path='/work-management'>
-                            <Header />
-                            <WorkManagement/>
+                        },
+                        viewWorkDetail,
+                        backToBucketBoard,
+                        addTag,
+                        onSubmitLogin,
+                        handleSelectedItem,
+                        findAssigneeFilterList, 
+                        findTagIdFilterList,
+                        findStatusFilterList,
+                        findImportanceLevelFilterList,
+                        addNewChannel,
+                        countTotalWorkItem,
+                        findActiveChannel
+                    }}
+                >                
+                    <Switch>
+                        <Route path='/login-page'>
+                            <LoginPage/>
                         </Route>
-                        <Route path='/setting-page'>
-                            <Header />
-                            <SettingPage />
-                        </Route>
-                    </WorkItemProvider>
-                </Switch>
-            </DataContext.Provider>
+                        <WorkItemProvider>
+                            <Route path='/work-management'>
+                                <Header />
+                                <WorkManagement/>
+                            </Route>
+                            <Route path='/setting-page'>
+                                <Header />
+                                <SettingPage />
+                            </Route>
+                        </WorkItemProvider>
+                    </Switch>
+                </DataContext.Provider>
+            </Provider>
         </Router>
     );
 }

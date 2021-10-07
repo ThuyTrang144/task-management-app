@@ -1,5 +1,5 @@
 import React from 'react';
-import { BucketContext } from '../../../../context/bucket';
+import { BucketContext } from '../../../../slice/bucket';
 import Bucket from './Bucket';
 import './style.scss';
 import Masonry from 'react-masonry-css';
