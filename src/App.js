@@ -6,8 +6,10 @@ import { DATA } from './data';
 import { Route, BrowserRouter as Router, Switch } from  'react-router-dom';
 import { LoginPage } from './module/login';
 import { SettingPage } from './module/setting';
-import { channelListUrl, settingMenu, statusUrl, userListUrl } from './constant';
+import { channelListUrl, settingMenu, statusUrl } from './constant';
 import { WorkItemProvider } from './module/work-management/work-item-hook/useWorkItem';
+import { Provider } from 'react-redux';
+import store from './app/store';
 
 function App() {
 
@@ -19,7 +21,6 @@ function App() {
     const [isViewDetail, setIsViewDetailState] = useState(false);
     const [user, setUser] = useState(userList[0]); 
     const [activeMenuItem, setActiveMenuItem] = useState(settingMenu[0].id);
-    const [ assigneeList, setAssigneeList ] = useState([]);    
     const [ tagIdList, setTagIdList ] = useState([]);
     const [ statusList, setStatusList ] = useState([]);
     const [ importanceLevelList, setImportanceLevelList ] = useState([]);
@@ -30,15 +31,6 @@ function App() {
         setUser(user);
     } ;
 
-    const getUserList = async () => {
-        try {
-            const res = await fetch(userListUrl);
-            return res.json();
-        } catch(err) {
-            console.log('user list', err);
-        }
-    };
-
     const getChannelList = async () => {
         try {
             const res = await fetch(channelListUrl);
@@ -48,24 +40,12 @@ function App() {
         }
     };
 
-    const getStatusList = async () => {
-        try {
-            let response = await fetch(statusUrl);
-            return response.json();
-        } catch (err) {
-            console.log('status', err);
-        }
-    };
 
     useEffect(() => {
         (async () => {
-            const userList = await getUserList();
-            setUserList(userList.results);
             const channelList = await getChannelList();
             setChannelList(channelList.results);
             setCurrentChannel(channelList.results[0]);
-            const status = await getStatusList();
-            setStatusList(status.results);
         })();
     }, []);
 
@@ -87,10 +67,6 @@ function App() {
         setActiveMenuItem(name);
     };
     
-    const findAssigneeFilterList = (assigneeList) => {
-        setAssigneeList(assigneeList);
-    };
-
     const findTagIdFilterList = (tagIdList) => {
         setTagIdList(tagIdList);
     };
@@ -117,54 +93,54 @@ function App() {
     };
     return (
         <Router>
-            <DataContext.Provider
-                value={{
-                    state: {
-                        channelList, 
-                        currentChannel,
-                        userList,
-                        tagList,
-                        activeId,
-                        isViewDetail,
-                        viewWorkDetail,
-                        user,
-                        activeMenuItem,
-                        assigneeList,
-                        tagIdList,
-                        statusList,
-                        importanceLevelList
+            <Provider store={store}>
+                <DataContext.Provider
+                    value={{
+                        state: {
+                            channelList, 
+                            currentChannel,
+                            userList,
+                            tagList,
+                            activeId,
+                            isViewDetail,
+                            viewWorkDetail,
+                            user,
+                            activeMenuItem,
+                            tagIdList,
+                            statusList,
+                            importanceLevelList
 
-                    },
-                    viewWorkDetail,
-                    backToBucketBoard,
-                    addTag,
-                    onSubmitLogin,
-                    handleSelectedItem,
-                    findAssigneeFilterList, 
-                    findTagIdFilterList,
-                    findStatusFilterList,
-                    findImportanceLevelFilterList,
-                    addNewChannel,
-                    countTotalWorkItem,
-                    findActiveChannel
-                }}
-            >                
-                <Switch>
-                    <Route path='/login-page'>
-                        <LoginPage/>
-                    </Route>
-                    <WorkItemProvider>
-                        <Route path='/work-management'>
-                            <Header />
-                            <WorkManagement/>
+                        },
+                        viewWorkDetail,
+                        backToBucketBoard,
+                        addTag,
+                        onSubmitLogin,
+                        handleSelectedItem,
+                        findTagIdFilterList,
+                        findStatusFilterList,
+                        findImportanceLevelFilterList,
+                        addNewChannel,
+                        countTotalWorkItem,
+                        findActiveChannel
+                    }}
+                >                
+                    <Switch>
+                        <Route path='/login-page'>
+                            <LoginPage/>
                         </Route>
-                        <Route path='/setting-page'>
-                            <Header />
-                            <SettingPage />
-                        </Route>
-                    </WorkItemProvider>
-                </Switch>
-            </DataContext.Provider>
+                        <WorkItemProvider>
+                            <Route path='/work-management'>
+                                <Header />
+                                <WorkManagement/>
+                            </Route>
+                            <Route path='/setting-page'>
+                                <Header />
+                                <SettingPage />
+                            </Route>
+                        </WorkItemProvider>
+                    </Switch>
+                </DataContext.Provider>
+            </Provider>
         </Router>
     );
 }

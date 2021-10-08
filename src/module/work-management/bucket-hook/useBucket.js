@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useContext, useState } from 'react/cjs/react.development';
 import { bucketListUrl } from '../../../constant';
-import { BucketContext } from '../context/bucket';
+import { BucketContext } from '../slice/bucket';
 
 const BucketProvider = ( {children} ) => {
     const [ bucketList, setBucketList ] = useState([]);

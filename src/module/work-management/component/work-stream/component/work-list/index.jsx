@@ -1,17 +1,20 @@
 import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { ListView } from '../../../../../../component/list-view';
 import { DataContext } from '../../../../../../context';
-import { useStatus } from '../../../../../../general-data-hook/useStatus';
 import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
 import ItemCard from '../../../item-card';
 
 import './style.scss';
 
 const WorkList = React.memo(function (props) {
-    const { workItemList, filterWorkItem } = useWorkItem();
-    const { statusList } = useStatus();
+    const { filterWorkItem } = useWorkItem();
+    const workList = useSelector(state => state.workItems.workList);
     const context = useContext(DataContext);
-    const { assigneeList, tagIdList, importanceLevelList } = context.state;
+    const { tagIdList } = context.state;
+    const assigneeList = useSelector(state => state.users.userFilteredList);
+    const statusList = useSelector(state => state.status.statusFilteredList);
+    const importanceLevelList = useSelector(state => state.importanceLevel.importanceLevelFilteredList);
     const activeMenuItem = context.state.activeMenuItem;
     const filterWorkListByMenu = (workList, activeMenuItem) => {
         var itemList = workList.filter(item => !item.bucketId && item.statusId !== 4);
@@ -29,7 +32,7 @@ const WorkList = React.memo(function (props) {
         }
     };
     const filterWorkListByAssignee = (workList, assigneeList) => {
-        return workList.filter(item => assigneeList.includes(item.ownerId));
+        return workList.filter(item => assigneeList.includes(item.owner_id));
     };
     const filterWorkListByTag = (workList, tagList) => {
         return workList.filter(item => {
@@ -44,14 +47,14 @@ const WorkList = React.memo(function (props) {
         return workList.filter(item => statusList.includes(item.status_id));
     };
     const filterWorkListByImportanceLevel = (workList, importanceLevelList) => {
-        return workList.filter(item => importanceLevelList.includes(item.importanceLevelId));
+        return workList.filter(item => importanceLevelList.includes(item.important_level_id));
     };
     const renderItemList = () => {
-        var renderedList = filterWorkListByMenu(workItemList, activeMenuItem);
-        // renderedList = assigneeList.length !== 0 ? filterWorkListByAssignee(renderedList, assigneeList) : renderedList;
-        // renderedList = tagIdList.length !== 0 ? filterWorkListByTag(renderedList, tagIdList) : renderedList;
-        // renderedList = statusList.length !== 0 ? filterWorkListByStatus(renderedList, statusList) : renderedList;
-        // renderedList = importanceLevelList.length !== 0 ? filterWorkListByImportanceLevel(renderedList, importanceLevelList) : renderedList;
+        var renderedList = filterWorkListByMenu(workList, activeMenuItem);
+        renderedList = assigneeList.length !== 0 ? filterWorkListByAssignee(renderedList, assigneeList) : renderedList;
+        renderedList = tagIdList.length !== 0 ? filterWorkListByTag(renderedList, tagIdList) : renderedList;
+        renderedList = statusList.length !== 0 ? filterWorkListByStatus(renderedList, statusList) : renderedList;
+        renderedList = importanceLevelList.length !== 0 ? filterWorkListByImportanceLevel(renderedList, importanceLevelList) : renderedList;
         const filterList = filterWorkItem(renderedList, props.searchValue);
 
         if (filterList.length === 0) {
