@@ -1,59 +1,38 @@
 import axios from 'axios';
-import { useContext, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react/cjs/react.development';
-import { workItemListUrl } from '../../../constant';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { defaultChannelId, defaultImportanceLevelId, defaultOwnerId, defaultStatusId, workItemListUrl } from '../../../constant';
 import { useChannelList } from '../../../general-data-hook/useChannelList';
 import { usePrevious } from '../../../general-data-hook/usePrevious';
 import { useStatus } from '../../../general-data-hook/useStatus';
-import { WorkItemContext } from '../slice/workItem';
-import { addWorkItem, getList } from '../slice/workItemSlice';
+import { addNewWorkItem, getWorkItemList } from '../slice/workItemSlice';
 
-const WorkItemProvider = ({children}) => {
-    const { currentChannel } = useChannelList();
+export const useWorkItem = () => {
+    const { activeChannelId } = useChannelList();
     const { findStatusByName } = useStatus();
-    const prev = usePrevious(currentChannel);
-    const [ workItemList, setWorkItemList] = useState([]);
+    const prev = usePrevious(activeChannelId);
+    const workItemList = useSelector(state => state.workItems.workList);
+    const workListFetchingStatus = useSelector(state => state.workItems.status);
     const dispatch = useDispatch();
 
-    async function getWorkItemList (url) {
-        try {
-            let res = await axios.get(url);
-            return res.data;
-        } catch (error) {
-            console.log(error);
-        } 
-    }
-
-    async function addNewWorkItem (text) {
-        const newWorkItem = {
+    async function addWorkItem (text) {
+        const workItem = {
             'name': text,
-            'description': 'Work item of defualt channel',
-            'owner_id': '732e7d85-929b-4af0-843d-98a1044e8456',
-            'channel_id': currentChannel._id,
-            'status_id': 'cba0c270-6650-4a91-8b47-98653adb9e8a',
-            'important_level_id': '4ffdd4c4-c786-412c-aea6-7f19ca8d07b8'
+            'description': 'Work item of default channel',
+            'owner_id': defaultOwnerId,
+            'channel_id': activeChannelId,
+            'status_id': defaultStatusId,
+            'important_level_id': defaultImportanceLevelId
         };
-        dispatch(addWorkItem(newWorkItem));
-        try {
-            const { data } = await axios.post(workItemListUrl, newWorkItem);
-            return data;
-        } catch (error) {
-            return console.log(error);
-        }
+        dispatch(addNewWorkItem(workItem));
     }
 
-    useEffect(() => {
-        (async () => {
-            const data = await getWorkItemList(workItemListUrl);
-            if (prev !== currentChannel) {
-                const workList = currentChannel ? data.results.filter(item => item.channel_id === currentChannel._id) : 
-                    data.results.filter(item => item.channel_id='5e296837-9cae-4268-87f6-8cb351745ea8');
-                dispatch(getList(workList));
-            }
-        })();
-  
-    }, [dispatch, currentChannel, prev]); // only re-render wwhen currentChannelId changes
+    useEffect(() => {  
+        if (prev !== activeChannelId ) {
+            const channel_id = activeChannelId !== undefined ? activeChannelId : defaultChannelId ;
+            dispatch(getWorkItemList(`${workItemListUrl}${channel_id }`));
+        }
+    }, [dispatch, prev, activeChannelId, workItemList]); // only re-render wwhen currentChannelId changes
 
     const findWorkItemById = (id) => {
         const workItem = workItemList.find(element => element._id === id);
@@ -70,7 +49,6 @@ const WorkItemProvider = ({children}) => {
             }
         }
         const newWorkItemList = [...workItemList];
-        setWorkItemList(newWorkItemList);
     };
 
     const completeWorkItem = async (workId) => {
@@ -95,7 +73,6 @@ const WorkItemProvider = ({children}) => {
         } else {
             workItemList[workItemIndex].isFavourite = true;
         }
-        setWorkItemList([...workItemList]);
     };
 
     const editWorkItemDescription = (workId, text) => {
@@ -113,14 +90,12 @@ const WorkItemProvider = ({children}) => {
                 workItemList[i].bucketId = null;
             }
         }
-        setWorkItemList([...workItemList]);
     };
 
     const changeWorkItemStatus = (workId, text) => {
         const workItem = findWorkItemById(workId);
         const statusItem = findStatusByName(text);
         workItem.statusId = statusItem.id;
-        setWorkItemList([...workItemList]);
     };
     
     const filterWorkItem = (workList, searchValue) => {
@@ -131,27 +106,33 @@ const WorkItemProvider = ({children}) => {
         const newList = (searchValue.length !== 0) ? searchResult : workList;
         return newList;
     };
-    return (
-        <WorkItemContext.Provider
-            value={{
-                workItemList,
-                setWorkItemList,
-                findWorkItemById, 
-                archiveCompletedWorkItem, 
-                completeWorkItem, 
-                addFavouriteItem, 
-                editWorkItemDescription, 
-                editWorkItemTitle,
-                revertWorkItemToWorkStream,
-                changeWorkItemStatus,
-                filterWorkItem,
-                addNewWorkItem,
-                getWorkItemList
-            }}
-        >
-            {children}
-        </WorkItemContext.Provider>
-    ); 
+    return { workItemList, 
+        workListFetchingStatus, 
+        addWorkItem, 
+        filterWorkItem, 
+        editWorkItemTitle,
+        findWorkItemById
+    };
 };
-const useWorkItem = () => useContext(WorkItemContext);
-export { useWorkItem, WorkItemProvider};
+// (
+//     <WorkItemContext.Provider
+//         value={{
+//             workList,
+//             workListFetchingStatus,
+//             workItemList,
+//             setWorkItemList,
+//             findWorkItemById, 
+//             archiveCompletedWorkItem, 
+//             completeWorkItem, 
+//             addFavouriteItem, 
+//             editWorkItemDescription, 
+//             editWorkItemTitle,
+//             revertWorkItemToWorkStream,
+//             changeWorkItemStatus,
+//             filterWorkItem,
+//             addWorkItem,
+//             // getWorkItemList
+//         }}
+//     >
+//         {children}
+//     </WorkItemContext.Provider>

@@ -7,7 +7,6 @@ import { Route, BrowserRouter as Router, Switch } from  'react-router-dom';
 import { LoginPage } from './module/login';
 import { SettingPage } from './module/setting';
 import { channelListUrl, settingMenu, statusUrl } from './constant';
-import { WorkItemProvider } from './module/work-management/work-item-hook/useWorkItem';
 import { Provider } from 'react-redux';
 import store from './app/store';
 
@@ -82,64 +81,24 @@ function App() {
             channelList[i]['totalWorkItem'] = list.length;
         }
     };
-    const addNewChannel = (text) => {
-        const newChannel = {
-            id: Math.random().toString().substring(2), name: text
-        };
-        setChannelList([newChannel, ...channelList]);
-    };
-    const findActiveChannel = (channel) => {
-        setCurrentChannel(channel);
-    };
+
+
     return (
         <Router>
             <Provider store={store}>
-                <DataContext.Provider
-                    value={{
-                        state: {
-                            channelList, 
-                            currentChannel,
-                            userList,
-                            tagList,
-                            activeId,
-                            isViewDetail,
-                            viewWorkDetail,
-                            user,
-                            activeMenuItem,
-                            tagIdList,
-                            statusList,
-                            importanceLevelList
-
-                        },
-                        viewWorkDetail,
-                        backToBucketBoard,
-                        addTag,
-                        onSubmitLogin,
-                        handleSelectedItem,
-                        findTagIdFilterList,
-                        findStatusFilterList,
-                        findImportanceLevelFilterList,
-                        addNewChannel,
-                        countTotalWorkItem,
-                        findActiveChannel
-                    }}
-                >                
-                    <Switch>
-                        <Route path='/login-page'>
-                            <LoginPage/>
-                        </Route>
-                        <WorkItemProvider>
-                            <Route path='/work-management'>
-                                <Header />
-                                <WorkManagement/>
-                            </Route>
-                            <Route path='/setting-page'>
-                                <Header />
-                                <SettingPage />
-                            </Route>
-                        </WorkItemProvider>
-                    </Switch>
-                </DataContext.Provider>
+                <Switch>
+                    <Route path='/login-page'>
+                        <LoginPage/>
+                    </Route>
+                    <Route path='/work-management'>
+                        <Header />
+                        <WorkManagement/>
+                    </Route>
+                    <Route path='/setting-page'>
+                        <Header />
+                        <SettingPage />
+                    </Route>
+                </Switch>
             </Provider>
         </Router>
     );
