@@ -2,7 +2,6 @@ import { Select } from 'antd';
 import { Checkbox } from 'antd';
 import React from 'react';
 import { FilterPannel } from '../filter-panel';
-import { status, importanceLevel } from '../../../../../../constant';
 import './style.scss';
 import { useUserList } from '../../../../../../general-data-hook/useUserList';
 import { useGeneralTag } from '../../../../../../general-data-hook/useGeneralTag';
@@ -10,11 +9,11 @@ import { useContext } from 'react/cjs/react.development';
 import { DataContext } from '../../../../../../context';
 import { useStatus } from '../../../../../../general-data-hook/useStatus';
 import { useImportanceLevel } from '../../../../../../general-data-hook/useImportanceLevel';
-import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { filterByUser } from '../../../../../../slice/userSlice';
 import { filterByStatus } from '../../../../../../slice/statusSlice';
 import { filterByImportanceLevel } from '../../../../../../slice/importanceLevelSlice';
+
 const { Option } = Select;
 const CheckboxGroup = Checkbox.Group;
 
@@ -28,7 +27,7 @@ export function SubFilter ({ title, children }) {
 }
 
 const Filter = React.memo(function () {
-    const { tagList, findTagsByName } = useGeneralTag();
+    // const { tagList, findTagsByName } = useGeneralTag();
     const { statusList, findStatusByName } = useStatus();
     const { importanceLevelList, findImportanceLevelByName } = useImportanceLevel();
     const { userList, findUserByName } = useUserList();
@@ -44,14 +43,14 @@ const Filter = React.memo(function () {
         dispatch(filterByUser(assigneeList));
     };
 
-    const onChangeTag = (value) => {
-        const tagIdList = [];
-        for (let i = 0; i < value.length; i++) {
-            const tag = findTagsByName(value[i]);
-            tagIdList.push(tag.id);
-        }
-        context.findTagIdFilterList(tagIdList);
-    };
+    // const onChangeTag = (value) => {
+    //     const tagIdList = [];
+    //     for (let i = 0; i < value.length; i++) {
+    //         const tag = findTagsByName(value[i]);
+    //         tagIdList.push(tag.id);
+    //     }
+    //     context.findTagIdFilterList(tagIdList);
+    // };
     
     const onChangeStatus = (checkedValue) => {
         const statusList = [];
@@ -61,6 +60,7 @@ const Filter = React.memo(function () {
         }
         dispatch(filterByStatus(statusList));
     };
+
     const onChangeImportanceLevel = (checkedValue) => {
         const importanceLevelList = [];
         for (let i = 0; i < checkedValue.length; i++) {
@@ -69,6 +69,7 @@ const Filter = React.memo(function () {
         }
         dispatch(filterByImportanceLevel(importanceLevelList));
     };
+
     function renderAssignee() {
         return userList.map(item => 
             (
@@ -82,18 +83,20 @@ const Filter = React.memo(function () {
             )
         );
     }
-    function renderTags() {
-        return tagList.map(item => 
-            (
-                <Option 
-                    className='selector-input' 
-                    key={item.id} 
-                    value={item.name}>
-                    {item.name}
-                </Option>
-            )
-        );
-    }
+
+    // function renderTags() {
+    //     return tagList.map(item => 
+    //         (
+    //             <Option 
+    //                 className='selector-input' 
+    //                 key={item.id} 
+    //                 value={item.name}>
+    //                 {item.name}
+    //             </Option>
+    //         )
+    //     );
+    // }
+
     function renderStatus() {
         return statusList.map(item => 
             <Checkbox 
@@ -102,6 +105,7 @@ const Filter = React.memo(function () {
                 {item.label}
             </Checkbox>);
     }
+
     function renderImportanceLevel() {
         return importanceLevelList.map(item => 
             (
@@ -127,7 +131,7 @@ const Filter = React.memo(function () {
                     {renderAssignee()}
                 </Select>   
             </SubFilter>
-            <SubFilter title='Tags'>
+            {/* <SubFilter title='Tags'>
                 <Select 
                     mode="multiple"
                     allowClear
@@ -137,7 +141,7 @@ const Filter = React.memo(function () {
                 >
                     {renderTags()}
                 </Select>   
-            </SubFilter>
+            </SubFilter> */}
             <SubFilter title='Status'>
                 <CheckboxGroup 
                     className='checkbox-filter'

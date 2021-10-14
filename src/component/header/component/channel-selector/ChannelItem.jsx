@@ -14,11 +14,11 @@ export const ChannelItem = (props) => {
         backgroundColor = 'grey';
     }
     const handleChannel = () => {
-        props.handleChangeChannel(props.id);
+        props.changeChannel(props.id);
     };
     return (
         <div className='channel-item' style={{backgroundColor: backgroundColor}} onClick={handleChannel}>
-            <p>{props.name}{props.currentChannelId === props.id ? <span style={{fontSize: '18px'}}> (Active)</span> : null}</p>
+            <p>{props.name}{props.activeChannelId === props.id ? <span style={{fontSize: '18px'}}> (Active)</span> : null}</p>
             <div>
                 <p>{props.totalWorkItem} Work Items</p>
                 <p>{userList.length} users</p>

@@ -1,32 +1,33 @@
+import { LoadingOutlined } from '@ant-design/icons';
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { ListView } from '../../../../../../component/list-view';
+import { archiveId } from '../../../../../../constant';
 import { DataContext } from '../../../../../../context';
 import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
 import ItemCard from '../../../item-card';
-
 import './style.scss';
 
 const WorkList = React.memo(function (props) {
-    const { filterWorkItem } = useWorkItem();
-    const workList = useSelector(state => state.workItems.workList);
-    const context = useContext(DataContext);
-    const { tagIdList } = context.state;
+    const { filterWorkItem, workItemList, workListFetchingStatus } = useWorkItem();
+    // const context = useContext(DataContext);
+    // const { tagIdList } = context.state;
+    // const activeMenuItem = context.state.activeMenuItem;
     const assigneeList = useSelector(state => state.users.userFilteredList);
     const statusList = useSelector(state => state.status.statusFilteredList);
     const importanceLevelList = useSelector(state => state.importanceLevel.importanceLevelFilteredList);
-    const activeMenuItem = context.state.activeMenuItem;
+    
     const filterWorkListByMenu = (workList, activeMenuItem) => {
-        var itemList = workList.filter(item => !item.bucketId && item.statusId !== 4);
+        var itemList = workList.filter(item => item.status_id !== archiveId);
         switch (activeMenuItem) {
             case 'Work Stream': 
                 return itemList;
             case 'Owned Works':
-                return itemList.filter(item => item.ownerId === context.state.user.id);
+                // return itemList.filter(item => item.owner_id === context.state.user.id);
             case 'Participant Works':
-                return itemList.filter(item => item.participantId === context.state.user.id);
+                // return itemList.filter(item => item.participantId === context.state.user.id);
             case 'Archived Works':
-                return workList.filter(item => !item.bucketId && item.statusId === 4);
+                return workList.filter(item => !item.bucketId && item.statusId === archiveId);
             default:
                 return itemList;
         }
@@ -50,9 +51,9 @@ const WorkList = React.memo(function (props) {
         return workList.filter(item => importanceLevelList.includes(item.important_level_id));
     };
     const renderItemList = () => {
-        var renderedList = filterWorkListByMenu(workList, activeMenuItem);
+        var renderedList = filterWorkListByMenu(workItemList);
         renderedList = assigneeList.length !== 0 ? filterWorkListByAssignee(renderedList, assigneeList) : renderedList;
-        renderedList = tagIdList.length !== 0 ? filterWorkListByTag(renderedList, tagIdList) : renderedList;
+        // renderedList = tagIdList.length !== 0 ? filterWorkListByTag(renderedList, tagIdList) : renderedList;
         renderedList = statusList.length !== 0 ? filterWorkListByStatus(renderedList, statusList) : renderedList;
         renderedList = importanceLevelList.length !== 0 ? filterWorkListByImportanceLevel(renderedList, importanceLevelList) : renderedList;
         const filterList = filterWorkItem(renderedList, props.searchValue);
@@ -68,7 +69,10 @@ const WorkList = React.memo(function (props) {
     return ( 
         <div className='work-listing'
         >
-            {renderItemList()}
+            { workListFetchingStatus === 'loading' ? 
+                <LoadingOutlined style={{fontSize: '24px', marginLeft: '40%', marginTop: '10%'}} /> : 
+                renderItemList()
+            }
         </div>
     );
 });

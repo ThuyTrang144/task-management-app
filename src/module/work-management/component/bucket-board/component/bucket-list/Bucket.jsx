@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ListView } from '../../../../../../component/list-view';
-import { bucketListUrl } from '../../../../../../constant';
+import { archiveId, bucketListUrl } from '../../../../../../constant';
+import { getWorkItemList } from '../../../../slice/workItemSlice';
 import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
 import { BucketHeader } from './BucketHeader';
 import { BucketItem } from './BucketItem';
 
 export default function Bucket(props) {
-    const [ workList, setWorkList ] = useState([]);
-    const { workItemList, findWorkItemById, setWorkItemList, filterWorkItem, getWorkItemList } = useWorkItem();
+    const { workItemList, findWorkItemById, filterWorkItem } = useWorkItem();
     const [ isViewMore, setIsViewMore ] = useState(false);
-    var itemList = workList.filter(item => item.status_id !== 'ecf5118c-ac14-4c93-9101-88245824e364');
+    var itemList = workItemList.filter(item => item.status_id !== archiveId);
+    const workListFetchingStatus = useSelector(state => state.workItems.status);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        (async () => {
-            const data = await getWorkItemList(`${bucketListUrl}/${props.id}/items`);
-            setWorkList(data.results);
-        })();
-    }, [props.id, getWorkItemList]); 
+        if (workListFetchingStatus === 'idle') {
+            dispatch(getWorkItemList(`${bucketListUrl}/${props.id}/items`));
+        }
+    }, [workListFetchingStatus, dispatch, props.id]); 
+
     function renderBucket() {
         const filterList = filterWorkItem(itemList, props.searchValue); 
         filterList.sort((a, b) => b.isFavourite - a.isFavourite );
@@ -59,7 +63,7 @@ export default function Bucket(props) {
         let id = event.dataTransfer.getData('text');  
         const workItem = findWorkItemById(id);
         workItem.bucketId = bucketId;
-        setWorkItemList([...workItemList]);
+        // setWorkItemList([...workItemList]);
     }
     return (
         <div 

@@ -4,16 +4,19 @@ import { useChannelList } from '../../../../general-data-hook/useChannelList';
 import { DownOutlined } from '@ant-design/icons';
 import { ChannelItem } from './ChannelItem';
 import { Button, Input, Modal } from 'antd';
+import { defaultChannelId, defaultChannelName } from '../../../../constant';
+import { useDispatch } from 'react-redux';
+import { handleChangeChannel } from '../../../../slice/channelSlice';
 
 export function ChannelSelector() {
-    const { channelList, currentChannel, findChannelById, addNewChannel, findActiveChannel } = useChannelList();   
-    const [ currentActiveChannel, setCurrentActiveChannel ] = useState(currentChannel);
+    const { channelList, activeChannelId, findActiveChannel, addNewChannel } = useChannelList();
+    const dispatch = useDispatch();
+    const activeChannel = findActiveChannel(activeChannelId); 
     const [ isAddingChannel, setIsAddingChannel ] = useState(false);
     const [ isViewChannelList, setIsViewChannleList ] = useState(false);
-    const handleChangeChannel = (id) => {
-        const channel = findChannelById(id);
-        setCurrentActiveChannel(channel);
-        findActiveChannel(channel);
+    
+    const changeChannel = (id) => {
+        dispatch(handleChangeChannel(id));
         setIsViewChannleList(false);
     };
 
@@ -24,8 +27,8 @@ export function ChannelSelector() {
                 id={item._id} 
                 name={item.name} 
                 totalWorkItem={item.totalWorkItem} 
-                handleChangeChannel={handleChangeChannel}
-                currentChannelId={currentActiveChannel ? currentActiveChannel._id : '5e296837-9cae-4268-87f6-8cb351745ea8'}
+                changeChannel={changeChannel}
+                activeChannelId={activeChannelId ? activeChannelId : defaultChannelId}
             ></ChannelItem>
         );
     }
@@ -51,9 +54,9 @@ export function ChannelSelector() {
     return (
         <>
             <button className='channel-selector' onClick={viewChannelList}>
-                {currentActiveChannel === undefined ? 
-                    <span>{'Channel: ' + 'Default Channel'.toLocaleUpperCase()}</span> : 
-                    <span>{'Channel: ' + currentActiveChannel.name.toLocaleUpperCase()}</span>}
+                {activeChannel ? <span>{'Channel: ' + activeChannel.name.toLocaleUpperCase()}</span> :
+                    <span>{'Channel: ' + defaultChannelName.toLocaleUpperCase()}</span>}
+         
                 <DownOutlined />
             </button>
             <Modal 
