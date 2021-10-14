@@ -81,7 +81,12 @@ function App() {
             channelList[i]['totalWorkItem'] = list.length;
         }
     };
-
+    const addNewChannel = (text) => {
+        const newChannel = {
+            id: Math.random().toString().substring(2), name: text
+        };
+        setChannelList([newChannel, ...channelList]);
+    };
 
     return (
         <Router>

@@ -18,7 +18,7 @@ export const useChannelList = () => {
     const findActiveChannel = (id) => {
         return channelList.find(item => item._id === id);
     };
-
+    
     return { 
         channelList,
         activeChannelId,
