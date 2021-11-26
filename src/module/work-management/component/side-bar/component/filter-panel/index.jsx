@@ -1,5 +1,6 @@
 import './style.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 export function FilterPannel({ title, children }) {
     return (
@@ -18,11 +19,22 @@ export function MenuItem ({ children }) {
     );
 }
 
-export function Item ({ name, icon }) {
+export function Item (props) {
+    const onClick = () => {
+        props.handleSelectedItem(props.data.name);
+    };
     return (
-        <li className='item' key={name}>
-            { icon ? <FontAwesomeIcon className='item-icon' icon={icon}/> : null}
-            <span className='item-name'>{name}</span>
-        </li>
+        <Link to={props.data.link} 
+            key={props.data._id} 
+            onClick={onClick} 
+        >
+            <li 
+                className='item' 
+                style={props.activeMenuItem === props.data.name ?  {backgroundColor: '#13C2C2', color: 'white'} : null}
+            >
+                { props.data.icon ? <FontAwesomeIcon className='item-icon' icon={props.data.icon}/> : null}
+                <span className='item-name'>{props.data.name}</span>
+            </li>
+        </Link>
     );
 }

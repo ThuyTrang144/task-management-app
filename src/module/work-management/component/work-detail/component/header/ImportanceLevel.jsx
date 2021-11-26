@@ -7,11 +7,11 @@ export const ImportanceLevel = () => {
     return (
         <WorkDetailContext.Consumer>
             {value => { 
-                const importanceLevel = findImportanceLevelById(value.workDetailData.importanceLevelId);
+                const importanceLevel = findImportanceLevelById(value.workDetailData.important_level_id);
                 return <div className="importance-level">
                     <ExclamationCircleOutlined />
                     <span>Importance</span><br></br>
-                    <span className="level">{importanceLevel.name}</span>
+                    <span className="level">{importanceLevel.label}</span>
                 </div>;}}
         </WorkDetailContext.Consumer>  
     );

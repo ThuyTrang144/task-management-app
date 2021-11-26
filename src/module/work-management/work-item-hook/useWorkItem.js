@@ -1,68 +1,71 @@
-import { useContext } from 'react';
-import Moment from 'react-moment';
-import { useState } from 'react/cjs/react.development';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { defaultChannelId, defaultImportanceLevelId, defaultOwnerId, defaultStatusId, workItemListUrl } from '../../../constant';
+import { useChannelList } from '../../../general-data-hook/useChannelList';
+import { usePrevious } from '../../../general-data-hook/usePrevious';
 import { useStatus } from '../../../general-data-hook/useStatus';
-import { useUserList } from '../../../general-data-hook/useUserList';
-import BucketItem from '../component/bucket-board/component/bucket-list/BucketItem';
-import ItemCard from '../component/item-card';
-import { WorkItemContext } from '../context/workItem';
+import { addNewWorkItem, getWorkItemList } from '../slice/workItemSlice';
 
-const WorkItemProvider = ({children}) => {
-    const workItemContext = useContext(WorkItemContext);
-    const [workItemList, setWorkItemList] = useState(workItemContext.workItemList);
-    const { findStatusByName, findStatusById } = useStatus();
-    const { findUserById } = useUserList();
+export const useWorkItem = () => {
+    const { activeChannelId } = useChannelList();
+    const { findStatusByName } = useStatus();
+    const prev = usePrevious(activeChannelId);
+    const workItemList = useSelector(state => state.workItems.workList);
+    const workListFetchingStatus = useSelector(state => state.workItems.status);
+    const dispatch = useDispatch();
+
+    async function addWorkItem (text) {
+        const workItem = {
+            'name': text,
+            'description': 'Work item of default channel',
+            'owner_id': defaultOwnerId,
+            'channel_id': activeChannelId,
+            'status_id': defaultStatusId,
+            'important_level_id': defaultImportanceLevelId
+        };
+        dispatch(addNewWorkItem(workItem));
+    }
+
+    useEffect(() => {  
+        if (prev !== activeChannelId ) {
+            const channel_id = activeChannelId !== undefined ? activeChannelId : defaultChannelId ;
+            dispatch(getWorkItemList(`${workItemListUrl}${channel_id }`));
+        }
+    }, [dispatch, prev, activeChannelId, workItemList]); // only re-render wwhen currentChannelId changes
 
     const findWorkItemById = (id) => {
-        return workItemList.find(element => element.id === id);
+        const workItem = workItemList.find(element => element._id === id);
+        if (workItem === undefined ) {
+            return { id: 'unknown', name: 'unknown', owner: 'unknown'};
+        } else return workItem;
     };
-    const addWorkItem = (text) => {
-        const newItem = {
-            id: Math.random().toString().substring(2), 
-            name: text, 
-            description: 'This is a new work item',
-            tagId: null,
-            ownerId: 3,
-            participantId: null,
-            createdDate: new Date().toLocaleString() + '', 
-            dueDate: null,
-            statusId: 1, 
-            importanceLevelId: null,
-            channelId: 1,
-            assignee: null, 
-            bucketId: null,
-            activitiesList: [
-                {name: 'Created a new work item', 
-                    assigneeId: 3, 
-                    createdTime:<Moment fromNow>{new Date().toLocaleString() + ''}</Moment>, 
-                    labelId: 1}],
-            todoList: null
-        };
 
-        setWorkItemList([
-            newItem,
-            ...workItemList
-        ]
-        );
-    };
     const archiveCompletedWorkItem = (bucketId) => {
         for (let i = 0; i < workItemList.length; i++) {
             if (workItemList[i].bucketId === bucketId && workItemList[i].statusId === 3) {
-                workItemContext.archivedWorkList.push(workItemList[i]);
-                workItemList.splice(i, 1);
+                workItemList[i].statusId = 4;
+                workItemList[i].bucketId = null;
             }
         }
-        setWorkItemList([...workItemList]);
+        const newWorkItemList = [...workItemList];
     };
-    const completeWorkItem = (workId) => {
-        const workItemIndex = workItemList.findIndex(item => item.id === workId); 
-        if (workItemList[workItemIndex].statusId === 1 || workItemList[workItemIndex].statusId === 2) {
-            workItemList[workItemIndex].statusId = 3;
-        } else if (workItemList[workItemIndex].statusId === 3) {
-            workItemList[workItemIndex].statusId = 1;
+
+    const completeWorkItem = async (workId) => {
+        const workItemIndex = workItemList.findIndex(item => item._id === workId); 
+        if (workItemList[workItemIndex].status_id === 'cba0c270-6650-4a91-8b47-98653adb9e8a' || workItemList[workItemIndex].status_id === '9542a65a-5199-4299-a0a8-0a82045e3c10') {
+            workItemList[workItemIndex].status_id = 'e56d0b49-fa56-4392-9385-100bf9bfdb15';
+        } else if (workItemList[workItemIndex].status_id === 'e56d0b49-fa56-4392-9385-100bf9bfdb15') {
+            workItemList[workItemIndex].status_id = 'cba0c270-6650-4a91-8b47-98653adb9e8a' ;
         }
-        setWorkItemList([...workItemList]);
+        try {
+            const { data } = await axios.patch(`${workItemListUrl}/${workId}`, {status_id: workItemList[workItemIndex].status_id});
+            return data;
+        } catch(err) {
+            return console.log(err);
+        }
     };
+
     const addFavouriteItem = (workId) => {
         const workItemIndex = workItemList.findIndex(item => item.id === workId);
         if (workItemList[workItemIndex].isFavourite) {
@@ -70,81 +73,66 @@ const WorkItemProvider = ({children}) => {
         } else {
             workItemList[workItemIndex].isFavourite = true;
         }
-        setWorkItemList([...workItemList]);
     };
+
     const editWorkItemDescription = (workId, text) => {
         const workItem = findWorkItemById(workId);
         workItem.description = text;
     };
+    const editWorkItemTitle = (workId, text) => {
+        const workItem = findWorkItemById(workId);
+        workItem.name = text;
+    };
+
     const revertWorkItemToWorkStream = (bucketId) => {
         for (let i = 0; i < workItemList.length; i++) {
             if (workItemList[i].bucketId === bucketId) {
                 workItemList[i].bucketId = null;
             }
         }
-        setWorkItemList([...workItemList]);
     };
+
     const changeWorkItemStatus = (workId, text) => {
         const workItem = findWorkItemById(workId);
         const statusItem = findStatusByName(text);
-        console.log('status item', statusItem);
         workItem.statusId = statusItem.id;
     };
-    const renderWorkItemList = (workList, searchValue) => {
+    
+    const filterWorkItem = (workList, searchValue) => {
         const searchResult = workList.filter(item => 
         {
             return item.name.toLocaleLowerCase().startsWith(searchValue) || item.name.toLocaleLowerCase().includes(searchValue);
-
         });
         const newList = (searchValue.length !== 0) ? searchResult : workList;
-
-        if (searchResult.length === 0 && searchValue.length !== 0) {
-            return <p className="search-result">There is no work item match with your search. Please add a new one.</p>;
-        }
-
-        return newList.map(item => {
-            const statusItem = findStatusById(item.statusId);
-            const owner = findUserById(item.ownerId);
-            if (item.bucketId !== null) {
-                return <BucketItem 
-                    key={item.id} 
-                    id={item.id}
-                    name={item.name} 
-                    status={statusItem.name} 
-                    owner={owner.name} 
-                    createdDate={item.createdDate} 
-                    dueDate={item.dueDate}/>;
-            } else { 
-                return <ItemCard 
-                    key={item.id} 
-                    id={item.id}
-                    name={item.name} 
-                    status={statusItem.name} 
-                    owner={owner.name} 
-                    createdDate={item.createdDate} 
-                    dueDate={item.dueDate} 
-                />; }
-        });
+        return newList;
     };
-    // const filterWorkItem = ()
-    return (
-        <WorkItemContext.Provider
-            value={{
-                workItemList,
-                findWorkItemById, 
-                addWorkItem, 
-                archiveCompletedWorkItem, 
-                completeWorkItem, 
-                addFavouriteItem, 
-                editWorkItemDescription, 
-                revertWorkItemToWorkStream,
-                changeWorkItemStatus,
-                renderWorkItemList
-            }}
-        >
-            {children})
-        </WorkItemContext.Provider>
-    ); 
+    return { workItemList, 
+        workListFetchingStatus, 
+        addWorkItem, 
+        filterWorkItem, 
+        editWorkItemTitle,
+        findWorkItemById
+    };
 };
-const useWorkItem = () => useContext(WorkItemContext);
-export { useWorkItem, WorkItemProvider};
+// (
+//     <WorkItemContext.Provider
+//         value={{
+//             workList,
+//             workListFetchingStatus,
+//             workItemList,
+//             setWorkItemList,
+//             findWorkItemById, 
+//             archiveCompletedWorkItem, 
+//             completeWorkItem, 
+//             addFavouriteItem, 
+//             editWorkItemDescription, 
+//             editWorkItemTitle,
+//             revertWorkItemToWorkStream,
+//             changeWorkItemStatus,
+//             filterWorkItem,
+//             addWorkItem,
+//             // getWorkItemList
+//         }}
+//     >
+//         {children}
+//     </WorkItemContext.Provider>

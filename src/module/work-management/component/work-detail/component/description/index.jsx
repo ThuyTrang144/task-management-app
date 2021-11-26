@@ -4,10 +4,10 @@ import { Input } from 'antd';
 import './style.scss';
 import { useContext } from 'react/cjs/react.development';
 import { WorkDetailContext } from '../../context';
-import { WorkItemContext } from '../../../../context/workItem';
+import { useWorkItem } from '../../../../work-item-hook/useWorkItem';
 
 const Description = React.memo(function () {
-    const workItemContext = useContext(WorkItemContext);
+    const { editWorkItemDescription } = useWorkItem();
     const workContext = useContext(WorkDetailContext);
     const { workDetailData } = workContext;
     const [isEdit, setIsEditState] = useState(false);
@@ -20,7 +20,7 @@ const Description = React.memo(function () {
     }
     function onKeyPress(e) {
         const value = e.target.value;
-        workItemContext.editWorkItemDescription(workDetailData.id, value);
+        editWorkItemDescription(workDetailData.id, value);
         setIsEditState(false);
     }
     return ( 

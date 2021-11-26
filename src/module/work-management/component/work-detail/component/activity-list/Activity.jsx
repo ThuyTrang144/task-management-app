@@ -1,5 +1,6 @@
 import React from 'react';
 import { DeleteOutlined, CommentOutlined } from '@ant-design/icons';
+import Moment from 'react-moment';
 class Activity extends React.Component {
     render() {
         return (
@@ -7,8 +8,8 @@ class Activity extends React.Component {
                 <div className="activities-info">
                     <div className="info-group">
                         <span className="assignee">{this.props.assignee}</span>
-                        <span className="created-time">{this.props.createdTime}</span>
-                        <div className="activities-tag">{this.props.label}</div>
+                        <Moment fromNow className="created-time">{this.props.createdTime}</Moment>
+                        <span className="activities-tag">System</span>
                     </div>
                     <div className="activities-actions">
                         <DeleteOutlined id='delete-icon'/>

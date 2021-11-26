@@ -2,25 +2,28 @@ import Checkbox from 'antd/lib/checkbox/Checkbox';
 import React, { useState } from 'react';
 import Activity from './Activity';
 import { SmileOutlined } from '@ant-design/icons';
-import { useContext } from 'react/cjs/react.development';
-import { WorkDetailContext } from '../../context';
 import { useActivity } from '../../../../work-item-hook/useActivity';
 import { useUserList } from '../../../../../../general-data-hook/useUserList';
+import { useContext } from 'react/cjs/react.development';
+import { WorkDetailContext } from '../../context';
+import './style.scss';
 
 const ActivitiesList = React.memo(function () {
-    const workContext = useContext(WorkDetailContext);
     const { findUserById } = useUserList();
-    const { addNewActivity } = useActivity();
+    const context = useContext(WorkDetailContext);
+    const { activityList, addNewActivity } = useActivity();
     const [ activity, setActivityState ] = useState(''); 
     function renderActivities() {
-        return workContext.workDetailData.activitiesList.map(item => {
+        console.log('activity', activityList);
+        const filterList = activityList.filter(item => item.work_item_id === context.workDetailData._id);
+        return filterList.map(item => {
             const assignee = findUserById(item.assigneeId);
             return <Activity 
-                key={item.id} 
-                id={item.id}
+                key={item._id} 
+                id={item._id}
                 name={item.name}
                 assignee={assignee.name}
-                createdTime={item.createdTime}
+                createdTime={item._created_at}
                 label={item.label}>
             </Activity>; 
         }
@@ -32,7 +35,7 @@ const ActivitiesList = React.memo(function () {
     }
     function onKeyPress(e) {
         if (e.charCode === 13) {
-            addNewActivity(workContext.workDetailData.id, activity);
+            addNewActivity(activity);
             setActivityState('');
         }
     }

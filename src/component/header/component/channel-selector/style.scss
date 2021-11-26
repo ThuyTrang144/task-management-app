@@ -1,5 +1,6 @@
-.ant-select.channel-selector {
+.channel-selector {
     height: 34px;
+    background-color:#4F91FF;
     width: 300px;
     margin-left: 20px;
     color: var(--text-color-light);
@@ -7,17 +8,37 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .ant-select-selector {
-        background-color: #13C2C2;
-        border-style: none;
-        border-radius: 100px;
+    border-style: none;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    span {
+        margin-left: 15px;
     }
-    .ant-select-arrow {
-        color: var(--text-color-light);
-        font-size: var(--md);
+    .anticon.anticon-down {
+        margin-right: 15px;
     }
 }
-.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    box-shadow: none;
-    border-color: unset;
+.channel-item {
+    width: 370px;
+    height: 130px;
+    margin-top: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    color: var(--text-color-light);
+    > p {
+        font-size: var(--two-xl);
+    }
+    p {
+        margin: 10px 15px;
+    }
+
+}
+.channel-list {
+    .ant-modal-body {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
 }

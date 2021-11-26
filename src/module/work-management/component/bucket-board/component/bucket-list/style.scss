@@ -1,96 +1,98 @@
 @import "../../../../../../style/mixin.scss";
-.bucket-listing {
-        width: 100%;
+
+.my-masonry-grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .my-masonry-grid_column {   
+    width: calc(50% - 10px) !important;  
+    .bucket-box {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
         justify-content: space-between;
-        .bucket-box {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: calc(50% - 10px);
-            margin-top: 10px;
-            .bucket-header {
-                @include display-flex;
-                .bucket-title {
-                    width: 85%;
-                    span {
-                        text-decoration: none;
-                        font-size: 18px;
-                        color: black;
-                        &:hover{
-                            color: #40A9FF;
-                        }
-                    }
-                }
-                .actions {
-                    font-size: 30px;
-                    color: #787885;
-                    .bucket-icon {
-                        font-size: var(--three-xl);
-                        margin-right: 10px;
-                        &:hover {
-                           color: var(--text-hover-color);
-                        }
+            margin: 10px 1px;
+        .bucket-header {
+            @include display-flex;
+            .bucket-title {
+                width: 85%;
+                span {
+                    text-decoration: none;
+                    font-size: 18px;
+                    color: black;
+                    &:hover{
+                        color: #40A9FF;
                     }
                 }
             }
-            .bucket-card {
-                width: 100%;
-                height: 500px;
-                padding: 10px;
-                box-shadow: 0px 0px 2px 0px grey;
-                background-color: white;
-                border-radius: 5px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                .bucket-item {
-                    width: 100%;
-                    @include display-flex;
-                    .item-actions {
-                        @include display-flex;
-                        flex-direction: column;
-                        width: 5%;
-                        margin-left: 5px;
-                        .favourite-icon {
-                            color: #FFB41F;
-                            margin-top: 10px;
-                            font-size: var(--xl);
-                        }
+            .actions {
+                font-size: 30px;
+                color: #787885;
+                .bucket-icon {
+                    font-size: var(--three-xl);
+                    margin-right: 10px;
+                    &:hover {
+                       color: var(--text-hover-color);
                     }
                 }
-                .bucket-item-card  {
-                    width: 95%;
-                    .item-card {
-                        margin-top: unset;
-                        box-shadow: unset;
-                        &:hover {
-                            background: unset !important;
-                        }
-                        .work-item-name {
-                            &:hover {
-                                color:  var(--text-hover-color);
-                            }
-                        }
-                        .work-item-name {
-                            cursor: pointer;
-                        }
-                    }
-                }
-                .empty-bucket {
-                    width: 100%;
-                    display: flex;
-                    justify-content: center;
-                    height: 100%;
-                    align-items: center;
-                    color: var(--text-color-dark);
-                }
-    
             }
         }
+        .bucket-card {
+            width: 100%;
+            padding: 10px;
+            box-shadow: 0px 0px 2px 0px grey;
+            background-color: white;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .bucket-item {
+                width: 100%;
+                @include display-flex;
+                .item-actions {
+                    @include display-flex;
+                    flex-direction: column;
+                    width: 5%;
+                    margin-left: 5px;
+                    .favourite-icon {
+                        color: #FFB41F;
+                        margin-top: 10px;
+                        font-size: var(--xl);
+                    }
+                }
+            }
+            .bucket-item-card  {
+                width: 95%;
+                .item-card {
+                    margin-top: unset;
+                    box-shadow: unset;
+                    &:hover {
+                        background: unset !important;
+                    }
+                    .work-item-name {
+                        &:hover {
+                            color:  var(--text-hover-color);
+                        }
+                    }
+                    .work-item-name {
+                        cursor: pointer;
+                    }
+                }
+            }
+            .empty-bucket {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                height: 100%;
+                align-items: center;
+                color: var(--text-color-dark);
+            }
+
+        }
     }
-.ant-dropdown-menu-title-content {
+  }
+  .ant-dropdown-menu-title-content {
     span {
         margin-left: 10px;
     }
